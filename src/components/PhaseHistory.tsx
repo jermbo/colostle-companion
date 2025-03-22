@@ -7,14 +7,11 @@ export const PhaseHistory: React.FC = () => {
 
 	if (storyPhases.length === 0) {
 		return (
-			<div
-				className="empty-history"
-				style={{ padding: "20px", textAlign: "center" }}
-			>
+			<section className="empty-history">
 				<p>
 					No story phases yet. Start your adventure by creating a new phase.
 				</p>
-			</div>
+			</section>
 		);
 	}
 
@@ -55,91 +52,65 @@ export const PhaseHistory: React.FC = () => {
 	};
 
 	return (
-		<div className="phase-history" style={{ padding: "15px" }}>
-			<h2 style={{ marginBottom: "20px" }}>Journey Log</h2>
-			<div className="phase-list">
+		<section className="phase-history">
+			<h2 id="journey-log-title">Journey Log</h2>
+			<ul
+				className="phase-list"
+				aria-labelledby="journey-log-title"
+				role="list"
+			>
 				{storyPhases.map((phase, index) => (
-					<div
+					<li
 						key={phase.id}
-						onClick={() => goToPhase(index)}
 						className={`phase-item ${
 							index === currentPhaseIndex ? "active" : ""
 						}`}
-						style={{
-							padding: "12px 15px",
-							marginBottom: "10px",
-							borderRadius: "5px",
-							backgroundColor:
-								index === currentPhaseIndex ? "#f8f9fa" : "white",
-							border: `1px solid ${
-								index === currentPhaseIndex
-									? getPhaseColor(phase.type)
-									: "#dee2e6"
-							}`,
-							boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-							cursor: "pointer",
-							display: "flex",
-							alignItems: "center",
-						}}
 					>
-						<div
-							className="phase-icon"
-							style={{
-								width: "35px",
-								height: "35px",
-								borderRadius: "50%",
-								backgroundColor: getPhaseColor(phase.type),
-								color: "white",
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "center",
-								marginRight: "12px",
-								fontSize: "18px",
-							}}
+						<button
+							onClick={() => goToPhase(index)}
+							className="phase-item-button"
+							aria-pressed={index === currentPhaseIndex}
+							aria-label={`${phase.title}, ${phase.type} phase`}
 						>
-							{getPhaseIcon(phase.type)}
-						</div>
-
-						<div className="phase-details" style={{ flex: "1" }}>
-							<div
-								style={{
-									display: "flex",
-									justifyContent: "space-between",
-									alignItems: "center",
-								}}
+							<span
+								className="phase-icon"
+								aria-hidden="true"
+								style={{ backgroundColor: getPhaseColor(phase.type) }}
 							>
-								<h3 style={{ margin: "0", fontSize: "16px" }}>{phase.title}</h3>
-								<span style={{ fontSize: "12px", color: "#6c757d" }}>
-									{formatDate(phase.timestamp)}
-								</span>
-							</div>
+								{getPhaseIcon(phase.type)}
+							</span>
 
-							{phase.description && (
-								<p
-									style={{
-										margin: "5px 0 0 0",
-										fontSize: "14px",
-										color: "#495057",
-										overflow: "hidden",
-										textOverflow: "ellipsis",
-										whiteSpace: "nowrap",
-									}}
-								>
-									{phase.description.substring(0, 100)}
-									{phase.description.length > 100 ? "..." : ""}
-								</p>
-							)}
+							<div className="phase-details">
+								<div className="phase-header">
+									<h3 className="phase-title">{phase.title}</h3>
+									<time
+										className="phase-date"
+										dateTime={new Date(phase.timestamp).toISOString()}
+									>
+										{formatDate(phase.timestamp)}
+									</time>
+								</div>
 
-							<div style={{ marginTop: "5px", fontSize: "12px" }}>
-								<span style={{ marginRight: "10px" }}>
-									<strong>Cards:</strong> {phase.cards.length}
-								</span>
-								{phase.notes && <span>📝 Has notes</span>}
+								{phase.description && (
+									<p className="phase-description">
+										{phase.description.substring(0, 100)}
+										{phase.description.length > 100 ? "..." : ""}
+									</p>
+								)}
+
+								<div className="phase-metadata">
+									<span className="phase-cards-count">
+										<strong>Cards:</strong> {phase.cards.length}
+									</span>
+									{phase.notes && (
+										<span className="phase-has-notes">📝 Has notes</span>
+									)}
+								</div>
 							</div>
-						</div>
-					</div>
+						</button>
+					</li>
 				))}
-			</div>
-		</div>
+			</ul>
+		</section>
 	);
 };

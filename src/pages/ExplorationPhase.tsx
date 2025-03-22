@@ -42,23 +42,20 @@ export const ExplorationPhase: React.FC = () => {
 	}, [currentPhase]);
 
 	if (!currentPhase) {
-		return <div>No active exploration phase. Please start a new phase.</div>;
+		return (
+			<section aria-label="No active phase" className="no-active-phase">
+				No active exploration phase. Please start a new phase.
+			</section>
+		);
 	}
 
 	return (
-		<div className="exploration-phase-container" style={{ padding: "20px" }}>
-			<h1 style={{ marginBottom: "20px" }}>{currentPhase.title}</h1>
+		<section className="exploration-phase-container">
+			<h1 className="phase-title">{currentPhase.title}</h1>
 
-			<div className="phase-inputs" style={{ marginBottom: "30px" }}>
-				<div style={{ marginBottom: "20px" }}>
-					<label
-						htmlFor="description"
-						style={{
-							display: "block",
-							marginBottom: "8px",
-							fontWeight: "bold",
-						}}
-					>
+			<div className="phase-inputs">
+				<div className="form-group">
+					<label htmlFor="description" className="form-label">
 						Description
 					</label>
 					<textarea
@@ -66,28 +63,13 @@ export const ExplorationPhase: React.FC = () => {
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 						onBlur={handleSaveDescription}
-						placeholder="Describe what's happening in this phase..."
-						style={{
-							width: "100%",
-							padding: "10px",
-							fontSize: "16px",
-							borderRadius: "5px",
-							border: "1px solid #ccc",
-							minHeight: "100px",
-							resize: "vertical",
-						}}
+						placeholder="Describe your exploration journey..."
+						className="form-textarea"
 					/>
 				</div>
 
-				<div>
-					<label
-						htmlFor="notes"
-						style={{
-							display: "block",
-							marginBottom: "8px",
-							fontWeight: "bold",
-						}}
-					>
+				<div className="form-group">
+					<label htmlFor="notes" className="form-label">
 						Notes
 					</label>
 					<textarea
@@ -95,109 +77,61 @@ export const ExplorationPhase: React.FC = () => {
 						value={notes}
 						onChange={(e) => setNotes(e.target.value)}
 						onBlur={handleSaveNotes}
-						placeholder="Add any additional notes here..."
-						style={{
-							width: "100%",
-							padding: "10px",
-							fontSize: "16px",
-							borderRadius: "5px",
-							border: "1px solid #ccc",
-							minHeight: "80px",
-							resize: "vertical",
-						}}
+						placeholder="Keep track of discoveries here..."
+						className="form-textarea notes-textarea"
 					/>
 				</div>
 			</div>
 
-			<div className="card-section">
-				<h2 style={{ marginBottom: "15px" }}>Cards</h2>
+			<section className="card-section">
+				<h2 className="section-title">Exploration Cards</h2>
 
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						marginBottom: "20px",
-					}}
-				>
+				<div className="tab-buttons">
 					<button
 						onClick={() => setShowDrawArea(true)}
-						style={{
-							padding: "8px 15px",
-							backgroundColor: showDrawArea ? "#4a69bd" : "#e9ecef",
-							color: showDrawArea ? "white" : "#495057",
-							border: "none",
-							borderRadius: "5px",
-							cursor: "pointer",
-						}}
+						className={`tab-button ${showDrawArea ? "active" : ""}`}
+						aria-pressed={showDrawArea}
 					>
-						Draw Cards
+						Draw Exploration Cards
 					</button>
 
 					<button
 						onClick={() => setShowDrawArea(false)}
-						style={{
-							padding: "8px 15px",
-							backgroundColor: !showDrawArea ? "#4a69bd" : "#e9ecef",
-							color: !showDrawArea ? "white" : "#495057",
-							border: "none",
-							borderRadius: "5px",
-							cursor: "pointer",
-						}}
+						className={`tab-button ${!showDrawArea ? "active" : ""}`}
+						aria-pressed={!showDrawArea}
 					>
 						Interpretations
 					</button>
 				</div>
 
 				{showDrawArea ? (
-					<div className="draw-area">
-						<div
-							style={{
-								border: "2px dashed #ccc",
-								borderRadius: "10px",
-								padding: "30px",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								justifyContent: "center",
-								backgroundColor: "#f8f9fa",
-							}}
-						>
-							<button
-								onClick={handleDrawCard}
-								style={{
-									padding: "12px 24px",
-									fontSize: "18px",
-									backgroundColor: "#4a69bd",
-									color: "white",
-									border: "none",
-									borderRadius: "5px",
-									cursor: "pointer",
-									marginBottom: "20px",
-								}}
-							>
-								Draw Card
+					<div
+						className="draw-area"
+						role="region"
+						aria-label="Draw exploration cards"
+					>
+						<div className="draw-area-container">
+							<button onClick={handleDrawCard} className="draw-button">
+								Draw Exploration Card
 							</button>
 
-							<div
-								className="drawn-cards"
-								style={{
-									display: "flex",
-									flexWrap: "wrap",
-									justifyContent: "center",
-								}}
-							>
+							<ul className="drawn-cards" aria-label="Drawn exploration cards">
 								{drawnCards.map((card, index) => (
-									<CardDisplay
-										key={`card-${index}`}
-										card={card}
-										onClick={() => setShowDrawArea(false)}
-									/>
+									<li key={`card-${index}`}>
+										<CardDisplay
+											card={card}
+											onClick={() => setShowDrawArea(false)}
+										/>
+									</li>
 								))}
-							</div>
+							</ul>
 						</div>
 					</div>
 				) : (
-					<div className="interpretation-area">
+					<section
+						className="interpretation-area"
+						aria-label="Card interpretations"
+					>
 						{drawnCards.length > 0 ? (
 							drawnCards.map((card, index) => (
 								<CardInterpretationDisplay
@@ -207,11 +141,11 @@ export const ExplorationPhase: React.FC = () => {
 								/>
 							))
 						) : (
-							<p>No cards have been drawn yet.</p>
+							<p>No exploration cards have been drawn yet.</p>
 						)}
-					</div>
+					</section>
 				)}
-			</div>
-		</div>
+			</section>
+		</section>
 	);
 };

@@ -29,63 +29,36 @@ export const CardInterpretationDisplay: React.FC<
 	};
 
 	return (
-		<div
+		<article
 			className="card-interpretation-container"
-			style={{
-				display: "flex",
-				margin: "20px 0",
-				padding: "15px",
-				borderRadius: "8px",
-				backgroundColor: "#f8f9fa",
-				boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-			}}
+			aria-labelledby={`interpretation-title-${card.id}`}
 		>
-			<div className="card-visual" style={{ flexShrink: 0 }}>
+			<div className="card-visual">
 				<CardDisplay card={card} showDetails={true} />
 			</div>
 
-			<div
-				className="interpretation-details"
-				style={{ marginLeft: "20px", flex: 1 }}
-			>
-				<div
-					className="interpretation-type"
-					style={{
-						display: "inline-block",
-						padding: "5px 10px",
-						borderRadius: "4px",
-						backgroundColor: "#e9ecef",
-						fontSize: "14px",
-						marginBottom: "10px",
-					}}
-				>
+			<div className="interpretation-details">
+				<span className="interpretation-type-tag">
 					{typeToLabel[interpretation.type]}
-				</div>
+				</span>
 
-				<h3 style={{ marginTop: 0, marginBottom: "10px", fontSize: "20px" }}>
+				<h3
+					id={`interpretation-title-${card.id}`}
+					className="interpretation-title"
+				>
 					{interpretation.name}
 				</h3>
 
-				<p
-					style={{ marginBottom: "15px", fontSize: "16px", lineHeight: "1.5" }}
-				>
+				<p className="interpretation-description">
 					{interpretation.description}
 				</p>
 
 				{interpretation.conditionText && (
-					<div
-						className="condition-text"
-						style={{
-							padding: "10px",
-							backgroundColor: "#e2e3e5",
-							borderRadius: "4px",
-							fontSize: "14px",
-						}}
-					>
+					<div className="condition-text">
 						<strong>Condition:</strong> {interpretation.conditionText}
 					</div>
 				)}
 			</div>
-		</div>
+		</article>
 	);
 };

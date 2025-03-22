@@ -21,91 +21,33 @@ export const CardDisplay: React.FC<CardDisplayProps> = ({
 		spades: "♠",
 	}[suit];
 
+	const cardClasses = `card-display ${color} ${showDetails ? "expanded" : ""}`;
+	const handleKeyPress = (e: React.KeyboardEvent) => {
+		if (onClick && (e.key === "Enter" || e.key === " ")) {
+			onClick();
+		}
+	};
+
 	return (
-		<div
+		<button
 			onClick={onClick}
-			className={`card-display ${color} ${showDetails ? "expanded" : ""}`}
-			style={{
-				width: showDetails ? "200px" : "120px",
-				height: showDetails ? "280px" : "170px",
-				background: "white",
-				border: "1px solid #ccc",
-				borderRadius: "10px",
-				boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-				display: "flex",
-				flexDirection: "column",
-				padding: "10px",
-				position: "relative",
-				margin: "10px",
-				cursor: onClick ? "pointer" : "default",
-			}}
+			onKeyPress={handleKeyPress}
+			className={cardClasses}
+			type="button"
+			aria-label={`${id} of ${suit}`}
+			tabIndex={onClick ? 0 : -1}
 		>
-			<div
-				style={{
-					position: "absolute",
-					top: "10px",
-					left: "10px",
-					fontSize: showDetails ? "24px" : "18px",
-					color: color,
-					fontWeight: "bold",
-				}}
-			>
+			<span className="card-corner card-top-left">{id.toUpperCase()}</span>
+
+			<span className="card-corner card-top-right">{suitSymbol}</span>
+
+			<span className="card-corner card-bottom-right rotated">
 				{id.toUpperCase()}
-			</div>
+			</span>
 
-			<div
-				style={{
-					position: "absolute",
-					top: "10px",
-					right: "10px",
-					fontSize: showDetails ? "24px" : "18px",
-					color: color,
-					fontWeight: "bold",
-				}}
-			>
-				{suitSymbol}
-			</div>
+			<span className="card-corner card-bottom-left rotated">{suitSymbol}</span>
 
-			<div
-				style={{
-					position: "absolute",
-					bottom: "10px",
-					right: "10px",
-					fontSize: showDetails ? "24px" : "18px",
-					color: color,
-					fontWeight: "bold",
-					transform: "rotate(180deg)",
-				}}
-			>
-				{id.toUpperCase()}
-			</div>
-
-			<div
-				style={{
-					position: "absolute",
-					bottom: "10px",
-					left: "10px",
-					fontSize: showDetails ? "24px" : "18px",
-					color: color,
-					fontWeight: "bold",
-					transform: "rotate(180deg)",
-				}}
-			>
-				{suitSymbol}
-			</div>
-
-			<div
-				style={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					transform: "translate(-50%, -50%)",
-					fontSize: showDetails ? "64px" : "40px",
-					color: color,
-				}}
-			>
-				{suitSymbol}
-			</div>
-		</div>
+			<span className="card-center-symbol">{suitSymbol}</span>
+		</button>
 	);
 };

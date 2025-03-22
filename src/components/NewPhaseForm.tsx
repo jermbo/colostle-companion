@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useGame, PhaseType } from "../context/GameContext";
 
 export const NewPhaseForm: React.FC<{ onClose: () => void }> = ({
@@ -8,6 +8,27 @@ export const NewPhaseForm: React.FC<{ onClose: () => void }> = ({
 	const [title, setTitle] = useState("");
 	const [type, setType] = useState<PhaseType>("exploration");
 	const [error, setError] = useState("");
+	const modalRef = useRef<HTMLDivElement>(null);
+	const titleInputRef = useRef<HTMLInputElement>(null);
+
+	// Focus on the title input when the modal opens
+	useEffect(() => {
+		if (titleInputRef.current) {
+			titleInputRef.current.focus();
+		}
+
+		// Trap focus within the modal
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				onClose();
+			}
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+		return () => {
+			document.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [onClose]);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -23,112 +44,57 @@ export const NewPhaseForm: React.FC<{ onClose: () => void }> = ({
 
 	return (
 		<div
-			className="new-phase-modal"
-			style={{
-				position: "fixed",
-				top: 0,
-				left: 0,
-				right: 0,
-				bottom: 0,
-				backgroundColor: "rgba(0, 0, 0, 0.5)",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				zIndex: 1000,
-			}}
+			className="modal-overlay"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="modal-title"
+			ref={modalRef}
 		>
-			<div
-				className="modal-content"
-				style={{
-					backgroundColor: "white",
-					borderRadius: "8px",
-					padding: "25px",
-					width: "90%",
-					maxWidth: "500px",
-					boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-				}}
-			>
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-						marginBottom: "20px",
-					}}
-				>
-					<h2 style={{ margin: 0 }}>Start New Phase</h2>
+			<div className="modal-content">
+				<header className="modal-header">
+					<h2 id="modal-title">Start New Phase</h2>
 					<button
 						onClick={onClose}
-						style={{
-							background: "none",
-							border: "none",
-							fontSize: "20px",
-							cursor: "pointer",
-						}}
+						className="close-button"
+						aria-label="Close dialog"
 					>
 						×
 					</button>
-				</div>
+				</header>
 
 				{error && (
-					<div
-						style={{
-							backgroundColor: "#f8d7da",
-							color: "#721c24",
-							padding: "10px",
-							borderRadius: "5px",
-							marginBottom: "15px",
-						}}
-					>
+					<div className="error-message" role="alert">
 						{error}
 					</div>
 				)}
 
 				<form onSubmit={handleSubmit}>
-					<div style={{ marginBottom: "20px" }}>
-						<label
-							htmlFor="title"
-							style={{
-								display: "block",
-								marginBottom: "8px",
-								fontWeight: "bold",
-							}}
-						>
+					<div className="form-group">
+						<label htmlFor="phase-title" className="form-label">
 							Phase Title
 						</label>
 						<input
-							id="title"
+							id="phase-title"
 							type="text"
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							placeholder="Enter a title for this phase"
-							style={{
-								width: "100%",
-								padding: "10px",
-								fontSize: "16px",
-								borderRadius: "5px",
-								border: "1px solid #ccc",
-							}}
+							className="form-input"
+							ref={titleInputRef}
+							aria-required="true"
 						/>
 					</div>
 
-					<div style={{ marginBottom: "25px" }}>
-						<label
-							style={{
-								display: "block",
-								marginBottom: "8px",
-								fontWeight: "bold",
-							}}
-						>
-							Phase Type
-						</label>
-						<div style={{ display: "flex", gap: "10px" }}>
+					<fieldset className="form-group">
+						<legend className="form-label">Phase Type</legend>
+						<div className="type-options-container">
 							<TypeOption
 								selected={type === "exploration"}
 								onClick={() => setType("exploration")}
 								icon="🧭"
 								label="Exploration"
 								color="#4a69bd"
+								id="phase-type-exploration"
 							/>
 							<TypeOption
 								selected={type === "combat"}
@@ -136,6 +102,7 @@ export const NewPhaseForm: React.FC<{ onClose: () => void }> = ({
 								icon="⚔️"
 								label="Combat"
 								color="#9b2226"
+								id="phase-type-combat"
 							/>
 							<TypeOption
 								selected={type === "event"}
@@ -143,46 +110,23 @@ export const NewPhaseForm: React.FC<{ onClose: () => void }> = ({
 								icon="🎲"
 								label="Event"
 								color="#457b9d"
+								id="phase-type-event"
 							/>
 						</div>
-					</div>
+					</fieldset>
 
-					<div style={{ display: "flex", justifyContent: "space-between" }}>
+					<footer className="form-actions">
 						<button
 							type="button"
 							onClick={onClose}
-							style={{
-								padding: "10px 15px",
-								fontSize: "16px",
-								backgroundColor: "#e9ecef",
-								color: "#495057",
-								border: "none",
-								borderRadius: "5px",
-								cursor: "pointer",
-							}}
+							className="secondary-button"
 						>
 							Cancel
 						</button>
-						<button
-							type="submit"
-							style={{
-								padding: "10px 20px",
-								fontSize: "16px",
-								backgroundColor:
-									type === "exploration"
-										? "#4a69bd"
-										: type === "combat"
-										? "#9b2226"
-										: "#457b9d",
-								color: "white",
-								border: "none",
-								borderRadius: "5px",
-								cursor: "pointer",
-							}}
-						>
+						<button type="submit" className={`primary-button ${type}-button`}>
 							Start Phase
 						</button>
-					</div>
+					</footer>
 				</form>
 			</div>
 		</div>
@@ -195,6 +139,7 @@ interface TypeOptionProps {
 	icon: string;
 	label: string;
 	color: string;
+	id: string;
 }
 
 const TypeOption: React.FC<TypeOptionProps> = ({
@@ -203,23 +148,35 @@ const TypeOption: React.FC<TypeOptionProps> = ({
 	icon,
 	label,
 	color,
+	id,
 }) => {
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			onClick();
+		}
+	};
+
 	return (
 		<div
 			onClick={onClick}
+			onKeyDown={handleKeyDown}
+			className={`type-option ${selected ? "selected" : ""}`}
 			style={{
-				flex: 1,
-				padding: "15px 10px",
-				border: `2px solid ${selected ? color : "#dee2e6"}`,
-				borderRadius: "5px",
-				backgroundColor: selected ? `${color}19` : "white", // 10% opacity of the color
-				cursor: "pointer",
-				textAlign: "center",
-				transition: "all 0.2s ease",
+				borderColor: selected ? color : undefined,
+				backgroundColor: selected ? `${color}19` : undefined,
 			}}
+			role="radio"
+			aria-checked={selected}
+			tabIndex={0}
+			id={id}
 		>
-			<div style={{ fontSize: "24px", marginBottom: "5px" }}>{icon}</div>
-			<div style={{ fontWeight: selected ? "bold" : "normal" }}>{label}</div>
+			<span className="type-icon" aria-hidden="true">
+				{icon}
+			</span>
+			<span className={`type-label ${selected ? "selected" : ""}`}>
+				{label}
+			</span>
 		</div>
 	);
 };
