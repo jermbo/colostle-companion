@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+# Colostle Companion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A digital companion app for the solo tabletop role-playing game Colostle. This app helps players manage their character, draw cards, and track their journey through the vast castle world of Colostle.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Character creation and management
+- Draw and interpret cards for exploration, combat, and events
+- Track story phases with detailed notes and descriptions
+- View your journey log and navigate between different story phases
 
-## Expanding the ESLint configuration
+## Game Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Colostle is a solo RPG where you explore a world inside a castle so vast that entire civilizations exist within its rooms, corridors, and forgotten chambers. Using a standard deck of playing cards, you draw to determine encounters, locations, and events that shape your character's journey.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This companion app digitizes the card-drawing process and provides instant interpretations based on the game's rules, allowing you to focus on the storytelling and adventure.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone this repository
+2. Install dependencies with `npm install`
+3. Run the development server with `npm run dev`
+4. Build for production with `npm run build`
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+
+## License
+
+This project is not affiliated with the official Colostle game. Colostle is designed by Nich Angell.
+This companion app is a fan-made tool intended to enhance the play experience.
