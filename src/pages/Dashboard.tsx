@@ -5,6 +5,7 @@ import { NewPhaseForm } from "../components/NewPhaseForm";
 import { ExplorationPhase } from "./ExplorationPhase";
 import { CombatPhase } from "./CombatPhase";
 import { EventPhase } from "./EventPhase";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 export const Dashboard: React.FC = () => {
 	const { gameState } = useGame();
@@ -50,20 +51,24 @@ export const Dashboard: React.FC = () => {
 					<h1>Colostle Companion</h1>
 				</div>
 
-				{character && (
-					<div className="character-info">
-						<div className="character-text">
-							<div className="character-name">{character.name}</div>
-							<div className="character-traits">
-								{character.traits.join(" • ")}
+				<div className="header-actions">
+					<ThemeSwitcher />
+
+					{character && (
+						<div className="character-info">
+							<div className="character-text">
+								<div className="character-name">{character.name}</div>
+								<div className="character-traits">
+									{character.traits.join(" • ")}
+								</div>
+							</div>
+
+							<div className="character-avatar" aria-hidden="true">
+								{character.name.charAt(0)}
 							</div>
 						</div>
-
-						<div className="character-avatar" aria-hidden="true">
-							{character.name.charAt(0)}
-						</div>
-					</div>
-				)}
+					)}
+				</div>
 			</header>
 
 			<main className="dashboard-content">

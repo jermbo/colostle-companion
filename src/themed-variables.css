@@ -1,0 +1,120 @@
+/* Theme Variables
+   This file contains theme-specific variables that can be customized
+   for different themes (light, dark, custom themes, etc.)
+*/
+
+/* Default Light Theme */
+:root {
+	/* Color system */
+	--theme-primary: #4a69bd;
+	--theme-primary-light: #6a89dd;
+	--theme-primary-dark: #2a497d;
+
+	--theme-combat: #9b2226;
+	--theme-combat-light: #c13236;
+	--theme-combat-dark: #7b1216;
+
+	--theme-event: #457b9d;
+	--theme-event-light: #659bbd;
+	--theme-event-dark: #255b7d;
+
+	/* Neutrals */
+	--theme-text: #212529;
+	--theme-text-light: #495057;
+	--theme-text-lighter: #6c757d;
+
+	--theme-bg: #ffffff;
+	--theme-bg-light: #f8f9fa;
+	--theme-bg-dark: #e9ecef;
+
+	/* Borders and shadows */
+	--theme-border: #dee2e6;
+	--theme-border-dark: #ced4da;
+}
+
+/* Dark Theme */
+.dark-theme {
+	/* Color system */
+	--theme-primary: #5f7de0;
+	--theme-primary-light: #7f9df0;
+	--theme-primary-dark: #3f5dc0;
+
+	--theme-combat: #e03b40;
+	--theme-combat-light: #f05b60;
+	--theme-combat-dark: #c01b20;
+
+	--theme-event: #65abe0;
+	--theme-event-light: #85cbf0;
+	--theme-event-dark: #458bc0;
+
+	/* Neutrals */
+	--theme-text: #e9ecef;
+	--theme-text-light: #ced4da;
+	--theme-text-lighter: #adb5bd;
+
+	--theme-bg: #121212;
+	--theme-bg-light: #1e1e1e;
+	--theme-bg-dark: #2d2d2d;
+
+	/* Borders and shadows */
+	--theme-border: #2d2d2d;
+	--theme-border-dark: #3d3d3d;
+}
+
+/* Fantasy Theme */
+.fantasy-theme {
+	/* Color system */
+	--theme-primary: #7b3f00;
+	--theme-primary-light: #9b5f20;
+	--theme-primary-dark: #5b2f00;
+
+	--theme-combat: #8b0000;
+	--theme-combat-light: #ab2020;
+	--theme-combat-dark: #6b0000;
+
+	--theme-event: #2f4f4f;
+	--theme-event-light: #4f6f6f;
+	--theme-event-dark: #0f2f2f;
+
+	/* Neutrals */
+	--theme-text: #3a2f0b;
+	--theme-text-light: #5a4f2b;
+	--theme-text-lighter: #7a6f4b;
+
+	--theme-bg: #f5f0e1;
+	--theme-bg-light: #f9f5ea;
+	--theme-bg-dark: #ebe3c9;
+
+	/* Borders and shadows */
+	--theme-border: #d5c89d;
+	--theme-border-dark: #c5b87d;
+}
+
+/* Sci-Fi Theme */
+.scifi-theme {
+	/* Color system */
+	--theme-primary: #3a86ff;
+	--theme-primary-light: #5aa6ff;
+	--theme-primary-dark: #0a66df;
+
+	--theme-combat: #ff006e;
+	--theme-combat-light: #ff338e;
+	--theme-combat-dark: #d00058;
+
+	--theme-event: #00b4d8;
+	--theme-event-light: #20d4f8;
+	--theme-event-dark: #0094b8;
+
+	/* Neutrals */
+	--theme-text: #cad2c5;
+	--theme-text-light: #eaf2e5;
+	--theme-text-lighter: #ffffff;
+
+	--theme-bg: #0f172a;
+	--theme-bg-light: #1e293b;
+	--theme-bg-dark: #0f0f1a;
+
+	/* Borders and shadows */
+	--theme-border: #2e3856;
+	--theme-border-dark: #3e4866;
+}
