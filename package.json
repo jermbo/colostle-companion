@@ -16,7 +16,7 @@
 		"migrate:create": "db-migrate create --config api/config/database.json",
 		"migrate:up": "db-migrate up --config api/config/database.json",
 		"migrate:down": "db-migrate down --config api/config/database.json",
-		"seed": "ts-node api/scripts/seed.ts"
+		"seed": "ts-node api/scripts/seed.js"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",

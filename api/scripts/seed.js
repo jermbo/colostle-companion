@@ -1,9 +1,9 @@
 import { config } from "dotenv";
-import { seedDatabase } from "../utils/seedData.js";
-import { logger } from "../utils/logger.js";
+import { seedDatabase } from "../utils/seedData";
+import { logger } from "../utils/logger";
 
 // Import data
-import items from "../../ui/src/data/items.js";
+import items from "../../ui/src/data/items";
 
 // Load environment variables
 config();

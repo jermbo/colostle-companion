@@ -1,6 +1,6 @@
-import { logger } from "./logger.js";
-import { ItemsService } from "../services/items.service.js";
-import { Item } from "../../types/gameData.js";
+import { logger } from "./logger";
+import { ItemsService } from "../services/items.service";
+import { Item } from "../../types/gameData";
 
 // Import seed data
 const seedItems = async (items: Item[]): Promise<void> => {

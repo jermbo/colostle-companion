@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { ItemsService } from "../services/items.service.js";
-import { ApiError } from "../middlewares/error.middleware.js";
-import { Item } from "../../types/gameData.js";
+import { ItemsService } from "../services/items.service";
+import { ApiError } from "../middlewares/error.middleware";
+import { Item } from "../../types/gameData";
 
 export const ItemsController = {
 	// Get all items

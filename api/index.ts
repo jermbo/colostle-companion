@@ -27,9 +27,20 @@ config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
-app.use(cors());
-app.use(helmet());
+// Configure CORS
+const corsOptions = {
+	origin: "*", // During development, allow all origins
+	methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+	allowedHeaders: ["Content-Type", "Authorization"],
+	credentials: true,
+};
+app.use(cors(corsOptions));
+
+app.use(
+	helmet({
+		contentSecurityPolicy: false, // Disable for development to allow Swagger UI to work properly
+	})
+);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(requestLogger);

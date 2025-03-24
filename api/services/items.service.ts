@@ -1,6 +1,6 @@
-import { ItemsRepository } from "../repositories/items.repository.js";
-import { Item } from "../../types/gameData.js";
-import { ApiError } from "../middlewares/error.middleware.js";
+import { ItemsRepository } from "../repositories/items.repository";
+import { Item } from "../../types/gameData";
+import { ApiError } from "../middlewares/error.middleware";
 
 export const ItemsService = {
 	// Get all items
@@ -34,31 +34,33 @@ export const ItemsService = {
 	},
 
 	// Create a new item
-	async createItem(data: Item): Promise<Item> {
+	async createItem(itemData: Item): Promise<Item> {
 		try {
 			// Check if item with the same ID already exists
-			const existingItem = await ItemsRepository.getById(data.id);
+			const existingItem = await ItemsRepository.getById(itemData.id);
 
 			if (existingItem) {
-				const error = new ApiError(`Item with ID ${data.id} already exists`);
+				const error = new ApiError(
+					`Item with ID ${itemData.id} already exists`
+				);
 				error.statusCode = 409; // Conflict
 				throw error;
 			}
 
-			return await ItemsRepository.create(data);
+			return await ItemsRepository.create(itemData);
 		} catch (error: any) {
 			if (error instanceof ApiError) {
 				throw error;
 			}
 
-			throw new ApiError(error.message);
+			throw new ApiError(`Failed to create item: ${error.message}`);
 		}
 	},
 
 	// Update an existing item
-	async updateItem(id: string, data: Partial<Item>): Promise<Item> {
+	async updateItem(id: string, itemData: Partial<Item>): Promise<Item> {
 		try {
-			const updatedItem = await ItemsRepository.update(id, data);
+			const updatedItem = await ItemsRepository.update(id, itemData);
 
 			if (!updatedItem) {
 				const error = new ApiError(`Item with ID ${id} not found`);
@@ -72,7 +74,7 @@ export const ItemsService = {
 				throw error;
 			}
 
-			throw new ApiError(error.message);
+			throw new ApiError(`Failed to update item: ${error.message}`);
 		}
 	},
 
@@ -91,7 +93,7 @@ export const ItemsService = {
 				throw error;
 			}
 
-			throw new ApiError(error.message);
+			throw new ApiError(`Failed to delete item: ${error.message}`);
 		}
 	},
 

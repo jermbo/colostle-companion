@@ -1,16 +1,12 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { ItemsController } from "../controllers/items.controller";
 
 const router = Router();
 
 // GET /api/items - Get all items
-router.get("/", (_req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
-});
+router.get("/", ItemsController.getAllItems);
 
 // GET /api/items/:id - Get a single item by ID
 router.get(
@@ -18,16 +14,7 @@ router.get(
 	validate([
 		param("id").isString().notEmpty().withMessage("Item ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample Item",
-				description: "Sample description",
-			},
-		});
-	}
+	ItemsController.getItemById
 );
 
 // POST /api/items - Create a new item
@@ -38,12 +25,7 @@ router.post(
 		body("name").isString().notEmpty().withMessage("Item name is required"),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
-	}
+	ItemsController.createItem
 );
 
 // PUT /api/items/:id - Update an item
@@ -54,12 +36,7 @@ router.put(
 		body("name").optional().isString(),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
-	}
+	ItemsController.updateItem
 );
 
 // DELETE /api/items/:id - Delete an item
@@ -68,12 +45,7 @@ router.delete(
 	validate([
 		param("id").isString().notEmpty().withMessage("Item ID is required"),
 	]),
-	(_, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "Item deleted successfully",
-		});
-	}
+	ItemsController.deleteItem
 );
 
 export default router;
