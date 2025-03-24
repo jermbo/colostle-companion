@@ -148,7 +148,711 @@ paths:
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  # Add other endpoints here
+
+  # Encounters Routes
+  /encounters:
+    get:
+      summary: Get all encounters
+      description: Returns a list of all encounters
+      operationId: getEncounters
+      tags:
+        - Encounters
+      responses:
+        "200":
+          description: A list of encounters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Encounter"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new encounter
+      description: Adds a new encounter to the database
+      operationId: createEncounter
+      tags:
+        - Encounters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EncounterInput"
+      responses:
+        "201":
+          description: Encounter created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Encounter"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /encounters/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Encounter ID
+        schema:
+          type: string
+    get:
+      summary: Get encounter by ID
+      description: Returns a single encounter by ID
+      operationId: getEncounterById
+      tags:
+        - Encounters
+      responses:
+        "200":
+          description: Encounter details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Encounter"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update encounter
+      description: Updates an existing encounter
+      operationId: updateEncounter
+      tags:
+        - Encounters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EncounterUpdateInput"
+      responses:
+        "200":
+          description: Encounter updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Encounter"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete encounter
+      description: Deletes an encounter
+      operationId: deleteEncounter
+      tags:
+        - Encounters
+      responses:
+        "200":
+          description: Encounter deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Encounter deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  # Events Routes
+  /events:
+    get:
+      summary: Get all events
+      description: Returns a list of all events
+      operationId: getEvents
+      tags:
+        - Events
+      responses:
+        "200":
+          description: A list of events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new event
+      description: Adds a new event to the database
+      operationId: createEvent
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventInput"
+      responses:
+        "201":
+          description: Event created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Event"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /events/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Event ID
+        schema:
+          type: string
+    get:
+      summary: Get event by ID
+      description: Returns a single event by ID
+      operationId: getEventById
+      tags:
+        - Events
+      responses:
+        "200":
+          description: Event details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Event"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update event
+      description: Updates an existing event
+      operationId: updateEvent
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventUpdateInput"
+      responses:
+        "200":
+          description: Event updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Event"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete event
+      description: Deletes an event
+      operationId: deleteEvent
+      tags:
+        - Events
+      responses:
+        "200":
+          description: Event deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Event deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  # Ocean Encounters Routes
+  /ocean-encounters:
+    get:
+      summary: Get all ocean encounters
+      description: Returns a list of all ocean encounters
+      operationId: getOceanEncounters
+      tags:
+        - Ocean Encounters
+      responses:
+        "200":
+          description: A list of ocean encounters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OceanEncounter"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new ocean encounter
+      description: Adds a new ocean encounter to the database
+      operationId: createOceanEncounter
+      tags:
+        - Ocean Encounters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OceanEncounterInput"
+      responses:
+        "201":
+          description: Ocean encounter created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/OceanEncounter"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /ocean-encounters/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Ocean Encounter ID
+        schema:
+          type: string
+    get:
+      summary: Get ocean encounter by ID
+      description: Returns a single ocean encounter by ID
+      operationId: getOceanEncounterById
+      tags:
+        - Ocean Encounters
+      responses:
+        "200":
+          description: Ocean encounter details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/OceanEncounter"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update ocean encounter
+      description: Updates an existing ocean encounter
+      operationId: updateOceanEncounter
+      tags:
+        - Ocean Encounters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OceanEncounterUpdateInput"
+      responses:
+        "200":
+          description: Ocean encounter updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/OceanEncounter"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete ocean encounter
+      description: Deletes an ocean encounter
+      operationId: deleteOceanEncounter
+      tags:
+        - Ocean Encounters
+      responses:
+        "200":
+          description: Ocean encounter deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Ocean encounter deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  # Weather Routes
+  /weather:
+    get:
+      summary: Get all weather entries
+      description: Returns a list of all weather entries
+      operationId: getWeather
+      tags:
+        - Weather
+      responses:
+        "200":
+          description: A list of weather entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Weather"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new weather entry
+      description: Adds a new weather entry to the database
+      operationId: createWeather
+      tags:
+        - Weather
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WeatherInput"
+      responses:
+        "201":
+          description: Weather entry created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Weather"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /weather/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Weather ID
+        schema:
+          type: string
+    get:
+      summary: Get weather entry by ID
+      description: Returns a single weather entry by ID
+      operationId: getWeatherById
+      tags:
+        - Weather
+      responses:
+        "200":
+          description: Weather entry details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Weather"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update weather entry
+      description: Updates an existing weather entry
+      operationId: updateWeather
+      tags:
+        - Weather
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WeatherUpdateInput"
+      responses:
+        "200":
+          description: Weather entry updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Weather"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete weather entry
+      description: Deletes a weather entry
+      operationId: deleteWeather
+      tags:
+        - Weather
+      responses:
+        "200":
+          description: Weather entry deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Weather entry deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  # City Amenities Routes
+  /city-amenities:
+    get:
+      summary: Get all city amenities
+      description: Returns a list of all city amenities
+      operationId: getCityAmenities
+      tags:
+        - City Amenities
+      responses:
+        "200":
+          description: A list of city amenities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CityAmenity"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new city amenity
+      description: Adds a new city amenity to the database
+      operationId: createCityAmenity
+      tags:
+        - City Amenities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CityAmenityInput"
+      responses:
+        "201":
+          description: City amenity created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/CityAmenity"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /city-amenities/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: City Amenity ID
+        schema:
+          type: string
+    get:
+      summary: Get city amenity by ID
+      description: Returns a single city amenity by ID
+      operationId: getCityAmenityById
+      tags:
+        - City Amenities
+      responses:
+        "200":
+          description: City amenity details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/CityAmenity"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update city amenity
+      description: Updates an existing city amenity
+      operationId: updateCityAmenity
+      tags:
+        - City Amenities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CityAmenityUpdateInput"
+      responses:
+        "200":
+          description: City amenity updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/CityAmenity"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete city amenity
+      description: Deletes a city amenity
+      operationId: deleteCityAmenity
+      tags:
+        - City Amenities
+      responses:
+        "200":
+          description: City amenity deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: City amenity deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
 components:
   schemas:
@@ -179,7 +883,258 @@ components:
         description:
           type: string
           example: For trading
-    # Add other schemas here
+
+    # Encounter schemas
+    Encounter:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Friendly Stranger
+        description:
+          type: string
+          example: A helpful wanderer offers assistance
+        conditions:
+          type: object
+          properties:
+            hearts:
+              type: string
+              example: Gain 1 Heart
+            diamonds:
+              type: string
+              example: Find a small treasure
+    EncounterInput:
+      type: object
+      required:
+        - id
+        - name
+        - conditions
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Friendly Stranger
+        description:
+          type: string
+          example: A helpful wanderer offers assistance
+        conditions:
+          type: object
+          required:
+            - hearts
+            - diamonds
+          properties:
+            hearts:
+              type: string
+              example: Gain 1 Heart
+            diamonds:
+              type: string
+              example: Find a small treasure
+    EncounterUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Friendly Stranger
+        description:
+          type: string
+          example: A helpful wanderer offers assistance
+        conditions:
+          type: object
+          properties:
+            hearts:
+              type: string
+              example: Gain 1 Heart
+            diamonds:
+              type: string
+              example: Find a small treasure
+
+    # Event schemas
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Festival of Light
+        description:
+          type: string
+          example: A celebration where the skies are filled with floating lanterns
+    EventInput:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Festival of Light
+        description:
+          type: string
+          example: A celebration where the skies are filled with floating lanterns
+    EventUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Festival of Light
+        description:
+          type: string
+          example: A celebration where the skies are filled with floating lanterns
+
+    # Ocean Encounter schemas
+    OceanEncounter:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Giant Whirlpool
+        description:
+          type: string
+          example: A massive vortex threatens to pull the ship under
+        conditions:
+          type: object
+          properties:
+            black:
+              type: string
+              example: Your ship takes damage
+            red:
+              type: string
+              example: Navigate safely through the currents
+    OceanEncounterInput:
+      type: object
+      required:
+        - id
+        - name
+        - conditions
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Giant Whirlpool
+        description:
+          type: string
+          example: A massive vortex threatens to pull the ship under
+        conditions:
+          type: object
+          required:
+            - black
+            - red
+          properties:
+            black:
+              type: string
+              example: Your ship takes damage
+            red:
+              type: string
+              example: Navigate safely through the currents
+    OceanEncounterUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Giant Whirlpool
+        description:
+          type: string
+          example: A massive vortex threatens to pull the ship under
+        conditions:
+          type: object
+          properties:
+            black:
+              type: string
+              example: Your ship takes damage
+            red:
+              type: string
+              example: Navigate safely through the currents
+
+    # Weather schemas
+    Weather:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Thunderstorm
+        description:
+          type: string
+          example: Heavy rain and thunder shake the landscape
+    WeatherInput:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Thunderstorm
+        description:
+          type: string
+          example: Heavy rain and thunder shake the landscape
+    WeatherUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Thunderstorm
+        description:
+          type: string
+          example: Heavy rain and thunder shake the landscape
+
+    # City Amenity schemas
+    CityAmenity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Grand Bazaar
+        description:
+          type: string
+          example: A sprawling marketplace with exotic goods from across the realm
+    CityAmenityInput:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Grand Bazaar
+        description:
+          type: string
+          example: A sprawling marketplace with exotic goods from across the realm
+    CityAmenityUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Grand Bazaar
+        description:
+          type: string
+          example: A sprawling marketplace with exotic goods from across the realm
 
   responses:
     BadRequest:
