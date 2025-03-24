@@ -1,15 +1,22 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { CityAmenitiesService } from "../services/cityAmenities.service";
+import { ApiError } from "../middlewares/error.middleware";
 
 const router = Router();
 
 // GET /api/city-amenities - Get all city amenities
-router.get("/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
+router.get("/", async (req, res, next) => {
+	try {
+		const cityAmenities = await CityAmenitiesService.getAllCityAmenities();
+		res.status(200).json({
+			status: "success",
+			data: cityAmenities,
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 // GET /api/city-amenities/:id - Get a single city amenity by ID
@@ -21,15 +28,18 @@ router.get(
 			.notEmpty()
 			.withMessage("City Amenity ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample City Amenity",
-				description: "Sample description",
-			},
-		});
+	async (req, res, next) => {
+		try {
+			const cityAmenity = await CityAmenitiesService.getCityAmenityById(
+				req.params.id
+			);
+			res.status(200).json({
+				status: "success",
+				data: cityAmenity,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -44,11 +54,18 @@ router.post(
 			.withMessage("City Amenity name is required"),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
+	async (req, res, next) => {
+		try {
+			const newCityAmenity = await CityAmenitiesService.createCityAmenity(
+				req.body
+			);
+			res.status(201).json({
+				status: "success",
+				data: newCityAmenity,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -63,11 +80,19 @@ router.put(
 		body("name").optional().isString(),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
+	async (req, res, next) => {
+		try {
+			const updatedCityAmenity = await CityAmenitiesService.updateCityAmenity(
+				req.params.id,
+				req.body
+			);
+			res.status(200).json({
+				status: "success",
+				data: updatedCityAmenity,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -80,11 +105,16 @@ router.delete(
 			.notEmpty()
 			.withMessage("City Amenity ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "City Amenity deleted successfully",
-		});
+	async (req, res, next) => {
+		try {
+			await CityAmenitiesService.deleteCityAmenity(req.params.id);
+			res.status(200).json({
+				status: "success",
+				message: "City Amenity deleted successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 

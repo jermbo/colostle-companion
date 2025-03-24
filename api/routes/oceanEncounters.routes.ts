@@ -1,15 +1,23 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { OceanEncountersService } from "../services/oceanEncounters.service";
+import { ApiError } from "../middlewares/error.middleware";
 
 const router = Router();
 
 // GET /api/ocean-encounters - Get all ocean encounters
-router.get("/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
+router.get("/", async (req, res, next) => {
+	try {
+		const oceanEncounters =
+			await OceanEncountersService.getAllOceanEncounters();
+		res.status(200).json({
+			status: "success",
+			data: oceanEncounters,
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 // GET /api/ocean-encounters/:id - Get a single ocean encounter by ID
@@ -21,15 +29,18 @@ router.get(
 			.notEmpty()
 			.withMessage("Ocean Encounter ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample Ocean Encounter",
-				description: "Sample description",
-			},
-		});
+	async (req, res, next) => {
+		try {
+			const oceanEncounter = await OceanEncountersService.getOceanEncounterById(
+				req.params.id
+			);
+			res.status(200).json({
+				status: "success",
+				data: oceanEncounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -54,11 +65,17 @@ router.post(
 			.withMessage("Black condition is required"),
 		body("conditions.red").isString().withMessage("Red condition is required"),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
+	async (req, res, next) => {
+		try {
+			const newOceanEncounter =
+				await OceanEncountersService.createOceanEncounter(req.body);
+			res.status(201).json({
+				status: "success",
+				data: newOceanEncounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -74,11 +91,20 @@ router.put(
 		body("description").optional().isString(),
 		body("conditions").optional().isObject(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
+	async (req, res, next) => {
+		try {
+			const updatedOceanEncounter =
+				await OceanEncountersService.updateOceanEncounter(
+					req.params.id,
+					req.body
+				);
+			res.status(200).json({
+				status: "success",
+				data: updatedOceanEncounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -91,11 +117,16 @@ router.delete(
 			.notEmpty()
 			.withMessage("Ocean Encounter ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "Ocean Encounter deleted successfully",
-		});
+	async (req, res, next) => {
+		try {
+			await OceanEncountersService.deleteOceanEncounter(req.params.id);
+			res.status(200).json({
+				status: "success",
+				message: "Ocean Encounter deleted successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 

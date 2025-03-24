@@ -13,9 +13,9 @@
 		"start": "node dist/api/index.js",
 		"lint": "eslint .",
 		"test": "jest",
-		"migrate:create": "db-migrate create --config api/config/database.json",
-		"migrate:up": "db-migrate up --config api/config/database.json",
-		"migrate:down": "db-migrate down --config api/config/database.json",
+		"migrate:create": "db-migrate create --config api/config/database.json -m api/migrations",
+		"migrate:up": "db-migrate up --config api/config/database.json -m api/migrations",
+		"migrate:down": "db-migrate down --config api/config/database.json -m api/migrations",
 		"seed": "ts-node api/scripts/seed.js"
 	},
 	"dependencies": {

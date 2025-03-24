@@ -1,15 +1,22 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { EncountersService } from "../services/encounters.service";
+import { ApiError } from "../middlewares/error.middleware";
 
 const router = Router();
 
 // GET /api/encounters - Get all encounters
-router.get("/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
+router.get("/", async (req, res, next) => {
+	try {
+		const encounters = await EncountersService.getAllEncounters();
+		res.status(200).json({
+			status: "success",
+			data: encounters,
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 // GET /api/encounters/:id - Get a single encounter by ID
@@ -18,15 +25,16 @@ router.get(
 	validate([
 		param("id").isString().notEmpty().withMessage("Encounter ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample Encounter",
-				description: "Sample description",
-			},
-		});
+	async (req, res, next) => {
+		try {
+			const encounter = await EncountersService.getEncounterById(req.params.id);
+			res.status(200).json({
+				status: "success",
+				data: encounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -50,11 +58,16 @@ router.post(
 			.isString()
 			.withMessage("Diamonds condition is required"),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
+	async (req, res, next) => {
+		try {
+			const newEncounter = await EncountersService.createEncounter(req.body);
+			res.status(201).json({
+				status: "success",
+				data: newEncounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -67,11 +80,19 @@ router.put(
 		body("description").optional().isString(),
 		body("conditions").optional().isObject(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
+	async (req, res, next) => {
+		try {
+			const updatedEncounter = await EncountersService.updateEncounter(
+				req.params.id,
+				req.body
+			);
+			res.status(200).json({
+				status: "success",
+				data: updatedEncounter,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -81,11 +102,16 @@ router.delete(
 	validate([
 		param("id").isString().notEmpty().withMessage("Encounter ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "Encounter deleted successfully",
-		});
+	async (req, res, next) => {
+		try {
+			await EncountersService.deleteEncounter(req.params.id);
+			res.status(200).json({
+				status: "success",
+				message: "Encounter deleted successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 

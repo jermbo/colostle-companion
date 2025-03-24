@@ -1,15 +1,22 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { EventsService } from "../services/events.service";
+import { ApiError } from "../middlewares/error.middleware";
 
 const router = Router();
 
 // GET /api/events - Get all events
-router.get("/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
+router.get("/", async (req, res, next) => {
+	try {
+		const events = await EventsService.getAllEvents();
+		res.status(200).json({
+			status: "success",
+			data: events,
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 // GET /api/events/:id - Get a single event by ID
@@ -18,15 +25,16 @@ router.get(
 	validate([
 		param("id").isString().notEmpty().withMessage("Event ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample Event",
-				description: "Sample description",
-			},
-		});
+	async (req, res, next) => {
+		try {
+			const event = await EventsService.getEventById(req.params.id);
+			res.status(200).json({
+				status: "success",
+				data: event,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -38,11 +46,16 @@ router.post(
 		body("name").isString().notEmpty().withMessage("Event name is required"),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
+	async (req, res, next) => {
+		try {
+			const newEvent = await EventsService.createEvent(req.body);
+			res.status(201).json({
+				status: "success",
+				data: newEvent,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -54,11 +67,19 @@ router.put(
 		body("name").optional().isString(),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
+	async (req, res, next) => {
+		try {
+			const updatedEvent = await EventsService.updateEvent(
+				req.params.id,
+				req.body
+			);
+			res.status(200).json({
+				status: "success",
+				data: updatedEvent,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -68,11 +89,16 @@ router.delete(
 	validate([
 		param("id").isString().notEmpty().withMessage("Event ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "Event deleted successfully",
-		});
+	async (req, res, next) => {
+		try {
+			await EventsService.deleteEvent(req.params.id);
+			res.status(200).json({
+				status: "success",
+				message: "Event deleted successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 

@@ -1,15 +1,22 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { validate } from "../middlewares/validation.middleware";
+import { WeatherService } from "../services/weather.service";
+import { ApiError } from "../middlewares/error.middleware";
 
 const router = Router();
 
 // GET /api/weather - Get all weather entries
-router.get("/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		data: [],
-	});
+router.get("/", async (req, res, next) => {
+	try {
+		const weather = await WeatherService.getAllWeather();
+		res.status(200).json({
+			status: "success",
+			data: weather,
+		});
+	} catch (error) {
+		next(error);
+	}
 });
 
 // GET /api/weather/:id - Get a single weather entry by ID
@@ -18,15 +25,16 @@ router.get(
 	validate([
 		param("id").isString().notEmpty().withMessage("Weather ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: {
-				id: req.params.id,
-				name: "Sample Weather",
-				description: "Sample description",
-			},
-		});
+	async (req, res, next) => {
+		try {
+			const weather = await WeatherService.getWeatherById(req.params.id);
+			res.status(200).json({
+				status: "success",
+				data: weather,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -38,11 +46,16 @@ router.post(
 		body("name").isString().notEmpty().withMessage("Weather name is required"),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(201).json({
-			status: "success",
-			data: req.body,
-		});
+	async (req, res, next) => {
+		try {
+			const newWeather = await WeatherService.createWeather(req.body);
+			res.status(201).json({
+				status: "success",
+				data: newWeather,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -54,11 +67,19 @@ router.put(
 		body("name").optional().isString(),
 		body("description").optional().isString(),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			data: { ...req.body, id: req.params.id },
-		});
+	async (req, res, next) => {
+		try {
+			const updatedWeather = await WeatherService.updateWeather(
+				req.params.id,
+				req.body
+			);
+			res.status(200).json({
+				status: "success",
+				data: updatedWeather,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
@@ -68,11 +89,16 @@ router.delete(
 	validate([
 		param("id").isString().notEmpty().withMessage("Weather ID is required"),
 	]),
-	(req, res) => {
-		res.status(200).json({
-			status: "success",
-			message: "Weather entry deleted successfully",
-		});
+	async (req, res, next) => {
+		try {
+			await WeatherService.deleteWeather(req.params.id);
+			res.status(200).json({
+				status: "success",
+				message: "Weather entry deleted successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
 );
 
