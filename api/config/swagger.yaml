@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Colostle Companion API
+  description: API documentation for Colostle Companion application
+  version: 1.0.0
+  contact:
+    name: API Support
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+paths:
+  /items:
+    get:
+      summary: Get all items
+      description: Returns a list of all items
+      operationId: getItems
+      tags:
+        - Items
+      responses:
+        "200":
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Item"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new item
+      description: Adds a new item to the database
+      operationId: createItem
+      tags:
+        - Items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemInput"
+      responses:
+        "201":
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Item"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /items/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Item ID
+        schema:
+          type: string
+    get:
+      summary: Get item by ID
+      description: Returns a single item by ID
+      operationId: getItemById
+      tags:
+        - Items
+      responses:
+        "200":
+          description: Item details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Item"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Update item
+      description: Updates an existing item
+      operationId: updateItem
+      tags:
+        - Items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemInput"
+      responses:
+        "200":
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    $ref: "#/components/schemas/Item"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete item
+      description: Deletes an item
+      operationId: deleteItem
+      tags:
+        - Items
+      responses:
+        "200":
+          description: Item deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Item deleted successfully
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  # Add other endpoints here
+
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Treasure
+        description:
+          type: string
+          example: For trading
+    ItemInput:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: ace
+        name:
+          type: string
+          example: Treasure
+        description:
+          type: string
+          example: For trading
+    # Add other schemas here
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              statusCode:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Bad request
+              details:
+                type: object
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              statusCode:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: Resource not found
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              statusCode:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
