@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useGame } from "../context/GameContext";
 
-export const CharacterCreation: React.FC = () => {
-	const { createCharacter } = useGame();
+interface CharacterCreationProps {
+	onCreateCharacter: () => void;
+}
+
+export const CharacterCreation: React.FC<CharacterCreationProps> = ({
+	onCreateCharacter,
+}) => {
+	const { createCharacter, saveCurrentGame } = useGame();
 	const [name, setName] = useState("");
 	const [traits, setTraits] = useState<string[]>(["", "", ""]);
 	const [inventory, setInventory] = useState<string[]>(["", "", ""]);
 	const [error, setError] = useState("");
+	const [saving, setSaving] = useState(false);
 
 	const handleTraitChange = (index: number, value: string) => {
 		const newTraits = [...traits];
@@ -20,7 +27,7 @@ export const CharacterCreation: React.FC = () => {
 		setInventory(newInventory);
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		// Validation
@@ -37,12 +44,27 @@ export const CharacterCreation: React.FC = () => {
 
 		const validInventory = inventory.filter((item) => item.trim() !== "");
 
-		// Create character
-		createCharacter({
-			name: name.trim(),
-			traits: validTraits,
-			inventory: validInventory,
-		});
+		try {
+			setSaving(true);
+
+			// Create character in state first and wait for it to complete
+			await createCharacter({
+				name: name.trim(),
+				traits: validTraits,
+				inventory: validInventory,
+			});
+
+			// Save to IndexedDB after character is created
+			await saveCurrentGame();
+
+			// Navigate to dashboard after everything is saved
+			onCreateCharacter();
+		} catch (err) {
+			console.error("Error creating/saving character:", err);
+			setError("Failed to save character. Please try again.");
+		} finally {
+			setSaving(false);
+		}
 	};
 
 	return (
@@ -128,8 +150,10 @@ export const CharacterCreation: React.FC = () => {
 						</fieldset>
 					</div>
 
-					<button type="submit" className="primary-button">
-						Create Character & Begin Journey
+					<button type="submit" className="primary-button" disabled={saving}>
+						{saving
+							? "Creating Character..."
+							: "Create Character & Begin Journey"}
 					</button>
 				</fieldset>
 			</form>

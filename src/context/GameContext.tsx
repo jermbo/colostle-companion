@@ -1,8 +1,15 @@
-import React, { createContext, useContext, ReactNode, useState } from "react";
+import React, {
+	createContext,
+	useContext,
+	ReactNode,
+	useState,
+	useEffect,
+} from "react";
 import { Card, CardId, CardSuit } from "../types/gameData";
+import * as IndexedDB from "../services/indexedDB";
 
 // Character definition
-interface Character {
+export interface Character {
 	name: string;
 	traits: string[];
 	inventory: string[];
@@ -23,7 +30,7 @@ export interface StoryPhase {
 }
 
 // Game state interface
-interface GameState {
+export interface GameState {
 	character: Character | null;
 	storyPhases: StoryPhase[];
 	currentPhaseIndex: number;
@@ -39,6 +46,14 @@ interface GameContextProps {
 	updatePhaseNotes: (notes: string) => void;
 	goToPhase: (index: number) => void;
 	drawCard: (suit?: CardSuit) => Card;
+	// New actions for multiple characters
+	saveCurrentGame: () => Promise<string>;
+	loadCharacter: (id: string) => Promise<void>;
+	getAllCharacters: () => Promise<any[]>;
+	deleteCharacter: (id: string) => Promise<void>;
+	startNewGame: () => void;
+	currentCharacterId: string | null;
+	isDatabaseInitialized: boolean;
 }
 
 const defaultGameState: GameState = {
@@ -53,13 +68,38 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
 	const [gameState, setGameState] = useState<GameState>(defaultGameState);
+	const [currentCharacterId, setCurrentCharacterId] = useState<string | null>(
+		null
+	);
+	const [dbInitialized, setDbInitialized] = useState(false);
+
+	// Initialize the database
+	useEffect(() => {
+		const initDb = async () => {
+			try {
+				await IndexedDB.initDatabase();
+				setDbInitialized(true);
+			} catch (error) {
+				console.error("Failed to initialize database:", error);
+			}
+		};
+
+		initDb();
+	}, []);
 
 	// Create a character
-	const createCharacter = (character: Character) => {
-		setGameState((prev) => ({
-			...prev,
-			character,
-		}));
+	const createCharacter = (character: Character): Promise<void> => {
+		return new Promise((resolve) => {
+			setGameState((prev) => ({
+				...prev,
+				character,
+			}));
+
+			// Using requestAnimationFrame to ensure state is updated
+			requestAnimationFrame(() => {
+				resolve();
+			});
+		});
 	};
 
 	// Start a new story phase
@@ -159,6 +199,100 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
 		return { id: randomId, suit: randomSuit, color };
 	};
 
+	// Save current game state to IndexedDB
+	const saveCurrentGame = async (): Promise<string> => {
+		if (!dbInitialized) {
+			throw new Error("Database not initialized");
+		}
+
+		// Log game state for debugging
+		IndexedDB.logGameState("Before saving game state", gameState);
+
+		if (!gameState.character) {
+			console.error("No character to save - current game state:", gameState);
+			throw new Error("No character to save");
+		}
+
+		try {
+			// If we have a current character ID, update that record
+			if (currentCharacterId) {
+				await IndexedDB.updateCharacterData(currentCharacterId, gameState);
+				console.log("Updated character with ID:", currentCharacterId);
+				return currentCharacterId;
+			} else {
+				// Otherwise create a new record
+				const newId = await IndexedDB.saveCharacterData(gameState);
+				setCurrentCharacterId(newId);
+				console.log("Created new character with ID:", newId);
+				return newId;
+			}
+		} catch (error) {
+			console.error("Error saving game:", error);
+			throw error;
+		}
+	};
+
+	// Load a character by ID
+	const loadCharacter = async (id: string): Promise<void> => {
+		if (!dbInitialized) {
+			throw new Error("Database not initialized");
+		}
+
+		try {
+			const characterData = await IndexedDB.getCharacterById(id);
+			setGameState({
+				character: characterData.character,
+				storyPhases: characterData.storyPhases,
+				currentPhaseIndex: characterData.currentPhaseIndex,
+			});
+			setCurrentCharacterId(id);
+		} catch (error) {
+			console.error("Error loading character:", error);
+			throw error;
+		}
+	};
+
+	// Get all characters
+	const getAllCharacters = async () => {
+		if (!dbInitialized) {
+			throw new Error("Database not initialized");
+		}
+
+		try {
+			const characters = await IndexedDB.getAllCharacters();
+			return characters;
+		} catch (error) {
+			console.error("Error getting all characters:", error);
+			throw error;
+		}
+	};
+
+	// Delete a character
+	const deleteCharacter = async (id: string): Promise<void> => {
+		if (!dbInitialized) {
+			throw new Error("Database not initialized");
+		}
+
+		try {
+			await IndexedDB.deleteCharacterById(id);
+
+			// If we're deleting the current character, reset the game state
+			if (currentCharacterId === id) {
+				setGameState(defaultGameState);
+				setCurrentCharacterId(null);
+			}
+		} catch (error) {
+			console.error("Error deleting character:", error);
+			throw error;
+		}
+	};
+
+	// Start a new game (reset game state)
+	const startNewGame = () => {
+		setGameState(defaultGameState);
+		setCurrentCharacterId(null);
+	};
+
 	return (
 		<GameContext.Provider
 			value={{
@@ -170,6 +304,13 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
 				updatePhaseNotes,
 				goToPhase,
 				drawCard,
+				saveCurrentGame,
+				loadCharacter,
+				getAllCharacters,
+				deleteCharacter,
+				startNewGame,
+				currentCharacterId,
+				isDatabaseInitialized: dbInitialized,
 			}}
 		>
 			{children}

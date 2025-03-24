@@ -894,3 +894,325 @@ textarea:focus {
 	align-items: center;
 	padding: var(--space-md);
 }
+
+/* Character Selection Screen */
+.character-selection-container {
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 1.5rem;
+}
+
+.character-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin: 2rem 0;
+}
+
+.character-card {
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--border-color);
+	background-color: var(--card-bg);
+	cursor: pointer;
+	transition: all 0.2s ease;
+	position: relative;
+}
+
+.character-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.character-avatar {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: var(--primary-color);
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-right: 1rem;
+}
+
+.character-details {
+	flex: 1;
+}
+
+.character-name {
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.25rem;
+}
+
+.character-traits {
+	font-size: 0.9rem;
+	color: var(--text-muted);
+	margin-bottom: 0.25rem;
+}
+
+.last-played {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+}
+
+.delete-character-btn {
+	background-color: var(--danger-color);
+	color: white;
+	border: none;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.9rem;
+	cursor: pointer;
+	margin-left: 1rem;
+}
+
+.delete-character-btn:hover {
+	background-color: var(--danger-color-dark);
+}
+
+.new-character-button {
+	width: 100%;
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.new-character-button:hover {
+	background-color: var(--primary-color-dark);
+}
+
+.loading-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50vh;
+	font-size: 1.2rem;
+	color: var(--text-muted);
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.loading-container::after {
+	content: "";
+	width: 40px;
+	height: 40px;
+	border: 3px solid var(--color-primary-light);
+	border-radius: 50%;
+	border-top-color: var(--color-primary);
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.no-characters-message {
+	text-align: center;
+	color: var(--text-muted);
+	margin: 3rem 0;
+}
+
+/* Menu and Save Controls */
+.app-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	background-color: var(--header-bg);
+	border-bottom: 1px solid var(--border-color);
+}
+
+.menu-actions {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.menu-button {
+	background-color: var(--button-bg);
+	color: var(--button-text);
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.menu-button:hover {
+	background-color: var(--button-hover-bg);
+}
+
+.save-indicator {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.save-error {
+	color: var(--danger-color);
+	font-size: 0.8rem;
+}
+
+.save-success {
+	color: var(--success-color);
+	font-size: 0.8rem;
+}
+
+.save-button {
+	background-color: var(--success-color);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+	background-color: var(--success-color-dark);
+}
+
+.save-button:disabled {
+	background-color: var(--disabled-color);
+	cursor: not-allowed;
+}
+
+.auto-save-indicator {
+	display: flex;
+	align-items: center;
+	margin-right: 1rem;
+}
+
+.auto-save-message {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+	.menu-button {
+		padding: 0.4rem 0.75rem;
+		font-size: 0.8rem;
+	}
+
+	.save-button {
+		padding: 0.4rem 0.75rem;
+		font-size: 0.8rem;
+	}
+
+	.auto-save-message {
+		display: none;
+	}
+
+	.character-card {
+		padding: 0.75rem;
+	}
+
+	.character-avatar {
+		width: 40px;
+		height: 40px;
+		font-size: 1.2rem;
+	}
+}
+
+/* CSS Variables for Theme */
+:root {
+	--danger-color: #dc3545;
+	--danger-color-dark: #bd2130;
+	--success-color: #28a745;
+	--success-color-dark: #218838;
+	--disabled-color: #6c757d;
+	--color-primary-transparent: rgba(74, 105, 189, 0.1);
+	--success-color-transparent: rgba(40, 167, 69, 0.1);
+	--danger-color-transparent: rgba(220, 53, 69, 0.1);
+}
+
+/* Error Container */
+.error-container {
+	max-width: 800px;
+	margin: 3rem auto;
+	padding: 2rem;
+	background-color: var(--color-bg);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-md);
+	text-align: center;
+}
+
+.error-container h1 {
+	color: var(--danger-color);
+	margin-bottom: 1.5rem;
+}
+
+.error-container p {
+	margin-bottom: 1rem;
+	line-height: 1.6;
+}
+
+.error-container ul {
+	text-align: left;
+	padding-left: 2rem;
+	margin: 1.5rem 0;
+	line-height: 1.8;
+}
+
+/* Save Status Indicators */
+.save-status-container {
+	display: flex;
+	align-items: center;
+	margin-right: 1rem;
+}
+
+.save-status {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+	padding: 0.25rem 0.5rem;
+	border-radius: 4px;
+	background-color: transparent;
+	animation: fadeIn 0.3s ease;
+}
+
+.save-status.saving {
+	color: var(--color-primary);
+	background-color: var(--color-primary-transparent);
+}
+
+.save-status.saved {
+	color: var(--success-color);
+	background-color: var(--success-color-transparent);
+}
+
+.save-status.error {
+	color: var(--danger-color);
+	background-color: var(--danger-color-transparent);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

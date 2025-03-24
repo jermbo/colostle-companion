@@ -1,47 +1,97 @@
-import React, { useState } from "react";
-import { useGame } from "../context/GameContext";
+import React, { useState, useEffect } from "react";
+import { useGame, PhaseType } from "../context/GameContext";
 import { PhaseHistory } from "../components/PhaseHistory";
 import { NewPhaseForm } from "../components/NewPhaseForm";
 import { ExplorationPhase } from "./ExplorationPhase";
-import { CombatPhase } from "./CombatPhase";
-import { EventPhase } from "./EventPhase";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 
 export const Dashboard: React.FC = () => {
-	const { gameState } = useGame();
-	const { storyPhases, currentPhaseIndex, character } = gameState;
+	const { gameState, saveCurrentGame } = useGame();
+	const { character, storyPhases, currentPhaseIndex } = gameState;
 	const [showNewPhaseForm, setShowNewPhaseForm] = useState(false);
+	const [lastSaveTime, setLastSaveTime] = useState<Date | null>(null);
+	const [saveStatus, setSaveStatus] = useState<
+		"saving" | "saved" | "error" | null
+	>(null);
 
-	const currentPhase = storyPhases[currentPhaseIndex];
+	// Auto-save functionality - save after any change
+	useEffect(() => {
+		// Skip initial render
+		if (!character) return;
+
+		// Set a debounce timer to avoid too frequent saves
+		const saveTimer = setTimeout(async () => {
+			try {
+				setSaveStatus("saving");
+				await saveCurrentGame();
+				setLastSaveTime(new Date());
+				setSaveStatus("saved");
+
+				// Reset the "saved" status after a few seconds
+				setTimeout(() => {
+					setSaveStatus(null);
+				}, 3000);
+			} catch (err) {
+				console.error("Auto-save failed:", err);
+				setSaveStatus("error");
+			}
+		}, 2000); // 2 second debounce
+
+		return () => clearTimeout(saveTimer);
+	}, [storyPhases, currentPhaseIndex, character, saveCurrentGame]);
 
 	// Render the current phase based on its type
 	const renderCurrentPhase = () => {
-		if (!currentPhase) {
+		if (storyPhases.length === 0 || currentPhaseIndex < 0) {
 			return (
-				<section className="no-phase">
-					<h2>No Active Phase</h2>
-					<p>Start a new phase to continue your journey through Colostle.</p>
+				<div className="empty-phase">
+					<p>
+						No phases created yet. Start by adding a new phase to begin your
+						story.
+					</p>
 					<button
 						onClick={() => setShowNewPhaseForm(true)}
-						className="primary-button"
-						aria-label="Start New Phase"
+						className="new-phase-button mobile-only"
 					>
-						Start New Phase
+						+ New Phase
 					</button>
-				</section>
+				</div>
 			);
 		}
 
+		const currentPhase = storyPhases[currentPhaseIndex];
 		switch (currentPhase.type) {
 			case "exploration":
-				return <ExplorationPhase />;
+				return <ExplorationPhase phase={currentPhase} />;
 			case "combat":
-				return <CombatPhase />;
+				return <ExplorationPhase phase={currentPhase} />;
 			case "event":
-				return <EventPhase />;
+				return <ExplorationPhase phase={currentPhase} />;
 			default:
-				return <section aria-label="Unknown phase">Unknown phase type</section>;
+				return <ExplorationPhase phase={currentPhase} />;
 		}
+	};
+
+	// Render save status indicator
+	const renderSaveStatus = () => {
+		if (saveStatus === "saving") {
+			return <span className="save-status saving">Saving...</span>;
+		} else if (saveStatus === "saved") {
+			return (
+				<span className="save-status saved">
+					Saved at {lastSaveTime?.toLocaleTimeString()}
+				</span>
+			);
+		} else if (saveStatus === "error") {
+			return <span className="save-status error">Error saving</span>;
+		} else if (lastSaveTime) {
+			return (
+				<span className="save-status">
+					Last saved: {lastSaveTime.toLocaleTimeString()}
+				</span>
+			);
+		}
+		return null;
 	};
 
 	return (
@@ -52,6 +102,8 @@ export const Dashboard: React.FC = () => {
 				</div>
 
 				<div className="header-actions">
+					<div className="save-status-container">{renderSaveStatus()}</div>
+
 					<ThemeSwitcher />
 
 					{character && (

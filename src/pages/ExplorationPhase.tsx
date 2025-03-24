@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { useGame } from "../context/GameContext";
+import { useGame, StoryPhase } from "../context/GameContext";
 import { CardDisplay } from "../components/CardDisplay";
 import { CardInterpretationDisplay } from "../components/CardInterpretationDisplay";
-import { Card } from "../types/gameData";
 
-export const ExplorationPhase: React.FC = () => {
+interface ExplorationPhaseProps {
+	phase: StoryPhase;
+}
+
+export const ExplorationPhase: React.FC<ExplorationPhaseProps> = ({
+	phase,
+}) => {
 	const {
-		gameState,
 		drawCard,
 		addCardToCurrentPhase,
 		updatePhaseDescription,
@@ -14,11 +18,10 @@ export const ExplorationPhase: React.FC = () => {
 	} = useGame();
 
 	const [showDrawArea, setShowDrawArea] = useState(true);
-	const [description, setDescription] = useState("");
-	const [notes, setNotes] = useState("");
+	const [description, setDescription] = useState(phase.description || "");
+	const [notes, setNotes] = useState(phase.notes || "");
 
-	const currentPhase = gameState.storyPhases[gameState.currentPhaseIndex];
-	const drawnCards = currentPhase?.cards || [];
+	const drawnCards = phase.cards || [];
 
 	const handleDrawCard = () => {
 		const card = drawCard();
@@ -35,23 +38,13 @@ export const ExplorationPhase: React.FC = () => {
 
 	// Set local state from phase data when it changes
 	React.useEffect(() => {
-		if (currentPhase) {
-			setDescription(currentPhase.description || "");
-			setNotes(currentPhase.notes || "");
-		}
-	}, [currentPhase]);
-
-	if (!currentPhase) {
-		return (
-			<section aria-label="No active phase" className="no-active-phase">
-				No active exploration phase. Please start a new phase.
-			</section>
-		);
-	}
+		setDescription(phase.description || "");
+		setNotes(phase.notes || "");
+	}, [phase]);
 
 	return (
 		<section className="exploration-phase-container">
-			<h1 className="phase-title">{currentPhase.title}</h1>
+			<h1 className="phase-title">{phase.title}</h1>
 
 			<div className="phase-inputs">
 				<div className="form-group">
