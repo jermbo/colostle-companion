@@ -4,10 +4,12 @@ A digital companion app for the solo tabletop role-playing game Colostle. This a
 
 ## Features
 
-- Character creation and management
+- Character creation and management with class selection
+- Companion creation for classes that require companions
 - Draw and interpret cards for exploration, combat, and events
 - Track story phases with detailed notes and descriptions
 - View your journey log and navigate between different story phases
+- Auto-save functionality to preserve your progress
 
 ## Game Overview
 
@@ -17,7 +19,8 @@ This companion app digitizes the card-drawing process and provides instant inter
 
 ### Character Management
 
-- Create and customize character profiles with attributes and skills
+- Create and customize character profiles with name and class selection
+- Create companions for classes that require them
 - Assign equipment and inventory items
 - Switch between multiple characters
 - Remove or edit existing characters
@@ -27,36 +30,45 @@ This companion app digitizes the card-drawing process and provides instant inter
 - **Exploration Phase**
 
   - Card-based exploration system
-  - Random scenario generation
-  - Interactive choice-making
-  - Seamless transition to combat
+  - Draw cards up to your class limit
+  - Different card types (Treasure, City/Building, Enemy, Enemy Rook)
+  - Replacement card drawing for specific card types
 
-- **Combat System**
+- **Card Drawing System**
 
-  - Turn-based combat mechanics
-  - Randomized enemy encounters
-  - Variable difficulty levels
-  - Action and attack resolution
+  - Automatic card interpretation based on suit and value
+  - Context-aware card effects
+  - Card history tracking
+  - Card discard pile management
 
-- **Companion/NPC System**
-  - Manage party members
-  - Assign inventory items
-  - Track companion stats and abilities
-  - Dynamic party composition
+- **Companion System**
+  - Create companions for eligible character classes
+  - Manage companion inventory
+  - Track companion information
+  - Link companions to characters
 
 ### Session Management
 
 - Save and load game sessions
 - Review session history
 - Edit or delete existing sessions
-- Cross-tab synchronization
+- Auto-save functionality with configurable timer
+- Manual save option
+
+### Journaling System
+
+- Create detailed journal entries about your adventures
+- Link entries to specific cards and events
+- Organize entries with tags and categories
+- Search and filter journal entries
+- View a timeline of your story
 
 ### Additional Features
 
-- Deck shuffling and customization
-- Game settings management
+- Data export and import functionality
 - Offline-first architecture
 - Data privacy (all data stored locally)
+- Responsive design for all devices
 
 ## Tech Stack
 
@@ -112,7 +124,7 @@ npm run dev
 
 ```
 colostle-companion/
-├── src/                  # Source code
+├── src/                 # Source code
 │   ├── assets/          # Static assets
 │   ├── components/      # Reusable React components
 │   ├── context/         # React Context providers
@@ -126,6 +138,10 @@ colostle-companion/
 │   └── main.tsx         # Application entry point
 ├── public/              # Public static files
 └── docs/                # Documentation
+    ├── MVP.md           # Minimum Viable Product plan
+    ├── Schema.md        # Database schema documentation
+    ├── User_Flow.md     # User flow diagrams
+    └── App_Flow.md      # Application flow documentation
 ```
 
 ## Development Guidelines
