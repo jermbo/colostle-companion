@@ -22,13 +22,12 @@ This companion app digitizes the card-drawing process and provides instant inter
 3. Run the development server with `npm run dev`
 4. Build for production with `npm run build`
 
-## Tech Stack
+## Documentation
 
-- React
-- TypeScript
-- Vite
+For detailed technical documentation, development guidelines, and project structure, please refer to [Technical Documentation](docs/Tech_Stack.md).
 
 ## License
 
-This project is not affiliated with the official Colostle game. Colostle is designed by Nich Angell.
+This project is not affiliated with the official Colostle game. Colostle is created by Nich Angell.
+
 This companion app is a fan-made tool intended to enhance the play experience.
