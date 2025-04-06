@@ -1,5 +1,6 @@
 /* Base	 */
 @import "./styles/base.css";
+@import "./styles/themed-variables.css";
 
 /* Layout */
 @import "./styles/layout.css";
