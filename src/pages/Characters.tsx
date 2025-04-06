@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Grid } from "../components/layout";
+import Grid from "../components/layout/Grid";
 
 const Characters = (): ReactElement => {
 	return (

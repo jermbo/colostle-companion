@@ -5,7 +5,8 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
-import { Layout, Navigation } from "./components/layout";
+import Layout from "./components/layout/Layout";
+import Navigation from "./components/layout/Navigation";
 import Dashboard from "./pages/Dashboard";
 import Characters from "./pages/Characters";
 import Sessions from "./pages/Sessions";

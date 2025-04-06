@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Button from "../ui/Button";
 
 interface Props {
 	children: ReactNode;
@@ -25,7 +26,8 @@ const MobileNav = ({ children, className = "" }: Props): ReactElement => {
 
 	return (
 		<div className={`mobile-nav ${className}`}>
-			<button
+			<Button
+				variant="icon"
 				className="mobile-nav__toggle"
 				onClick={toggleMenu}
 				aria-expanded={isOpen}
@@ -34,18 +36,19 @@ const MobileNav = ({ children, className = "" }: Props): ReactElement => {
 				<span className="mobile-nav__icon"></span>
 				<span className="mobile-nav__icon"></span>
 				<span className="mobile-nav__icon"></span>
-			</button>
+			</Button>
 
 			<div
 				className={`mobile-nav__menu ${isOpen ? "mobile-nav__menu--open" : ""}`}
 			>
-				<button
+				<Button
+					variant="icon"
 					className="mobile-nav__close"
 					onClick={closeMenu}
 					aria-label="Close navigation menu"
 				>
 					×
-				</button>
+				</Button>
 				<div className="mobile-nav__content">{children}</div>
 			</div>
 		</div>

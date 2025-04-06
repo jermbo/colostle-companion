@@ -18,7 +18,7 @@
 /* Container Component */
 .container {
 	width: 100%;
-	max-width: 1200px;
+	max-width: var(--container-width);
 	margin: 0 auto;
 	padding: 0 var(--space-md);
 }
@@ -119,7 +119,7 @@
 }
 
 .footer__container {
-	max-width: 1200px;
+	max-width: var(--container-width);
 	margin: 0 auto;
 	padding: 0 var(--space-lg);
 }
@@ -328,11 +328,11 @@
 		display: none;
 	}
 
-	.mobile-nav-container {
+	.mobile-nav {
 		display: block !important;
 	}
 
-	.mobile-nav {
+	.mobile-nav-container {
 		display: block !important;
 	}
 
