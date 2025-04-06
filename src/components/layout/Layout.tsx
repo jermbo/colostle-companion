@@ -1,37 +1,55 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import MobileNav from "./MobileNav";
 import Container from "./Container";
+import Navigation from "./Navigation";
 
 interface Props {
 	children: ReactNode;
 	className?: string;
-	showSidebar?: boolean;
 	sidebarContent?: ReactNode;
 }
+
+const navItems = [
+	{ label: "Dashboard", href: "/", icon: "🏠" },
+	{ label: "Characters", href: "/characters", icon: "👤" },
+	{ label: "Sessions", href: "/sessions", icon: "🎲" },
+	{ label: "Journal", href: "/journal", icon: "📝" },
+	{ label: "Settings", href: "/settings", icon: "⚙️" },
+];
 
 const Layout = ({
 	children,
 	className = "",
-	showSidebar = true,
 	sidebarContent,
 }: Props): ReactElement => {
-	console.log("Layout rendering with sidebarContent:", !!sidebarContent);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+	const toggleSidebar = () => {
+		setIsSidebarOpen(!isSidebarOpen);
+	};
 
 	return (
 		<div className={`layout ${className}`}>
-			<Header>
-				<div className="mobile-nav-container">
-					<MobileNav>{sidebarContent}</MobileNav>
-				</div>
-			</Header>
+			<Header />
 
 			<div className="layout__content">
-				{showSidebar && <Sidebar>{sidebarContent}</Sidebar>}
+				<Sidebar isOpen={isSidebarOpen}>
+					{sidebarContent || (
+						<Navigation
+							items={navItems}
+							isCollapsed={!isSidebarOpen}
+							onToggleSidebar={toggleSidebar}
+						/>
+					)}
+				</Sidebar>
 
-				<main className="layout__main">
+				<main
+					className={`layout__main ${
+						!isSidebarOpen ? "layout__main--expanded" : ""
+					}`}
+				>
 					<Container>{children}</Container>
 				</main>
 			</div>

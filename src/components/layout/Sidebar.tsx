@@ -2,33 +2,13 @@ import { ReactElement, ReactNode } from "react";
 
 interface Props {
 	children: ReactNode;
-	className?: string;
-	isOpen?: boolean;
-	onClose?: () => void;
+	isOpen: boolean;
 }
 
-const Sidebar = ({
-	children,
-	className = "",
-	isOpen = true,
-	onClose,
-}: Props): ReactElement => {
+const Sidebar = ({ children, isOpen }: Props): ReactElement => {
 	return (
-		<aside
-			className={`sidebar ${
-				isOpen ? "sidebar--open" : "sidebar--closed"
-			} ${className}`}
-		>
+		<aside className={`sidebar ${!isOpen ? "sidebar--collapsed" : ""}`}>
 			<div className="sidebar__content">{children}</div>
-			{onClose && (
-				<button
-					className="sidebar__close"
-					onClick={onClose}
-					aria-label="Close sidebar"
-				>
-					×
-				</button>
-			)}
 		</aside>
 	);
 };

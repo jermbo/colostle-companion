@@ -30,7 +30,7 @@ const App = () => {
 	return (
 		<ThemeProvider>
 			<Router>
-				<Layout sidebarContent={<Navigation items={navItems} />}>
+				<Layout>
 					<Routes>
 						<Route path="/" element={<Dashboard />} />
 						<Route path="/characters" element={<Characters />} />
