@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { Character } from "../../types/character";
 import { useCharacterContext } from "../../context/CharacterContext";
+import { CHARACTER_CLASSES } from "../../types/character";
 
 interface Props {
 	character: Character;
@@ -9,6 +10,7 @@ interface Props {
 
 const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
 	const { deleteCharacter } = useCharacterContext();
+	const classInfo = CHARACTER_CLASSES[character.class];
 
 	const handleDelete = (): void => {
 		if (window.confirm(`Are you sure you want to delete ${character.name}?`)) {
@@ -19,17 +21,24 @@ const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
 	return (
 		<div className="card">
 			<h3 className="card__title">{character.name}</h3>
-			<p className="card__content">
-				Level {character.level} {character.class}
-			</p>
+			<div className="card__content">
+				<div className="card__stats">
+					<div className="card__stat">
+						<span className="card__stat-label">Class</span>
+						<p>{classInfo.displayName}</p>
+					</div>
+					<div className="card__stat">
+						<span className="card__stat-label">Level</span>
+						<p>{character.level}</p>
+					</div>
+				</div>
+			</div>
 
 			{character.companion && (
-				<div className="card__content">
-					<p>
-						<strong>Companion:</strong>
-					</p>
-					<p>{character.companion.name}</p>
-					<p>{character.companion.type}</p>
+				<div className="card__section">
+					<span className="card__stat-label">Companion</span>
+					<p className="card__content">{character.companion.name}</p>
+					<p className="card__content">{character.companion.type}</p>
 				</div>
 			)}
 
