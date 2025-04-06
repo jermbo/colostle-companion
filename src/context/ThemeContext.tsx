@@ -33,13 +33,20 @@ export const ThemeProvider = ({
 }: ThemeProviderProps): ReactElement => {
 	// Initialize theme state from localStorage or default to 'light'
 	const [theme, setTheme] = useState<Theme>(() => {
-		const savedTheme = localStorage.getItem("theme") as Theme | null;
-		return savedTheme || "light";
+		// Check if we're in a browser environment
+		if (typeof window !== "undefined") {
+			const savedTheme = localStorage.getItem("theme") as Theme | null;
+			return savedTheme || "light";
+		}
+		return "light";
 	});
 
-	// Update document attribute when theme changes
+	// Apply theme immediately on mount to prevent flash
 	useEffect(() => {
+		// Apply theme to document element
 		document.documentElement.setAttribute("data-theme", theme);
+
+		// Save theme preference to localStorage
 		localStorage.setItem("theme", theme);
 	}, [theme]);
 
