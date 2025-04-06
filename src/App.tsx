@@ -1,19 +1,45 @@
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Navigate,
+} from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
-import ThemeToggle from "./components/ThemeToggle";
+import { Layout, Navigation } from "./components/layout";
+import Dashboard from "./pages/Dashboard";
+import Characters from "./pages/Characters";
+import Sessions from "./pages/Sessions";
+import Journal from "./pages/Journal";
+import Settings from "./pages/Settings";
 import "./App.css";
+import "./styles/layout.css";
+import "./styles/pages.css";
+
+const navItems = [
+	{ label: "Dashboard", href: "/", icon: "🏠" },
+	{ label: "Characters", href: "/characters", icon: "👤" },
+	{ label: "Sessions", href: "/sessions", icon: "🎲" },
+	{ label: "Journal", href: "/journal", icon: "📝" },
+	{ label: "Settings", href: "/settings", icon: "⚙️" },
+];
 
 const App = () => {
+	console.log("App rendering with navItems:", navItems);
+
 	return (
 		<ThemeProvider>
-			<div className="app">
-				<header className="app__header">
-					<h1 className="app__header-title">Colostle Companion</h1>
-					<ThemeToggle />
-				</header>
-				<main className="app__main">
-					<p>Welcome to Colostle Companion!</p>
-				</main>
-			</div>
+			<Router>
+				<Layout sidebarContent={<Navigation items={navItems} />}>
+					<Routes>
+						<Route path="/" element={<Dashboard />} />
+						<Route path="/characters" element={<Characters />} />
+						<Route path="/sessions" element={<Sessions />} />
+						<Route path="/journal" element={<Journal />} />
+						<Route path="/settings" element={<Settings />} />
+						<Route path="*" element={<Navigate to="/" replace />} />
+					</Routes>
+				</Layout>
+			</Router>
 		</ThemeProvider>
 	);
 };
