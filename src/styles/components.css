@@ -1,0 +1,137 @@
+/* Card Component */
+.card {
+	background-color: var(--color-background-card);
+	border-radius: var(--border-radius-md);
+	padding: var(--space-md);
+	box-shadow: var(--shadow-sm);
+}
+
+.card__title {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--space-sm);
+	color: var(--color-text);
+}
+
+.card__content {
+	color: var(--color-text-light);
+}
+
+/* Form Components */
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-md);
+}
+
+.form__field {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+}
+
+.form__label {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+}
+
+.form__input,
+.form__select {
+	padding: var(--space-sm);
+	border-radius: var(--border-radius-sm);
+	border: 1px solid var(--color-border);
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-size: var(--font-size-base);
+}
+
+.form__input:focus,
+.form__select:focus {
+	outline: none;
+	border-color: var(--color-primary);
+}
+
+.form__input--error,
+.form__select--error {
+	border-color: var(--color-error);
+}
+
+.form__error {
+	color: var(--color-error);
+	font-size: var(--font-size-sm);
+}
+
+/* Button Components */
+.button {
+	padding: var(--space-sm) var(--space-md);
+	border-radius: var(--border-radius-sm);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.button--primary {
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
+}
+
+.button--primary:hover {
+	background-color: var(--color-primary-dark);
+}
+
+.button--secondary {
+	background-color: var(--color-background-tertiary);
+	color: var(--color-text);
+}
+
+.button--secondary:hover {
+	background-color: var(--color-background-hover);
+}
+
+.button--danger {
+	background-color: var(--color-error);
+	color: var(--color-text-light);
+}
+
+.button--danger:hover {
+	background-color: var(--color-error-dark);
+}
+
+/* Action Bar */
+.action-bar {
+	display: flex;
+	gap: var(--space-sm);
+	margin-bottom: var(--space-lg);
+}
+
+/* Grid Layout */
+.grid {
+	display: grid;
+	gap: var(--space-md);
+}
+
+.grid--2-cols {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.grid--2-cols,
+	.grid--3-cols {
+		grid-template-columns: 1fr;
+	}
+
+	.action-bar {
+		flex-direction: column;
+	}
+
+	.button {
+		width: 100%;
+	}
+}

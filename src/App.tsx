@@ -7,7 +7,6 @@ import {
 import { ThemeProvider } from "./context/ThemeContext";
 import { CharacterProvider } from "./context/CharacterContext";
 import Layout from "./components/layout/Layout";
-import Navigation from "./components/layout/Navigation";
 import Dashboard from "./pages/Dashboard";
 import Characters from "./pages/Characters";
 import Sessions from "./pages/Sessions";
@@ -17,6 +16,7 @@ import "./App.css";
 import "./styles/layout.css";
 import "./styles/pages.css";
 import "./styles/character.css";
+import "./styles/components.css";
 
 const navItems = [
 	{ label: "Dashboard", href: "/", icon: "🏠" },

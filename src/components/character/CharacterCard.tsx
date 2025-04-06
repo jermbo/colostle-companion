@@ -17,35 +17,30 @@ const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
 	};
 
 	return (
-		<div className="character-card">
-			<h3 className="character-card__title">{character.name}</h3>
-			<p className="character-card__class">
+		<div className="card">
+			<h3 className="card__title">{character.name}</h3>
+			<p className="card__content">
 				Level {character.level} {character.class}
 			</p>
 
 			{character.companion && (
-				<div className="character-card__companion">
-					<p className="character-card__companion-title">Companion:</p>
-					<p className="character-card__companion-name">
-						{character.companion.name}
+				<div className="card__content">
+					<p>
+						<strong>Companion:</strong>
 					</p>
-					<p className="character-card__companion-type">
-						{character.companion.type}
-					</p>
+					<p>{character.companion.name}</p>
+					<p>{character.companion.type}</p>
 				</div>
 			)}
 
-			<div className="character-card__actions">
+			<div className="action-bar">
 				<button
-					className="character-card__button character-card__button--edit"
+					className="button button--secondary"
 					onClick={() => onEdit(character)}
 				>
 					Edit
 				</button>
-				<button
-					className="character-card__button character-card__button--delete"
-					onClick={handleDelete}
-				>
+				<button className="button button--danger" onClick={handleDelete}>
 					Delete
 				</button>
 			</div>

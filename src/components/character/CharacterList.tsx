@@ -39,11 +39,10 @@ const CharacterList = (): ReactElement => {
 	};
 
 	return (
-		<div className="character-list">
-			<div className="character-list__header">
-				<h2>Characters</h2>
+		<div>
+			<div className="action-bar">
 				<button
-					className="character-list__create-button"
+					className="button button--primary"
 					onClick={handleCreateCharacter}
 				>
 					Create New Character
@@ -51,13 +50,13 @@ const CharacterList = (): ReactElement => {
 			</div>
 
 			{isCreatingCharacter && (
-				<div className="character-list__form">
+				<div className="card">
 					<CharacterCreationForm onComplete={handleCharacterCreated} />
 				</div>
 			)}
 
 			{isCreatingCompanion && selectedCharacter && (
-				<div className="character-list__form">
+				<div className="card">
 					<CompanionCreationForm
 						characterId={selectedCharacter.id}
 						onComplete={handleCompanionCreated}
@@ -66,11 +65,13 @@ const CharacterList = (): ReactElement => {
 			)}
 
 			{characters.length === 0 ? (
-				<p className="character-list__empty">
-					No characters found. Create your first character to get started!
-				</p>
+				<div className="card">
+					<p className="card__content">
+						No characters found. Create your first character to get started!
+					</p>
+				</div>
 			) : (
-				<div className="character-list__grid">
+				<div className="grid grid--3-cols">
 					{characters.map((character) => (
 						<CharacterCard
 							key={character.id}

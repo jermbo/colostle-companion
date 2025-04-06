@@ -3,7 +3,7 @@ import CharacterList from "../components/character/CharacterList";
 
 const Characters = (): ReactElement => {
 	return (
-		<div className="characters">
+		<div className="page characters">
 			<h2>Characters</h2>
 			<p>Manage your characters and companions.</p>
 

@@ -10,26 +10,40 @@
 	color: var(--color-text);
 }
 
+.page h3 {
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-semibold);
+	margin: var(--space-xl) 0 var(--space-md);
+	color: var(--color-text);
+}
+
 .page p {
 	margin-bottom: var(--space-lg);
 	color: var(--color-text-light);
 }
 
+/* Page-specific overrides */
+.dashboard {
+	padding: var(--space-lg);
+}
+
+.characters {
+	padding: var(--space-lg);
+}
+
+.sessions {
+	padding: var(--space-lg);
+}
+
+.journal {
+	padding: var(--space-lg);
+}
+
+.settings {
+	padding: var(--space-lg);
+}
+
 /* Dashboard */
-.dashboard__welcome {
-	margin-bottom: var(--space-xl);
-}
-
-.dashboard__section {
-	margin-bottom: var(--space-xl);
-}
-
-.dashboard__section h3 {
-	font-size: var(--font-size-xl);
-	font-weight: var(--font-weight-semibold);
-	margin-bottom: var(--space-md);
-	color: var(--color-text);
-}
 
 .dashboard__card {
 	background-color: var(--color-background-card);
@@ -365,15 +379,23 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-	.page {
-		padding: var(--spacing-md);
+	.page,
+	.dashboard,
+	.characters,
+	.sessions,
+	.journal,
+	.settings {
+		padding: var(--space-md);
 	}
 
 	.page h2 {
 		font-size: var(--font-size-xl);
 	}
 
-	.dashboard__section h3,
+	.page h3 {
+		font-size: var(--font-size-lg);
+	}
+
 	.character-card h3,
 	.session-card h3,
 	.journal__entry h3,

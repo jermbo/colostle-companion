@@ -69,7 +69,7 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 				<input
 					type="text"
 					id="character-name"
-					name="characterName"
+					name="character-name"
 					value={formData.characterName}
 					onChange={handleChange}
 					className={`character-form__input ${

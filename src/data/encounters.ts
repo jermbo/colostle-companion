@@ -35,7 +35,7 @@ const ENCOUNTERS: Encounter[] = [
 		id: "4",
 		name: "Quest Giver",
 		description:
-			"A person you meet asks you to find something for them. Maybe they have lost something, or they are too afraid to get it. Draw a card and check the ITEM table (page 27) to see how they will reward you if you do this for them. Use the other cards drawn in this EXPLORATION phase to inform where you might need to go. If you fight them, create a human opponent in your COMBAT phase.",
+			"A person you meet asks you to find something for them. Maybe they have lost something, or they are too afraid to get it. Draw a card and check the ITEM table to see how they will reward you if you do this for them. Use the other cards drawn in this EXPLORATION phase to inform where you might need to go. If you fight them, create a human opponent in your COMBAT phase.",
 		conditions: {
 			hearts: "Trustworthy",
 			diamonds: "Untrustworthy",
