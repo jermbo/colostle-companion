@@ -1,0 +1,141 @@
+:root {
+	/* Color Palette - Light Theme (Default) */
+	--color-primary: #4a6fa5;
+	--color-primary-light: #6b8fc7;
+	--color-primary-dark: #2c4a7a;
+
+	--color-secondary: #6b8fc7;
+	--color-secondary-light: #8ba8d5;
+	--color-secondary-dark: #4a6fa5;
+
+	--color-accent: #e67e22;
+	--color-accent-light: #f39c12;
+	--color-accent-dark: #d35400;
+
+	--color-background: #f5f5f5;
+	--color-background-alt: #e9e9e9;
+	--color-background-card: #ffffff;
+
+	--color-text: #333333;
+	--color-text-light: #666666;
+	--color-text-lighter: #999999;
+	--color-text-inverse: #ffffff;
+
+	--color-border: #dddddd;
+	--color-border-light: #eeeeee;
+	--color-border-dark: #cccccc;
+
+	--color-success: #2ecc71;
+	--color-warning: #f39c12;
+	--color-error: #e74c3c;
+	--color-info: #3498db;
+
+	/* Fluid Typography Scale */
+	--font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+	--font-size-xs: calc(var(--font-size-base) * 0.75);
+	--font-size-sm: calc(var(--font-size-base) * 0.875);
+	--font-size-md: var(--font-size-base);
+	--font-size-lg: calc(var(--font-size-base) * 1.125);
+	--font-size-xl: calc(var(--font-size-base) * 1.25);
+	--font-size-2xl: calc(var(--font-size-base) * 1.5);
+	--font-size-3xl: calc(var(--font-size-base) * 1.875);
+	--font-size-4xl: calc(var(--font-size-base) * 2.25);
+
+	/* Font Families */
+	--font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	--font-family-secondary: "Merriweather", Georgia, "Times New Roman", serif;
+
+	/* Font Weights */
+	--font-weight-light: 300;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	/* Vertical Rhythm */
+	--space-unit: 0.25rem;
+	--space-xs: calc(var(--space-unit) * 1);
+	--space-sm: calc(var(--space-unit) * 2);
+	--space-md: calc(var(--space-unit) * 4);
+	--space-lg: calc(var(--space-unit) * 6);
+	--space-xl: calc(var(--space-unit) * 8);
+	--space-2xl: calc(var(--space-unit) * 12);
+	--space-3xl: calc(var(--space-unit) * 16);
+
+	/* Line Heights */
+	--line-height-tight: 1.2;
+	--line-height-normal: 1.5;
+	--line-height-relaxed: 1.75;
+
+	/* Border Radius */
+	--border-radius-sm: 0.125rem;
+	--border-radius-md: 0.25rem;
+	--border-radius-lg: 0.5rem;
+	--border-radius-xl: 1rem;
+	--border-radius-full: 9999px;
+
+	/* Shadows */
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+		0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+		0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+		0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+	/* Transitions */
+	--transition-fast: 150ms ease;
+	--transition-normal: 250ms ease;
+	--transition-slow: 350ms ease;
+
+	/* Z-index */
+	--z-index-dropdown: 1000;
+	--z-index-sticky: 1020;
+	--z-index-fixed: 1030;
+	--z-index-modal-backdrop: 1040;
+	--z-index-modal: 1050;
+	--z-index-popover: 1060;
+	--z-index-tooltip: 1070;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+	--color-primary: #6b8fc7;
+	--color-primary-light: #8ba8d5;
+	--color-primary-dark: #4a6fa5;
+
+	--color-secondary: #8ba8d5;
+	--color-secondary-light: #a9c1e3;
+	--color-secondary-dark: #6b8fc7;
+
+	--color-accent: #f39c12;
+	--color-accent-light: #f1c40f;
+	--color-accent-dark: #e67e22;
+
+	--color-background: #121212;
+	--color-background-alt: #1e1e1e;
+	--color-background-card: #2d2d2d;
+
+	--color-text: #f5f5f5;
+	--color-text-light: #cccccc;
+	--color-text-lighter: #999999;
+	--color-text-inverse: #121212;
+
+	--color-border: #444444;
+	--color-border-light: #555555;
+	--color-border-dark: #333333;
+
+	--color-success: #2ecc71;
+	--color-warning: #f39c12;
+	--color-error: #e74c3c;
+	--color-info: #3498db;
+
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+		0 2px 4px -1px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4),
+		0 4px 6px -2px rgba(0, 0, 0, 0.3);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4),
+		0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
