@@ -11,16 +11,18 @@ const CharacterList = (): ReactElement => {
 		useState<boolean>(false);
 	const [isCreatingCompanion, setIsCreatingCompanion] =
 		useState<boolean>(false);
-	const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
-		null
-	);
+	const [selectedCharacter, setSelectedCharacter] = useState<
+		Character | undefined
+	>(undefined);
 
 	const handleCreateCharacter = (): void => {
+		setSelectedCharacter(undefined);
 		setIsCreatingCharacter(true);
 	};
 
 	const handleCharacterCreated = (): void => {
 		setIsCreatingCharacter(false);
+		setSelectedCharacter(undefined);
 	};
 
 	const handleEditCharacter = (character: Character): void => {
@@ -35,7 +37,7 @@ const CharacterList = (): ReactElement => {
 
 	const handleCompanionCreated = (): void => {
 		setIsCreatingCompanion(false);
-		setSelectedCharacter(null);
+		setSelectedCharacter(undefined);
 	};
 
 	return (
@@ -51,7 +53,10 @@ const CharacterList = (): ReactElement => {
 
 			{isCreatingCharacter && (
 				<div className="card">
-					<CharacterCreationForm onComplete={handleCharacterCreated} />
+					<CharacterCreationForm
+						character={selectedCharacter}
+						onComplete={handleCharacterCreated}
+					/>
 				</div>
 			)}
 

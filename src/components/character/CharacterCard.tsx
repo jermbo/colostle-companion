@@ -20,16 +20,42 @@ const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
 
 	return (
 		<div className="card">
-			<h3 className="card__title">{character.name}</h3>
+			<div className="card__header">
+				<h3 className="card__title">{character.name}</h3>
+				<p className="card__subtitle">{classInfo.displayName}</p>
+			</div>
+
 			<div className="card__content">
 				<div className="card__stats">
 					<div className="card__stat">
-						<span className="card__stat-label">Class</span>
-						<p>{classInfo.displayName}</p>
+						<span className="card__stat-label">Exploration</span>
+						<div className="card__stat-bars">
+							{[...Array(5)].map((_, i) => (
+								<div
+									key={i}
+									className={`card__stat-bar ${
+										i < classInfo.explorationScore
+											? "card__stat-bar--filled"
+											: ""
+									}`}
+									role="presentation"
+								/>
+							))}
+						</div>
 					</div>
 					<div className="card__stat">
-						<span className="card__stat-label">Level</span>
-						<p>{character.level}</p>
+						<span className="card__stat-label">Combat</span>
+						<div className="card__stat-bars">
+							{[...Array(5)].map((_, i) => (
+								<div
+									key={i}
+									className={`card__stat-bar ${
+										i < classInfo.combatScore ? "card__stat-bar--filled" : ""
+									}`}
+									role="presentation"
+								/>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>

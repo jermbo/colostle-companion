@@ -15,10 +15,7 @@ import {
 interface CharacterContextType {
 	characters: Character[];
 	addCharacter: (characterData: CharacterFormData) => void;
-	updateCharacter: (
-		id: string,
-		characterData: Partial<CharacterFormData>
-	) => void;
+	updateCharacter: (id: string, characterData: CharacterFormData) => void;
 	deleteCharacter: (id: string) => void;
 	addCompanion: (characterId: string, companionData: CompanionFormData) => void;
 	updateCompanion: (
@@ -54,7 +51,7 @@ export const CharacterProvider = ({
 	const addCharacter = (characterData: CharacterFormData): void => {
 		const newCharacter: Character = {
 			id: crypto.randomUUID(),
-			name: characterData.name,
+			name: characterData.characterName,
 			class: characterData.class,
 			level: 1,
 			createdAt: new Date(),
@@ -66,14 +63,15 @@ export const CharacterProvider = ({
 
 	const updateCharacter = (
 		id: string,
-		characterData: Partial<CharacterFormData>
+		characterData: CharacterFormData
 	): void => {
 		setCharacters((prevCharacters) =>
 			prevCharacters.map((character) =>
 				character.id === id
 					? {
 							...character,
-							...characterData,
+							name: characterData.characterName,
+							class: characterData.class,
 							updatedAt: new Date(),
 					  }
 					: character

@@ -1,18 +1,36 @@
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, useEffect } from "react";
 import { useCharacterContext } from "../../context/CharacterContext";
-import { CharacterFormData, CHARACTER_CLASSES } from "../../types/character";
+import {
+	CharacterFormData,
+	CHARACTER_CLASSES,
+	Character,
+} from "../../types/character";
 
 interface Props {
+	character?: Character;
 	onComplete?: () => void;
 }
 
-const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
-	const { addCharacter } = useCharacterContext();
+const CharacterCreationForm = ({
+	character,
+	onComplete,
+}: Props): ReactElement => {
+	const { addCharacter, updateCharacter } = useCharacterContext();
 	const [formData, setFormData] = useState<CharacterFormData>({
-		characterName: "",
-		class: "armed",
+		characterName: character?.name || "",
+		class: character?.class || "armed",
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// Initialize form with character data if editing
+	useEffect(() => {
+		if (character) {
+			setFormData({
+				characterName: character.name,
+				class: character.class,
+			});
+		}
+	}, [character]);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -34,7 +52,7 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 		const newErrors: Record<string, string> = {};
 
 		if (!formData.characterName.trim()) {
-			newErrors.name = "Character name is required";
+			newErrors.characterName = "Character name is required";
 		}
 
 		if (!formData.class) {
@@ -49,7 +67,12 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 		e.preventDefault();
 
 		if (validateForm()) {
-			addCharacter(formData);
+			if (character) {
+				updateCharacter(character.id, formData);
+			} else {
+				addCharacter(formData);
+			}
+
 			if (onComplete) {
 				onComplete();
 			}
@@ -60,7 +83,9 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
-			<h2 className="card__title">Create New Character</h2>
+			<h2 className="card__title">
+				{character ? "Edit Character" : "Create New Character"}
+			</h2>
 
 			<div className="form__field">
 				<label htmlFor="character-name" className="form__label">
@@ -72,13 +97,17 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 					name="characterName"
 					value={formData.characterName}
 					onChange={handleChange}
-					className={`form__input ${errors.name ? "form__input--error" : ""}`}
+					className={`form__input ${
+						errors.characterName ? "form__input--error" : ""
+					}`}
 					placeholder="Enter character name"
-					aria-describedby={errors.name ? "name-error" : undefined}
+					aria-describedby={
+						errors.characterName ? "characterName-error" : undefined
+					}
 				/>
-				{errors.name && (
-					<p className="form__error" id="name-error" role="alert">
-						{errors.name}
+				{errors.characterName && (
+					<p className="form__error" id="characterName-error" role="alert">
+						{errors.characterName}
 					</p>
 				)}
 			</div>
@@ -166,7 +195,7 @@ const CharacterCreationForm = ({ onComplete }: Props): ReactElement => {
 
 			<div className="action-bar">
 				<button type="submit" className="button button--primary">
-					Create Character
+					{character ? "Save Changes" : "Create Character"}
 				</button>
 			</div>
 		</form>
