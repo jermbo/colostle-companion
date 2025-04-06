@@ -1,101 +1,21 @@
-/* Global Styles */
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
+/* Base	 */
+@import "./styles/base.css";
 
-html {
-	font-size: 16px;
-	font-family: var(--font-family-primary);
-	color: var(--color-text);
-	background-color: var(--color-background);
-	line-height: var(--line-height-relaxed);
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
+/* Layout */
+@import "./styles/layout.css";
+@import "./styles/ui.css";
+@import "./styles/footer.css";
+@import "./styles/header.css";
 
-body {
-	min-height: 100vh;
-	transition: background-color var(--transition-normal),
-		color var(--transition-normal);
-}
+/* Components */
+@import "./styles/components.css";
+@import "./styles/form.css";
+@import "./styles/page.css";
+@import "./styles/sidebar.css";
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: var(--font-family-secondary);
-	font-weight: var(--font-weight-bold);
-	line-height: var(--line-height-tight);
-	margin-bottom: var(--space-md);
-}
-
-h1 {
-	font-size: var(--font-size-4xl);
-}
-
-h2 {
-	font-size: var(--font-size-3xl);
-}
-
-h3 {
-	font-size: var(--font-size-2xl);
-}
-
-h4 {
-	font-size: var(--font-size-xl);
-}
-
-h5 {
-	font-size: var(--font-size-lg);
-}
-
-h6 {
-	font-size: var(--font-size-md);
-}
-
-p {
-	margin-bottom: var(--space-md);
-}
-
-a {
-	color: var(--color-primary);
-	text-decoration: none;
-	transition: color var(--transition-fast);
-
-	&:hover {
-		color: var(--color-primary-dark);
-	}
-}
-
-button {
-	cursor: pointer;
-	font-family: var(--font-family-primary);
-	font-size: var(--font-size-md);
-	padding: var(--space-sm) var(--space-md);
-	border-radius: var(--border-radius-md);
-	border: 1px solid var(--color-border);
-	background-color: var(--color-background-card);
-	color: var(--color-text);
-	transition: all var(--transition-fast);
-
-	&:hover {
-		background-color: var(--color-background-alt);
-	}
-
-	&:focus {
-		outline: 2px solid var(--color-primary);
-		outline-offset: 2px;
-	}
-}
-
-.container {
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 var(--space-md);
-}
+/* Pages */
+@import "./styles/dashboard.css";
+@import "./styles/characters.css";
+@import "./styles/sessions.css";
+@import "./styles/journal.css";
+@import "./styles/settings.css";

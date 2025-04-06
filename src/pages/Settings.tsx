@@ -3,7 +3,7 @@ import Grid from "../components/layout/Grid";
 
 const Settings = (): ReactElement => {
 	return (
-		<div className="settings">
+		<div className="page settings">
 			<h2>Settings</h2>
 			<p>Customize your Colostle Companion experience.</p>
 
@@ -52,18 +52,17 @@ const Settings = (): ReactElement => {
 
 				<div className="settings__section">
 					<h3>Data Management</h3>
+
 					<div className="settings__option">
-						<button className="settings__button">Export Data</button>
+						<button className="button--primary">Export Data</button>
 					</div>
 
 					<div className="settings__option">
-						<button className="settings__button">Import Data</button>
+						<button className="button--secondary">Import Data</button>
 					</div>
 
 					<div className="settings__option">
-						<button className="settings__button settings__button--danger">
-							Clear All Data
-						</button>
+						<button className="button--danger">Clear All Data</button>
 					</div>
 				</div>
 			</Grid>

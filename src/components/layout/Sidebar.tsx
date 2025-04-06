@@ -2,12 +2,11 @@ import { ReactElement, ReactNode } from "react";
 
 interface Props {
 	children: ReactNode;
-	isOpen: boolean;
 }
 
-const Sidebar = ({ children, isOpen }: Props): ReactElement => {
+const Sidebar = ({ children }: Props): ReactElement => {
 	return (
-		<aside className={`sidebar ${!isOpen ? "sidebar--collapsed" : ""}`}>
+		<aside className="sidebar">
 			<div className="sidebar__content">{children}</div>
 		</aside>
 	);

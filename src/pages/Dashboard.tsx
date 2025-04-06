@@ -3,7 +3,7 @@ import Grid from "../components/layout/Grid";
 
 const Dashboard = (): ReactElement => {
 	return (
-		<div className="dashboard">
+		<div className="page dashboard">
 			<h2>Dashboard</h2>
 			<p>Welcome to your Colostle Companion dashboard!</p>
 

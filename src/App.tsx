@@ -12,11 +12,6 @@ import Characters from "./pages/Characters";
 import Sessions from "./pages/Sessions";
 import Journal from "./pages/Journal";
 import Settings from "./pages/Settings";
-import "./App.css";
-import "./styles/layout.css";
-import "./styles/pages.css";
-import "./styles/character.css";
-import "./styles/components.css";
 
 const navItems = [
 	{ label: "Dashboard", href: "/", icon: "🏠" },

@@ -11,35 +11,29 @@ interface NavItem {
 interface Props {
 	items: NavItem[];
 	className?: string;
-	isCollapsed?: boolean;
+	isExpanded?: boolean;
 	onToggleSidebar?: () => void;
 }
 
 const Navigation = ({
 	items,
 	className = "",
-	isCollapsed = false,
 	onToggleSidebar,
+	isExpanded = false,
 }: Props): ReactElement => {
 	return (
-		<nav
-			className={`navigation ${
-				isCollapsed ? "navigation--collapsed" : ""
-			} ${className}`}
-		>
-			{onToggleSidebar && (
-				<Button
-					variant="icon"
-					className={`hamburger ${isCollapsed ? "hamburger--open" : ""}`}
-					onClick={onToggleSidebar}
-					aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-					aria-expanded={!isCollapsed}
-				>
-					<span className="hamburger__line"></span>
-					<span className="hamburger__line"></span>
-					<span className="hamburger__line"></span>
-				</Button>
-			)}
+		<nav className={`navigation ${className}`}>
+			<Button
+				variant="icon"
+				className="hamburger"
+				onClick={onToggleSidebar}
+				aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
+				aria-expanded={isExpanded}
+			>
+				<span className="hamburger__line"></span>
+				<span className="hamburger__line"></span>
+				<span className="hamburger__line"></span>
+			</Button>
 
 			<ul className="navigation__list">
 				{items.map((item, index) => (
@@ -52,9 +46,8 @@ const Navigation = ({
 							{item.icon && (
 								<span className="navigation__icon">{item.icon}</span>
 							)}
-							{!isCollapsed && (
-								<span className="navigation__label">{item.label}</span>
-							)}
+
+							<span className="navigation__label">{item.label}</span>
 						</Link>
 					</li>
 				))}

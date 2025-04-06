@@ -1,0 +1,69 @@
+.sessions__actions {
+	margin-bottom: var(--spacing-lg);
+}
+
+.sessions__button {
+	padding: var(--spacing-sm) var(--spacing-md);
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	border-radius: var(--border-radius-sm);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.sessions__button:hover {
+	background-color: var(--primary-color-dark);
+}
+
+.session-card {
+	background-color: var(--bg-color-secondary);
+	border-radius: var(--border-radius-md);
+	padding: var(--spacing-md);
+	box-shadow: var(--shadow-sm);
+}
+
+.session-card h3 {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--spacing-sm);
+	color: var(--text-color-primary);
+}
+
+.session-card p {
+	margin-bottom: var(--spacing-md);
+	color: var(--text-color-secondary);
+}
+
+.session-card__actions {
+	display: flex;
+	gap: var(--spacing-sm);
+}
+
+.session-card__button {
+	padding: var(--spacing-sm) var(--spacing-md);
+	border-radius: var(--border-radius-sm);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.session-card__button--primary {
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+}
+
+.session-card__button--primary:hover {
+	background-color: var(--primary-color-dark);
+}
+
+.session-card__button--danger {
+	background-color: var(--danger-color);
+	color: var(--text-color-light);
+}
+
+.session-card__button--danger:hover {
+	background-color: var(--danger-color-dark);
+}

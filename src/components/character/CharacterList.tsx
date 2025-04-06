@@ -9,8 +9,10 @@ const CharacterList = (): ReactElement => {
 	const { characters } = useCharacterContext();
 	const [isCreatingCharacter, setIsCreatingCharacter] =
 		useState<boolean>(false);
+
 	const [isCreatingCompanion, setIsCreatingCompanion] =
 		useState<boolean>(false);
+
 	const [selectedCharacter, setSelectedCharacter] = useState<
 		Character | undefined
 	>(undefined);
@@ -41,12 +43,9 @@ const CharacterList = (): ReactElement => {
 	};
 
 	return (
-		<div>
+		<>
 			<div className="action-bar">
-				<button
-					className="button button--primary"
-					onClick={handleCreateCharacter}
-				>
+				<button className="button--primary" onClick={handleCreateCharacter}>
 					Create New Character
 				</button>
 			</div>
@@ -86,7 +85,7 @@ const CharacterList = (): ReactElement => {
 					))}
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

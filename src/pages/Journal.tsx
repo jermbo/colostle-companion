@@ -3,12 +3,12 @@ import Grid from "../components/layout/Grid";
 
 const Journal = (): ReactElement => {
 	return (
-		<div className="journal">
+		<div className="page journal">
 			<h2>Journal</h2>
 			<p>Record your adventures and track your progress.</p>
 
 			<div className="journal__actions">
-				<button className="journal__button">Create New Entry</button>
+				<button className="button--primary">Create New Entry</button>
 			</div>
 
 			<Grid columns={1} gap="md">
@@ -23,9 +23,9 @@ const Journal = (): ReactElement => {
 						nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.
 					</p>
 					<div className="journal__entry-actions">
-						<button className="journal__entry-button">Read More</button>
-						<button className="journal__entry-button">Edit</button>
-						<button className="journal__entry-button">Delete</button>
+						<button className="button--primary">Read More</button>
+						<button className="button--secondary">Edit</button>
+						<button className="button--danger">Delete</button>
 					</div>
 				</div>
 
@@ -40,9 +40,9 @@ const Journal = (): ReactElement => {
 						nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.
 					</p>
 					<div className="journal__entry-actions">
-						<button className="journal__entry-button">Read More</button>
-						<button className="journal__entry-button">Edit</button>
-						<button className="journal__entry-button">Delete</button>
+						<button className="button--primary">Read More</button>
+						<button className="button--secondary">Edit</button>
+						<button className="button--danger">Delete</button>
 					</div>
 				</div>
 			</Grid>

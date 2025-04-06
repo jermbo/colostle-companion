@@ -3,12 +3,12 @@ import Grid from "../components/layout/Grid";
 
 const Sessions = (): ReactElement => {
 	return (
-		<div className="sessions">
+		<div className="page sessions">
 			<h2>Sessions</h2>
 			<p>Manage your game sessions.</p>
 
 			<div className="sessions__actions">
-				<button className="sessions__button">Start New Session</button>
+				<button className="button--primary">Start New Session</button>
 			</div>
 
 			<Grid columns={2} gap="lg">
@@ -17,8 +17,8 @@ const Sessions = (): ReactElement => {
 					<p>Character: Character 1</p>
 					<p>Last played: 2 days ago</p>
 					<div className="sessions__card-actions">
-						<button className="sessions__card-button">Continue</button>
-						<button className="sessions__card-button">Delete</button>
+						<button className="button--primary">Continue</button>
+						<button className="button--danger">Delete</button>
 					</div>
 				</div>
 				<div className="sessions__card">
@@ -26,8 +26,8 @@ const Sessions = (): ReactElement => {
 					<p>Character: Character 2</p>
 					<p>Last played: 1 week ago</p>
 					<div className="sessions__card-actions">
-						<button className="sessions__card-button">Continue</button>
-						<button className="sessions__card-button">Delete</button>
+						<button className="button--primary">Continue</button>
+						<button className="button--danger">Delete</button>
 					</div>
 				</div>
 			</Grid>

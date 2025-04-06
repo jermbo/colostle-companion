@@ -2,13 +2,11 @@ import { ReactElement, ReactNode, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import Container from "./Container";
 import Navigation from "./Navigation";
 
 interface Props {
 	children: ReactNode;
 	className?: string;
-	sidebarContent?: ReactNode;
 }
 
 const navItems = [
@@ -19,11 +17,7 @@ const navItems = [
 	{ label: "Settings", href: "/settings", icon: "⚙️" },
 ];
 
-const Layout = ({
-	children,
-	className = "",
-	sidebarContent,
-}: Props): ReactElement => {
+const Layout = ({ children, className = "" }: Props): ReactElement => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
 	const toggleSidebar = () => {
@@ -31,26 +25,24 @@ const Layout = ({
 	};
 
 	return (
-		<div className={`layout ${className}`}>
+		<div
+			className={`layout ${className} ${
+				!isSidebarOpen ? "--sidebar-open" : ""
+			}`}
+		>
 			<Header />
 
 			<div className="layout__content">
-				<Sidebar isOpen={isSidebarOpen}>
-					{sidebarContent || (
-						<Navigation
-							items={navItems}
-							isCollapsed={!isSidebarOpen}
-							onToggleSidebar={toggleSidebar}
-						/>
-					)}
+				<Sidebar>
+					<Navigation
+						items={navItems}
+						isExpanded={!isSidebarOpen}
+						onToggleSidebar={toggleSidebar}
+					/>
 				</Sidebar>
 
-				<main
-					className={`layout__main ${
-						!isSidebarOpen ? "layout__main--expanded" : ""
-					}`}
-				>
-					<Container>{children}</Container>
+				<main className="layout__main">
+					<>{children}</>
 				</main>
 			</div>
 

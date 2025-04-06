@@ -1,0 +1,50 @@
+.dashboard__card {
+	background-color: var(--color-background-card);
+	border-radius: var(--border-radius-md);
+	padding: var(--space-md);
+	box-shadow: var(--shadow-sm);
+}
+
+.dashboard__card h4 {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--space-sm);
+	color: var(--color-text);
+}
+
+.dashboard__card p {
+	margin-bottom: var(--space-md);
+	color: var(--color-text-light);
+}
+
+.dashboard__card-actions {
+	display: flex;
+	gap: var(--spacing-sm);
+}
+
+.dashboard__button {
+	padding: var(--spacing-sm) var(--spacing-md);
+	border-radius: var(--border-radius-sm);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.dashboard__button--primary {
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+}
+
+.dashboard__button--primary:hover {
+	background-color: var(--primary-color-dark);
+}
+
+.dashboard__button--secondary {
+	background-color: var(--bg-color-tertiary);
+	color: var(--text-color-primary);
+}
+
+.dashboard__button--secondary:hover {
+	background-color: var(--bg-color-hover);
+}
