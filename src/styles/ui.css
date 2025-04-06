@@ -49,9 +49,7 @@
 
 .button--icon {
 	padding: var(--space-sm);
-	border-radius: 50%;
 	width: 40px;
-	height: 40px;
 }
 
 .button--small {

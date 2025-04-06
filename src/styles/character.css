@@ -1,0 +1,279 @@
+/* Character Form Styles */
+.character-form,
+.companion-form {
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius-md);
+	padding: var(--spacing-lg);
+	margin-bottom: var(--spacing-lg);
+	box-shadow: var(--shadow-sm);
+}
+
+.character-form h3,
+.companion-form h3 {
+	margin-top: 0;
+	margin-bottom: var(--spacing-md);
+	color: var(--text-color-primary);
+}
+
+.character-form__field,
+.companion-form__field {
+	margin-bottom: var(--spacing-md);
+}
+
+.character-form__label,
+.companion-form__label {
+	display: block;
+	margin-bottom: var(--spacing-xs);
+	font-weight: 500;
+	color: var(--text-color-primary);
+}
+
+.character-form__input,
+.character-form__select,
+.companion-form__input,
+.companion-form__select {
+	width: 100%;
+	padding: var(--spacing-sm);
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-sm);
+	background-color: var(--input-bg);
+	color: var(--text-color-primary);
+	font-size: var(--font-size-md);
+}
+
+.character-form__input:focus,
+.character-form__select:focus,
+.companion-form__input:focus,
+.companion-form__select:focus {
+	outline: none;
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 2px var(--primary-color-light);
+}
+
+.character-form__input--error,
+.character-form__select--error,
+.companion-form__input--error,
+.companion-form__select--error {
+	border-color: var(--error-color);
+}
+
+.character-form__error,
+.companion-form__error {
+	color: var(--error-color);
+	font-size: var(--font-size-sm);
+	margin-top: var(--spacing-xs);
+}
+
+.character-form__actions,
+.companion-form__actions {
+	margin-top: var(--spacing-lg);
+	display: flex;
+	justify-content: flex-end;
+}
+
+.character-form__button,
+.companion-form__button {
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	border: none;
+	border-radius: var(--border-radius-sm);
+	padding: var(--spacing-sm) var(--spacing-md);
+	font-size: var(--font-size-md);
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.character-form__button:hover,
+.companion-form__button:hover {
+	background-color: var(--primary-color-dark);
+}
+
+/* Character Card Styles */
+.character-card {
+	background-color: var(--surface-color);
+	border-radius: var(--border-radius-md);
+	padding: var(--spacing-md);
+	box-shadow: var(--shadow-sm);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.character-card:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.character-card__title {
+	margin-top: 0;
+	margin-bottom: var(--spacing-xs);
+	color: var(--text-color-primary);
+}
+
+.character-card__class {
+	margin-top: 0;
+	margin-bottom: var(--spacing-md);
+	color: var(--text-color-secondary);
+}
+
+.character-card__companion {
+	background-color: var(--surface-color-alt);
+	border-radius: var(--border-radius-sm);
+	padding: var(--spacing-sm);
+	margin-bottom: var(--spacing-md);
+}
+
+.character-card__companion-title {
+	font-weight: 500;
+	margin-top: 0;
+	margin-bottom: var(--spacing-xs);
+	color: var(--text-color-primary);
+}
+
+.character-card__companion-name,
+.character-card__companion-type {
+	margin-top: 0;
+	margin-bottom: var(--spacing-xs);
+	color: var(--text-color-secondary);
+}
+
+.character-card__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--spacing-sm);
+}
+
+.character-card__button {
+	background-color: transparent;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-sm);
+	padding: var(--spacing-xs) var(--spacing-sm);
+	font-size: var(--font-size-sm);
+	cursor: pointer;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.character-card__button--edit {
+	color: var(--primary-color);
+	border-color: var(--primary-color);
+}
+
+.character-card__button--edit:hover {
+	background-color: var(--primary-color-light);
+}
+
+.character-card__button--delete {
+	color: var(--error-color);
+	border-color: var(--error-color);
+}
+
+.character-card__button--delete:hover {
+	background-color: var(--error-color-light);
+}
+
+/* Character List Styles */
+.character-list {
+	margin-top: var(--spacing-lg);
+}
+
+.character-list__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--spacing-lg);
+}
+
+.character-list__create-button {
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	border: none;
+	border-radius: var(--border-radius-sm);
+	padding: var(--spacing-sm) var(--spacing-md);
+	font-size: var(--font-size-md);
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.character-list__create-button:hover {
+	background-color: var(--primary-color-dark);
+}
+
+.character-list__form {
+	margin-bottom: var(--spacing-lg);
+}
+
+.character-list__empty {
+	text-align: center;
+	padding: var(--spacing-xl);
+	color: var(--text-color-secondary);
+	background-color: var(--surface-color-alt);
+	border-radius: var(--border-radius-md);
+}
+
+.character-list__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: var(--spacing-md);
+}
+
+.character-form__class-info {
+	background: var(--color-background-secondary);
+	border-radius: var(--border-radius);
+	padding: var(--spacing-md);
+	margin: var(--spacing-md) 0;
+}
+
+.character-form__class-info h4 {
+	margin: 0 0 var(--spacing-sm);
+	color: var(--color-text-primary);
+	font-size: var(--font-size-lg);
+}
+
+.character-form__scores {
+	display: flex;
+	gap: var(--spacing-md);
+	margin-bottom: var(--spacing-md);
+}
+
+.character-form__score {
+	flex: 1;
+}
+
+.character-form__score-label {
+	display: block;
+	margin-bottom: var(--spacing-xs);
+	color: var(--color-text-secondary);
+	font-size: var(--font-size-sm);
+}
+
+.character-form__score-bars {
+	display: flex;
+	gap: var(--spacing-xs);
+}
+
+.character-form__score-bar {
+	width: 20px;
+	height: 8px;
+	background: var(--color-background-tertiary);
+	border-radius: var(--border-radius-sm);
+}
+
+.character-form__score-bar--filled {
+	background: var(--color-primary);
+}
+
+.character-form__description {
+	color: var(--color-text-secondary);
+	font-size: var(--font-size-sm);
+	line-height: 1.5;
+	margin: var(--spacing-sm) 0;
+}
+
+.character-form__companion-note {
+	color: var(--color-warning);
+	font-size: var(--font-size-sm);
+	margin: var(--spacing-sm) 0;
+	padding: var(--spacing-sm);
+	background: var(--color-warning-light);
+	border-radius: var(--border-radius-sm);
+}

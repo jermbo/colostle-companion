@@ -40,7 +40,7 @@ const CITY_AMENITIES: CityAmenity[] = [
 	{
 		id: "7",
 		name: "Rookling Crèche",
-		description: "See page 37 for details",
+		description: "",
 	},
 	{
 		id: "8",
@@ -51,7 +51,7 @@ const CITY_AMENITIES: CityAmenity[] = [
 	{
 		id: "9",
 		name: "House for sale",
-		description: "See page 37 for details",
+		description: "",
 	},
 ];
 
