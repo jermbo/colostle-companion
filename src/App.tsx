@@ -5,6 +5,7 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
+import { CharacterProvider } from "./context/CharacterContext";
 import Layout from "./components/layout/Layout";
 import Navigation from "./components/layout/Navigation";
 import Dashboard from "./pages/Dashboard";
@@ -15,6 +16,7 @@ import Settings from "./pages/Settings";
 import "./App.css";
 import "./styles/layout.css";
 import "./styles/pages.css";
+import "./styles/character.css";
 
 const navItems = [
 	{ label: "Dashboard", href: "/", icon: "🏠" },
@@ -29,18 +31,20 @@ const App = () => {
 
 	return (
 		<ThemeProvider>
-			<Router>
-				<Layout>
-					<Routes>
-						<Route path="/" element={<Dashboard />} />
-						<Route path="/characters" element={<Characters />} />
-						<Route path="/sessions" element={<Sessions />} />
-						<Route path="/journal" element={<Journal />} />
-						<Route path="/settings" element={<Settings />} />
-						<Route path="*" element={<Navigate to="/" replace />} />
-					</Routes>
-				</Layout>
-			</Router>
+			<CharacterProvider>
+				<Router>
+					<Layout>
+						<Routes>
+							<Route path="/" element={<Dashboard />} />
+							<Route path="/characters" element={<Characters />} />
+							<Route path="/sessions" element={<Sessions />} />
+							<Route path="/journal" element={<Journal />} />
+							<Route path="/settings" element={<Settings />} />
+							<Route path="*" element={<Navigate to="/" replace />} />
+						</Routes>
+					</Layout>
+				</Router>
+			</CharacterProvider>
 		</ThemeProvider>
 	);
 };
