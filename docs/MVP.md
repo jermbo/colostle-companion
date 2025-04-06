@@ -22,12 +22,12 @@ This document outlines the development phases for the Colostle Companion app, fo
 
 **Acceptance Criteria:**
 
-- [ ] Define color palette variables (primary, secondary, accent, background, text)
-- [ ] Define typography variables (font families, sizes, weights)
-- [ ] Define spacing variables (margins, paddings, gaps)
-- [ ] Define border radius and shadow variables
-- [ ] Create a dark/light theme toggle mechanism
-- [ ] Ensure all variables are properly scoped and accessible
+- [x] Define color palette variables (primary, secondary, accent, background, text)
+- [x] Define typography variables (font families, sizes, weights)
+- [x] Define spacing variables (margins, paddings, gaps)
+- [x] Define border radius and shadow variables
+- [x] Create a dark/light theme toggle mechanism
+- [x] Ensure all variables are properly scoped and accessible
 
 **Dependencies:**
 
