@@ -47,12 +47,11 @@ This document outlines the development phases for the Colostle Companion app, fo
 
 **Acceptance Criteria:**
 
-- [ ] Create a responsive container component
-- [ ] Implement a grid system for layout
-- [ ] Create header and footer components
-- [ ] Implement sidebar navigation for desktop
-- [ ] Create mobile navigation menu
-- [ ] Ensure all components adapt to different screen sizes
+- [x] Create a responsive container component
+- [x] Implement a grid system for layout
+- [x] Create header and footer components
+- [x] Implement collapsible sidebar navigation for desktop
+- [x] Ensure all components adapt to different screen sizes
 
 **Dependencies:**
 
