@@ -169,14 +169,14 @@
 /* Footer Component */
 .footer {
 	background-color: var(--color-background-card);
-	padding: var(--space-lg) 0;
+	padding: var(--space-md) 0;
 	margin-top: auto;
 }
 
 .footer__container {
 	max-width: var(--container-width);
 	margin: 0 auto;
-	padding: 0 var(--space-lg);
+	padding: 0 var(--space-md);
 }
 
 .footer__content {
@@ -185,7 +185,9 @@
 
 .footer__copyright {
 	color: var(--color-text-light);
-	font-size: var(--font-size-sm);
+	font-size: var(--font-size-xs);
+	margin: 0;
+	padding: 0;
 }
 
 /* Sidebar Component */
@@ -282,9 +284,7 @@
 	}
 
 	.footer {
-		padding: var(--space-md);
-		flex-direction: column;
-		text-align: center;
+		padding: var(--space-sm);
 	}
 
 	.footer__copyright {
