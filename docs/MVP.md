@@ -17,17 +17,18 @@ This document outlines the development phases for the Colostle Companion app, fo
 #### User Story: Theme Setup
 
 **As a** developer
-**I want** a consistent theme system with CSS variables
+**I want** a consistent theme system using Tailwind CSS and ShadCN/UI
 **So that** the application has a cohesive look and feel
 
 **Acceptance Criteria:**
 
-- [x] Define color palette variables (primary, secondary, accent, background, text)
-- [x] Define typography variables (font families, sizes, weights)
-- [x] Define spacing variables (margins, paddings, gaps)
-- [x] Define border radius and shadow variables
+- [x] Configure Tailwind CSS with custom theme
+- [x] Set up ShadCN/UI components with theme
+- [x] Define color palette using Tailwind's color system
+- [x] Configure typography using Tailwind's font system
+- [x] Set up spacing and sizing using Tailwind's spacing scale
 - [x] Create a dark/light theme toggle mechanism
-- [x] Ensure all variables are properly scoped and accessible
+- [x] Ensure all components use Tailwind's utility classes
 
 **Dependencies:**
 
@@ -35,7 +36,7 @@ This document outlines the development phases for the Colostle Companion app, fo
 
 **Testing Requirements:**
 
-- Unit tests for theme variable access
+- Unit tests for theme configuration
 - Visual regression tests for theme application
 - Accessibility tests for color contrast
 
@@ -47,11 +48,11 @@ This document outlines the development phases for the Colostle Companion app, fo
 
 **Acceptance Criteria:**
 
-- [x] Create a responsive container component
-- [x] Implement a grid system for layout
-- [x] Create header and footer components
-- [x] Implement collapsible sidebar navigation for desktop
-- [x] Ensure all components adapt to different screen sizes
+- [x] Create a responsive container component using Tailwind
+- [x] Implement a grid system using Tailwind's grid utilities
+- [x] Create header and footer components using ShadCN/UI
+- [x] Implement collapsible sidebar navigation using ShadCN/UI
+- [x] Ensure all components adapt to different screen sizes using Tailwind's responsive utilities
 
 **Dependencies:**
 
@@ -104,7 +105,7 @@ This document outlines the development phases for the Colostle Companion app, fo
 - [x] Create a character creation form
   - Implemented form with character name and class selection
   - Added form validation for required fields
-  - Created responsive form layout with BEM styling
+  - Created responsive form layout using Tailwind and ShadCN/UI
   - Added accessibility attributes and error handling
 - [x] Implement name input
   - Added controlled input with validation
@@ -154,7 +155,7 @@ This document outlines the development phases for the Colostle Companion app, fo
 - [x] Create a companion creation form
   - Implemented form with companion name and type selection
   - Added form validation for required fields
-  - Created responsive form layout with BEM styling
+  - Created responsive form layout using Tailwind and ShadCN/UI
   - Added accessibility attributes and error handling
 - [x] Implement companion name input
   - Added controlled input with validation

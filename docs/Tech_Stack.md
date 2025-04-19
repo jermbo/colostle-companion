@@ -90,10 +90,12 @@ npm run dev
 
 ## Styling Guidelines
 
-- Uses modern CSS features with Custom Properties
-- Follows BEM naming convention
+- Uses Tailwind CSS for styling
+- ShadCN/UI components for consistent UI
+- Modern CSS features with Tailwind's built-in utilities
+- Container queries for responsive design
 - CSS nesting limited to 3 layers deep
-- No CSS Modules - using global styles with proper scoping
+- No custom CSS - leveraging Tailwind's utility classes
 
 ## TypeScript Guidelines
 

@@ -158,8 +158,10 @@ colostle-companion/
 
 - Functional and declarative programming patterns
 - TypeScript for type safety
-- BEM naming convention for CSS
-- Modern CSS features with Custom Properties
+- Tailwind CSS for styling
+- ShadCN/UI components for consistent UI
+- Modern CSS features with Tailwind's built-in utilities
+- Container queries for responsive design
 - CSS nesting limited to 3 layers deep
 
 ### State Management
