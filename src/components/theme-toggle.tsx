@@ -1,6 +1,7 @@
 import { useTheme } from "@/context/theme-context";
 import { Moon, Sun, Monitor } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { Button } from "./ui/button";
 
 interface ThemeToggleProps {
 	className?: string;
@@ -13,10 +14,7 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
 				setIsOpen(false);
 			}
 		};
@@ -34,26 +32,25 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 
 	return (
 		<div className={`relative inline-block ${className}`} ref={dropdownRef}>
-			<button
-				className="flex items-center justify-center p-2 rounded-md bg-background text-foreground border border-border hover:bg-accent hover:text-accent-foreground transition-colors"
+			<Button
 				onClick={() => setIsOpen(!isOpen)}
 				aria-label="Toggle theme"
 				aria-expanded={isOpen}
+				variant="outline"
+				size="icon"
 			>
 				{getThemeIcon()}
-			</button>
+			</Button>
 			<div
-				className={`absolute top-full right-0 mt-2 p-2 bg-background border border-border rounded-md shadow-md min-w-[8rem] z-50 transition-all duration-200 ${
-					isOpen
-						? "opacity-100 translate-y-0"
-						: "opacity-0 -translate-y-2 pointer-events-none"
+				className={`bg-background border-border absolute top-full right-0 z-50 mt-2 flex min-w-[8rem] flex-col gap-1 rounded-md border p-2 shadow-md transition-all duration-200 ${
+					isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"
 				}`}
 			>
-				<button
-					className={`flex items-center gap-2 w-full p-2 rounded-md transition-colors ${
-						theme === "light"
-							? "bg-accent text-accent-foreground"
-							: "hover:bg-accent hover:text-accent-foreground"
+				<Button
+					variant="ghost"
+					size="sm"
+					className={`w-full justify-start ${
+						theme === "light" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
 					}`}
 					onClick={() => {
 						setTheme("light");
@@ -62,12 +59,12 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				>
 					<Sun size={16} />
 					<span>Light</span>
-				</button>
-				<button
-					className={`flex items-center gap-2 w-full p-2 rounded-md transition-colors ${
-						theme === "dark"
-							? "bg-accent text-accent-foreground"
-							: "hover:bg-accent hover:text-accent-foreground"
+				</Button>
+				<Button
+					variant="ghost"
+					size="sm"
+					className={`w-full justify-start ${
+						theme === "dark" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
 					}`}
 					onClick={() => {
 						setTheme("dark");
@@ -76,12 +73,12 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				>
 					<Moon size={16} />
 					<span>Dark</span>
-				</button>
-				<button
-					className={`flex items-center gap-2 w-full p-2 rounded-md transition-colors ${
-						theme === "system"
-							? "bg-accent text-accent-foreground"
-							: "hover:bg-accent hover:text-accent-foreground"
+				</Button>
+				<Button
+					variant="ghost"
+					size="sm"
+					className={`w-full justify-start ${
+						theme === "system" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
 					}`}
 					onClick={() => {
 						setTheme("system");
@@ -90,7 +87,7 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				>
 					<Monitor size={16} />
 					<span>System</span>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
