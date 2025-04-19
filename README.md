@@ -84,6 +84,8 @@ This companion app digitizes the card-drawing process and provides instant inter
 - TypeScript
 - Vite
 - IndexedDB
+- Tailwind CSS
+- ShadCN/UI
 
 ### Development Tools
 
