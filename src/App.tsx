@@ -12,10 +12,12 @@ import Characters from "./pages/Characters";
 import Sessions from "./pages/Sessions";
 import Journal from "./pages/Journal";
 import Settings from "./pages/Settings";
+import InventoryPage from "./pages/InventoryPage";
 
 const navItems = [
 	{ label: "Dashboard", href: "/", icon: "🏠" },
 	{ label: "Characters", href: "/characters", icon: "👤" },
+	{ label: "Inventory", href: "/inventory", icon: "🎒" },
 	{ label: "Sessions", href: "/sessions", icon: "🎲" },
 	{ label: "Journal", href: "/journal", icon: "📝" },
 	{ label: "Settings", href: "/settings", icon: "⚙️" },
@@ -32,6 +34,7 @@ const App = () => {
 						<Routes>
 							<Route path="/" element={<Dashboard />} />
 							<Route path="/characters" element={<Characters />} />
+							<Route path="/inventory" element={<InventoryPage />} />
 							<Route path="/sessions" element={<Sessions />} />
 							<Route path="/journal" element={<Journal />} />
 							<Route path="/settings" element={<Settings />} />

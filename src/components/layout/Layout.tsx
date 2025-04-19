@@ -12,6 +12,7 @@ interface Props {
 const navItems = [
 	{ label: "Dashboard", href: "/", icon: "🏠" },
 	{ label: "Characters", href: "/characters", icon: "👤" },
+	{ label: "Inventory", href: "/inventory", icon: "🎒" },
 	{ label: "Sessions", href: "/sessions", icon: "🎲" },
 	{ label: "Journal", href: "/journal", icon: "📝" },
 	{ label: "Settings", href: "/settings", icon: "⚙️" },
