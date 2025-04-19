@@ -9,10 +9,7 @@ const CharacterList = (): ReactElement => {
 	const { characters } = useCharacterContext();
 	const [isCreatingCharacter, setIsCreatingCharacter] =
 		useState<boolean>(false);
-
-	const [isCreatingCompanion, setIsCreatingCompanion] =
-		useState<boolean>(false);
-
+	const [isEditingCompanion, setIsEditingCompanion] = useState<boolean>(false);
 	const [selectedCharacter, setSelectedCharacter] = useState<
 		Character | undefined
 	>(undefined);
@@ -20,6 +17,7 @@ const CharacterList = (): ReactElement => {
 	const handleCreateCharacter = (): void => {
 		setSelectedCharacter(undefined);
 		setIsCreatingCharacter(true);
+		setIsEditingCompanion(false);
 	};
 
 	const handleCharacterCreated = (): void => {
@@ -30,15 +28,17 @@ const CharacterList = (): ReactElement => {
 	const handleEditCharacter = (character: Character): void => {
 		setSelectedCharacter(character);
 		setIsCreatingCharacter(true);
+		setIsEditingCompanion(false);
 	};
 
-	const handleCreateCompanion = (character: Character): void => {
+	const handleEditCompanion = (character: Character): void => {
 		setSelectedCharacter(character);
-		setIsCreatingCompanion(true);
+		setIsEditingCompanion(true);
+		setIsCreatingCharacter(false);
 	};
 
-	const handleCompanionCreated = (): void => {
-		setIsCreatingCompanion(false);
+	const handleCompanionComplete = (): void => {
+		setIsEditingCompanion(false);
 		setSelectedCharacter(undefined);
 	};
 
@@ -59,14 +59,17 @@ const CharacterList = (): ReactElement => {
 				</div>
 			)}
 
-			{isCreatingCompanion && selectedCharacter && (
-				<div className="card">
-					<CompanionCreationForm
-						characterId={selectedCharacter.id}
-						onComplete={handleCompanionCreated}
-					/>
-				</div>
-			)}
+			{isEditingCompanion &&
+				selectedCharacter &&
+				selectedCharacter.companion && (
+					<div className="card">
+						<CompanionCreationForm
+							characterId={selectedCharacter.id}
+							companion={selectedCharacter.companion}
+							onComplete={handleCompanionComplete}
+						/>
+					</div>
+				)}
 
 			{characters.length === 0 ? (
 				<div className="card">
@@ -81,6 +84,7 @@ const CharacterList = (): ReactElement => {
 							key={character.id}
 							character={character}
 							onEdit={handleEditCharacter}
+							onEditCompanion={handleEditCompanion}
 						/>
 					))}
 				</div>

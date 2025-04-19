@@ -1,6 +1,5 @@
 /* Character Form Styles */
-.character-form,
-.companion-form {
+.character-form {
 	background-color: var(--surface-color);
 	border-radius: var(--border-radius-md);
 	padding: var(--spacing-lg);
@@ -8,20 +7,17 @@
 	box-shadow: var(--shadow-sm);
 }
 
-.character-form h3,
-.companion-form h3 {
+.character-form h3 {
 	margin-top: 0;
 	margin-bottom: var(--spacing-md);
 	color: var(--text-color-primary);
 }
 
-.character-form__field,
-.companion-form__field {
+.character-form__field {
 	margin-bottom: var(--spacing-md);
 }
 
-.character-form__label,
-.companion-form__label {
+.character-form__label {
 	display: block;
 	margin-bottom: var(--spacing-xs);
 	font-weight: 500;
@@ -29,9 +25,7 @@
 }
 
 .character-form__input,
-.character-form__select,
-.companion-form__input,
-.companion-form__select {
+.character-form__select {
 	width: 100%;
 	padding: var(--spacing-sm);
 	border: 1px solid var(--border-color);
@@ -42,37 +36,30 @@
 }
 
 .character-form__input:focus,
-.character-form__select:focus,
-.companion-form__input:focus,
-.companion-form__select:focus {
+.character-form__select:focus {
 	outline: none;
 	border-color: var(--primary-color);
 	box-shadow: 0 0 0 2px var(--primary-color-light);
 }
 
 .character-form__input--error,
-.character-form__select--error,
-.companion-form__input--error,
-.companion-form__select--error {
+.character-form__select--error {
 	border-color: var(--error-color);
 }
 
-.character-form__error,
-.companion-form__error {
+.character-form__error {
 	color: var(--error-color);
 	font-size: var(--font-size-sm);
 	margin-top: var(--spacing-xs);
 }
 
-.character-form__actions,
-.companion-form__actions {
+.character-form__actions {
 	margin-top: var(--spacing-lg);
 	display: flex;
 	justify-content: flex-end;
 }
 
-.character-form__button,
-.companion-form__button {
+.character-form__button {
 	background-color: var(--primary-color);
 	color: var(--text-color-light);
 	border: none;
@@ -84,8 +71,7 @@
 	transition: background-color 0.2s ease;
 }
 
-.character-form__button:hover,
-.companion-form__button:hover {
+.character-form__button:hover {
 	background-color: var(--primary-color-dark);
 }
 

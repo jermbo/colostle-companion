@@ -1,9 +1,14 @@
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, useEffect } from "react";
 import { useCharacterContext } from "../../context/CharacterContext";
-import { CompanionFormData, CHARACTER_CLASSES } from "../../types/character";
+import {
+	CompanionFormData,
+	CHARACTER_CLASSES,
+	Companion,
+} from "../../types/character";
 
 interface Props {
 	characterId: string;
+	companion?: Companion;
 	onComplete?: () => void;
 }
 
@@ -54,14 +59,25 @@ const COMPANION_TYPES: CompanionType[] = [
 
 const CompanionCreationForm = ({
 	characterId,
+	companion,
 	onComplete,
 }: Props): ReactElement => {
-	const { characters, addCompanion } = useCharacterContext();
+	const { characters, addCompanion, updateCompanion } = useCharacterContext();
 	const [formData, setFormData] = useState<CompanionFormData>({
 		name: "",
 		type: "familiar",
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// Initialize form with companion data if editing
+	useEffect(() => {
+		if (companion) {
+			setFormData({
+				name: companion.name,
+				type: companion.type,
+			});
+		}
+	}, [companion]);
 
 	// Find the character and check if they can have a companion
 	const character = characters.find((c) => c.id === characterId);
@@ -111,7 +127,11 @@ const CompanionCreationForm = ({
 		e.preventDefault();
 
 		if (validateForm()) {
-			addCompanion(characterId, formData);
+			if (companion) {
+				updateCompanion(companion.id, formData);
+			} else {
+				addCompanion(characterId, formData);
+			}
 			if (onComplete) {
 				onComplete();
 			}
@@ -126,7 +146,7 @@ const CompanionCreationForm = ({
 		);
 	}
 
-	if (!canHaveCompanion) {
+	if (!canHaveCompanion && !companion) {
 		return (
 			<div className="card">
 				<p className="card__content">
@@ -139,7 +159,9 @@ const CompanionCreationForm = ({
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
-			<h2 className="card__title">Create Companion</h2>
+			<h2 className="card__title">
+				{companion ? "Edit Companion" : "Create Companion"}
+			</h2>
 
 			<div className="form__field">
 				<label htmlFor="name" className="form__label">
@@ -216,7 +238,7 @@ const CompanionCreationForm = ({
 					className="button button--primary"
 					disabled={!formData.name.trim()}
 				>
-					Create Companion
+					{companion ? "Save Changes" : "Create Companion"}
 				</button>
 			</div>
 		</form>

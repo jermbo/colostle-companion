@@ -6,9 +6,14 @@ import { CHARACTER_CLASSES } from "../../types/character";
 interface Props {
 	character: Character;
 	onEdit: (character: Character) => void;
+	onEditCompanion?: (character: Character) => void;
 }
 
-const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
+const CharacterCard = ({
+	character,
+	onEdit,
+	onEditCompanion,
+}: Props): ReactElement => {
 	const { deleteCharacter } = useCharacterContext();
 	const classInfo = CHARACTER_CLASSES[character.class];
 
@@ -62,7 +67,17 @@ const CharacterCard = ({ character, onEdit }: Props): ReactElement => {
 
 			{character.companion && (
 				<div className="card__section">
-					<span className="card__stat-label">Companion</span>
+					<div className="card__section-header">
+						<span className="card__stat-label">Companion</span>
+						{onEditCompanion && (
+							<button
+								className="button button--secondary button--small"
+								onClick={() => onEditCompanion(character)}
+							>
+								Edit Companion
+							</button>
+						)}
+					</div>
 					<p className="card__content">{character.companion.name}</p>
 					<p className="card__content">{character.companion.type}</p>
 				</div>
