@@ -1,8 +1,12 @@
+import { Button } from "./components/ui/button";
+import { Plus } from "lucide-react";
 const App = () => {
 	return (
-		<>
-			<h1>Hello World</h1>
-		</>
+		<div className="flex flex-col items-center justify-center min-h-svh">
+			<Button variant="outline" size="icon">
+				<Plus />
+			</Button>
+		</div>
 	);
 };
 
