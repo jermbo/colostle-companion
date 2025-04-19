@@ -13,6 +13,7 @@
 @import "./styles/form.css";
 @import "./styles/page.css";
 @import "./styles/sidebar.css";
+@import "./styles/companion.css";
 
 /* Pages */
 @import "./styles/dashboard.css";

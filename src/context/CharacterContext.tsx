@@ -14,7 +14,7 @@ import {
 
 interface CharacterContextType {
 	characters: Character[];
-	addCharacter: (characterData: CharacterFormData) => void;
+	addCharacter: (characterData: CharacterFormData) => Character;
 	updateCharacter: (id: string, characterData: CharacterFormData) => void;
 	deleteCharacter: (id: string) => void;
 	addCompanion: (characterId: string, companionData: CompanionFormData) => void;
@@ -48,7 +48,7 @@ export const CharacterProvider = ({
 }: CharacterProviderProps): ReactElement => {
 	const [characters, setCharacters] = useState<Character[]>([]);
 
-	const addCharacter = (characterData: CharacterFormData): void => {
+	const addCharacter = (characterData: CharacterFormData): Character => {
 		const newCharacter: Character = {
 			id: crypto.randomUUID(),
 			name: characterData.characterName,
@@ -59,6 +59,7 @@ export const CharacterProvider = ({
 		};
 
 		setCharacters((prevCharacters) => [...prevCharacters, newCharacter]);
+		return newCharacter;
 	};
 
 	const updateCharacter = (

@@ -5,6 +5,7 @@ import {
 	CHARACTER_CLASSES,
 	Character,
 } from "../../types/character";
+import CompanionCreationForm from "./CompanionCreationForm";
 
 interface Props {
 	character?: Character;
@@ -21,6 +22,8 @@ const CharacterCreationForm = ({
 		class: character?.class || "armed",
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
+	const [showCompanionForm, setShowCompanionForm] = useState(false);
+	const [characterId, setCharacterId] = useState<string | null>(null);
 
 	// Initialize form with character data if editing
 	useEffect(() => {
@@ -63,26 +66,49 @@ const CharacterCreationForm = ({
 		return Object.keys(newErrors).length === 0;
 	};
 
-	const handleSubmit = (e: React.FormEvent): void => {
+	const handleCharacterSubmit = (e: React.FormEvent): void => {
 		e.preventDefault();
 
 		if (validateForm()) {
 			if (character) {
 				updateCharacter(character.id, formData);
+				if (onComplete) {
+					onComplete();
+				}
 			} else {
-				addCharacter(formData);
+				const newCharacter = addCharacter(formData);
+				if (CHARACTER_CLASSES[formData.class].requiresCompanion) {
+					setCharacterId(newCharacter.id);
+					setShowCompanionForm(true);
+				} else if (onComplete) {
+					onComplete();
+				}
 			}
+		}
+	};
 
-			if (onComplete) {
-				onComplete();
-			}
+	const handleCompanionComplete = (): void => {
+		setShowCompanionForm(false);
+		if (onComplete) {
+			onComplete();
 		}
 	};
 
 	const selectedClass = CHARACTER_CLASSES[formData.class];
 
+	if (showCompanionForm && characterId) {
+		return (
+			<div className="character-creation">
+				<CompanionCreationForm
+					characterId={characterId}
+					onComplete={handleCompanionComplete}
+				/>
+			</div>
+		);
+	}
+
 	return (
-		<form className="form" onSubmit={handleSubmit}>
+		<form className="form" onSubmit={handleCharacterSubmit}>
 			<h2 className="card__title">
 				{character ? "Edit Character" : "Create New Character"}
 			</h2>
@@ -188,7 +214,8 @@ const CharacterCreationForm = ({
 
 				{selectedClass.requiresCompanion && (
 					<p className="card__content" role="alert">
-						<strong>Note:</strong> This class requires a companion.
+						<strong>Note:</strong> This class requires a companion. You will be
+						prompted to create one after creating your character.
 					</p>
 				)}
 			</div>

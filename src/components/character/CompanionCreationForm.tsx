@@ -1,22 +1,76 @@
 import { useState, ReactElement } from "react";
 import { useCharacterContext } from "../../context/CharacterContext";
-import { CompanionFormData } from "../../types/character";
+import { CompanionFormData, CHARACTER_CLASSES } from "../../types/character";
 
 interface Props {
 	characterId: string;
 	onComplete?: () => void;
 }
 
+interface CompanionType {
+	value: string;
+	label: string;
+	description: string;
+	image: string;
+}
+
+const COMPANION_TYPES: CompanionType[] = [
+	{
+		value: "familiar",
+		label: "Familiar",
+		description:
+			"A small Rook companion that follows you like a pet, providing guidance and companionship.",
+		image: "https://picsum.photos/seed/familiar/400/400",
+	},
+	{
+		value: "mount",
+		label: "Mount",
+		description:
+			"A mechanical mount adapted from Rook parts, allowing for faster travel across the Colostle.",
+		image: "https://picsum.photos/seed/mount/400/400",
+	},
+	{
+		value: "servant",
+		label: "Servant",
+		description:
+			"A loyal mechanical servant that assists with tasks and provides support during adventures.",
+		image: "https://picsum.photos/seed/servant/400/400",
+	},
+	{
+		value: "guardian",
+		label: "Guardian",
+		description:
+			"A protective companion that helps defend against threats and provides combat support.",
+		image: "https://picsum.photos/seed/guardian/400/400",
+	},
+	{
+		value: "friend",
+		label: "Friend",
+		description:
+			"A sentient Rook companion that forms a deep bond with you, offering both emotional and practical support.",
+		image: "https://picsum.photos/seed/friend/400/400",
+	},
+];
+
 const CompanionCreationForm = ({
 	characterId,
 	onComplete,
 }: Props): ReactElement => {
-	const { addCompanion } = useCharacterContext();
+	const { characters, addCompanion } = useCharacterContext();
 	const [formData, setFormData] = useState<CompanionFormData>({
 		name: "",
 		type: "familiar",
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// Find the character and check if they can have a companion
+	const character = characters.find((c) => c.id === characterId);
+	const canHaveCompanion =
+		character && CHARACTER_CLASSES[character.class].requiresCompanion;
+
+	const selectedCompanionType = COMPANION_TYPES.find(
+		(type) => type.value === formData.type
+	);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -39,6 +93,10 @@ const CompanionCreationForm = ({
 
 		if (!formData.name.trim()) {
 			newErrors.name = "Companion name is required";
+		} else if (formData.name.length < 2) {
+			newErrors.name = "Companion name must be at least 2 characters long";
+		} else if (formData.name.length > 50) {
+			newErrors.name = "Companion name must be less than 50 characters";
 		}
 
 		if (!formData.type) {
@@ -60,12 +118,31 @@ const CompanionCreationForm = ({
 		}
 	};
 
-	return (
-		<form className="companion-form" onSubmit={handleSubmit}>
-			<h3>Create Companion</h3>
+	if (!character) {
+		return (
+			<div className="card">
+				<p className="card__content">Character not found</p>
+			</div>
+		);
+	}
 
-			<div className="companion-form__field">
-				<label htmlFor="name" className="companion-form__label">
+	if (!canHaveCompanion) {
+		return (
+			<div className="card">
+				<p className="card__content">
+					{CHARACTER_CLASSES[character.class].displayName} cannot have
+					companions.
+				</p>
+			</div>
+		);
+	}
+
+	return (
+		<form className="form" onSubmit={handleSubmit}>
+			<h2 className="card__title">Create Companion</h2>
+
+			<div className="form__field">
+				<label htmlFor="name" className="form__label">
 					Companion Name
 				</label>
 				<input
@@ -74,16 +151,20 @@ const CompanionCreationForm = ({
 					name="name"
 					value={formData.name}
 					onChange={handleChange}
-					className={`companion-form__input ${
-						errors.name ? "companion-form__input--error" : ""
-					}`}
+					className={`form__input ${errors.name ? "form__input--error" : ""}`}
 					placeholder="Enter companion name"
+					maxLength={50}
+					aria-describedby={errors.name ? "name-error" : undefined}
 				/>
-				{errors.name && <p className="companion-form__error">{errors.name}</p>}
+				{errors.name && (
+					<p className="form__error" id="name-error" role="alert">
+						{errors.name}
+					</p>
+				)}
 			</div>
 
-			<div className="companion-form__field">
-				<label htmlFor="type" className="companion-form__label">
+			<div className="form__field">
+				<label htmlFor="type" className="form__label">
 					Companion Type
 				</label>
 				<select
@@ -91,21 +172,50 @@ const CompanionCreationForm = ({
 					name="type"
 					value={formData.type}
 					onChange={handleChange}
-					className={`companion-form__select ${
-						errors.type ? "companion-form__select--error" : ""
-					}`}
+					className={`form__select ${errors.type ? "form__select--error" : ""}`}
+					aria-describedby={errors.type ? "type-error" : undefined}
 				>
-					<option value="familiar">Familiar</option>
-					<option value="mount">Mount</option>
-					<option value="servant">Servant</option>
-					<option value="guardian">Guardian</option>
-					<option value="friend">Friend</option>
+					{COMPANION_TYPES.map((type) => (
+						<option key={type.value} value={type.value}>
+							{type.label}
+						</option>
+					))}
 				</select>
-				{errors.type && <p className="companion-form__error">{errors.type}</p>}
+				{errors.type && (
+					<p className="form__error" id="type-error" role="alert">
+						{errors.type}
+					</p>
+				)}
 			</div>
 
-			<div className="companion-form__actions">
-				<button type="submit" className="companion-form__button">
+			{selectedCompanionType && (
+				<div className="card__section">
+					<h3 className="card__title">{selectedCompanionType.label}</h3>
+					<div className="card__content">
+						<div className="card__image">
+							<img
+								src={selectedCompanionType.image}
+								alt={selectedCompanionType.label}
+							/>
+						</div>
+						<p className="card__description">
+							{selectedCompanionType.description}
+						</p>
+						{formData.name && (
+							<p className="card__content">
+								Your companion will be named: <strong>{formData.name}</strong>
+							</p>
+						)}
+					</div>
+				</div>
+			)}
+
+			<div className="action-bar">
+				<button
+					type="submit"
+					className="button button--primary"
+					disabled={!formData.name.trim()}
+				>
 					Create Companion
 				</button>
 			</div>
