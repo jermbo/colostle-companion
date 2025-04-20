@@ -3,17 +3,17 @@ import { CharacterForm } from "@/components/character-form";
 import { CharacterClass } from "@/types/character";
 import { addCharacter } from "@/lib/db";
 
-export default function Create() {
+export default function CharacterCreation() {
 	const navigate = useNavigate();
 
 	const handleSubmit = async (formData: { characterName: string; class: CharacterClass }) => {
 		try {
-			const character = await addCharacter({
+			await addCharacter({
 				name: formData.characterName,
 				class: formData.class,
 				level: 1,
 			});
-			navigate(`/character/${character.id}`);
+			navigate("/characters");
 		} catch (error) {
 			console.error("Failed to create character:", error);
 		}

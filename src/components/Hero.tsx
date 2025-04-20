@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import Button from "./ui/Button";
 
 const Hero = () => {
+	const navigate = useNavigate();
+
 	const handleOnStart = () => {
-		// TODO: Implement this in the character context
-		console.log("Starting adventure...");
+		navigate("/character/create");
 	};
+
 	return (
 		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 			<div className="text-center">
@@ -15,10 +18,15 @@ const Hero = () => {
 					Create your character and explore the ever-changing halls of Colostle. Each session brings new adventures and
 					discoveries.
 				</p>
-				<div className="mx-auto mt-5 max-w-md sm:flex sm:justify-center md:mt-8">
+				<div className="mx-auto mt-5 max-w-md space-x-4 sm:flex sm:justify-center md:mt-8">
 					<div className="rounded-md shadow">
 						<Button onClick={handleOnStart} variant="primary" size="lg">
-							Start Your Adventure
+							Create Character
+						</Button>
+					</div>
+					<div className="rounded-md shadow">
+						<Button onClick={() => navigate("/characters")} variant="secondary" size="lg">
+							View Characters
 						</Button>
 					</div>
 				</div>

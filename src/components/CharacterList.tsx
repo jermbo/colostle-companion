@@ -1,18 +1,33 @@
-import CharacterCard from "./CharacterCard";
+import { useCharacter } from "@/context/character-context";
+import { CharacterCard } from "./CharacterCard";
 
-interface Character {
-	id: string;
-	name: string;
-	lastPlayed: string;
-}
+export const CharacterList = () => {
+	const { characters, isLoading, error } = useCharacter();
 
-interface Props {
-	characters: Character[];
-	onContinue: (id: string) => void;
-	onMenuClick: (id: string) => void;
-}
+	if (isLoading) {
+		return (
+			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+				<div className="text-center">Loading characters...</div>
+			</div>
+		);
+	}
 
-const CharacterList = ({ characters, onContinue, onMenuClick }: Props) => {
+	if (error) {
+		return (
+			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+				<div className="text-center text-red-600">Error loading characters: {error.message}</div>
+			</div>
+		);
+	}
+
+	if (characters.length === 0) {
+		return (
+			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+				<div className="text-center text-gray-500">No characters found. Create one to get started!</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 			<h2 className="mb-6 text-2xl font-bold">Your Characters</h2>
@@ -28,9 +43,9 @@ const CharacterList = ({ characters, onContinue, onMenuClick }: Props) => {
 						<div key={character.id} className="min-w-[280px] flex-none snap-center first:pl-8 last:pr-8">
 							<CharacterCard
 								name={character.name}
-								lastPlayed={character.lastPlayed}
-								onContinue={() => onContinue(character.id)}
-								onMenuClick={() => onMenuClick(character.id)}
+								level={character.level}
+								characterClass={character.class}
+								slug={character.slug}
 							/>
 						</div>
 					))}
@@ -39,5 +54,3 @@ const CharacterList = ({ characters, onContinue, onMenuClick }: Props) => {
 		</div>
 	);
 };
-
-export default CharacterList;

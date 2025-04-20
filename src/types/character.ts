@@ -50,6 +50,7 @@ export const CHARACTER_CLASSES: Record<CharacterClass, CharacterClassInfo> = {
 
 export interface Character {
 	id: string;
+	slug: string;
 	name: string;
 	class: CharacterClass;
 	level: number;
@@ -62,7 +63,6 @@ export interface Companion {
 	id: string;
 	name: string;
 	type: string;
-	characterId: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -76,3 +76,10 @@ export interface CompanionFormData {
 	name: string;
 	type: string;
 }
+
+export const generateSlug = (name: string): string => {
+	return name
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+};
