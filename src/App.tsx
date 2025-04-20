@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/context/theme-context";
-import Navigation from "@/components/navigation/Navigation";
-import Hero from "@/components/hero/Hero";
-import CharacterList from "@/components/character/CharacterList";
+import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import CharacterList from "@/components/CharacterList";
 import "@/styles/utils.css";
 
 const App = () => {
