@@ -49,7 +49,6 @@ const Button = ({
 				circle && "btn-circle",
 				glass && "glass",
 				noAnimation && "no-animation",
-				"text-current",
 				className,
 			)}
 			disabled={disabled || loading}

@@ -1,11 +1,13 @@
 import { Character, Companion } from "@/types/character";
+import { Session } from "@/types/session";
 
 const DB_NAME = "colostle-companion";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 const STORES = {
 	CHARACTERS: "characters",
 	COMPANIONS: "companions",
+	SESSIONS: "sessions",
 } as const;
 
 export const initDB = async (): Promise<IDBDatabase> => {
@@ -30,6 +32,14 @@ export const initDB = async (): Promise<IDBDatabase> => {
 			if (!db.objectStoreNames.contains(STORES.COMPANIONS)) {
 				const companionStore = db.createObjectStore(STORES.COMPANIONS, { keyPath: "id" });
 				companionStore.createIndex("characterId", "characterId", { unique: false });
+			}
+
+			// Sessions store
+			if (!db.objectStoreNames.contains(STORES.SESSIONS)) {
+				const sessionStore = db.createObjectStore(STORES.SESSIONS, { keyPath: "id" });
+				sessionStore.createIndex("characterId", "characterId", { unique: false });
+				sessionStore.createIndex("status", "status", { unique: false });
+				sessionStore.createIndex("created", "created", { unique: false });
 			}
 		};
 	});
@@ -110,6 +120,44 @@ export const getCharacterBySlug = async (slug: string): Promise<Character | null
 			const index = store.index("slug");
 			const request = index.get(slug);
 			request.onsuccess = () => resolve(request.result || null);
+			request.onerror = () => reject(request.error);
+		});
+	});
+};
+
+export const addSession = async (session: Omit<Session, "id" | "created" | "updated">): Promise<Session> => {
+	const newSession: Session = {
+		...session,
+		id: crypto.randomUUID(),
+		created: new Date(),
+		updated: new Date(),
+	};
+
+	return withTransaction(STORES.SESSIONS, "readwrite", (store) => {
+		return new Promise((resolve, reject) => {
+			const request = store.add(newSession);
+			request.onsuccess = () => resolve(newSession);
+			request.onerror = () => reject(request.error);
+		});
+	});
+};
+
+export const getSessionsByCharacterId = async (characterId: string): Promise<Session[]> => {
+	return withTransaction(STORES.SESSIONS, "readonly", (store) => {
+		return new Promise((resolve, reject) => {
+			const index = store.index("characterId");
+			const request = index.getAll(characterId);
+			request.onsuccess = () => resolve(request.result || []);
+			request.onerror = () => reject(request.error);
+		});
+	});
+};
+
+export const updateSession = async (session: Session): Promise<Session> => {
+	return withTransaction(STORES.SESSIONS, "readwrite", (store) => {
+		return new Promise((resolve, reject) => {
+			const request = store.put(session);
+			request.onsuccess = () => resolve(session);
 			request.onerror = () => reject(request.error);
 		});
 	});

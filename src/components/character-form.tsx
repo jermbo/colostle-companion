@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CharacterClass, CHARACTER_CLASSES } from "@/types/character";
+import Button from "./ui/Button";
 
 interface Props {
 	onSubmit: (data: { characterName: string; class: CharacterClass }) => void;
@@ -25,9 +26,11 @@ export const CharacterForm = ({ onSubmit }: Props) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="max-w-md space-y-6">
-			<div>
-				<label htmlFor="characterName" className="block text-sm font-medium text-gray-700">
+		<form onSubmit={handleSubmit}>
+			<fieldset className="fieldset bg-base-200 border-base-300 rounded-box flex flex-col gap-4 border p-4">
+				<legend className="fieldset-legend">Create Character</legend>
+
+				<label className="label w-full" htmlFor="characterName">
 					Character Name
 				</label>
 				<input
@@ -35,20 +38,19 @@ export const CharacterForm = ({ onSubmit }: Props) => {
 					id="characterName"
 					value={characterName}
 					onChange={(e) => setCharacterName(e.target.value)}
-					className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					className="input w-full"
+					placeholder="Enter character name"
 					required
 				/>
-			</div>
 
-			<div>
-				<label htmlFor="characterClass" className="block text-sm font-medium text-gray-700">
+				<label className="label w-full" htmlFor="characterClass">
 					Character Class
 				</label>
 				<select
 					id="characterClass"
 					value={selectedClass}
 					onChange={(e) => setSelectedClass(e.target.value as CharacterClass)}
-					className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					className="input w-full"
 					required
 				>
 					{Object.entries(CHARACTER_CLASSES).map(([key, value]) => (
@@ -57,17 +59,11 @@ export const CharacterForm = ({ onSubmit }: Props) => {
 						</option>
 					))}
 				</select>
-			</div>
 
-			<div className="mt-4">
-				<button
-					type="submit"
-					disabled={isSubmitting}
-					className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-				>
+				<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
 					{isSubmitting ? "Creating..." : "Create Character"}
-				</button>
-			</div>
+				</Button>
+			</fieldset>
 		</form>
 	);
 };

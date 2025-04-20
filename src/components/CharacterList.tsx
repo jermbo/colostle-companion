@@ -29,7 +29,7 @@ export const CharacterList = () => {
 	}
 
 	return (
-		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+		<div className="">
 			<h2 className="mb-6 text-2xl font-bold">Your Characters</h2>
 
 			{/* Horizontal scroll container */}

@@ -9,7 +9,7 @@ const Hero = () => {
 	};
 
 	return (
-		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+		<div className="">
 			<div className="text-center">
 				<h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
 					Begin Your Journey in the Endless Castle
@@ -22,11 +22,6 @@ const Hero = () => {
 					<div className="rounded-md shadow">
 						<Button onClick={handleOnStart} variant="primary" size="lg">
 							Create Character
-						</Button>
-					</div>
-					<div className="rounded-md shadow">
-						<Button onClick={() => navigate("/characters")} variant="secondary" size="lg">
-							View Characters
 						</Button>
 					</div>
 				</div>

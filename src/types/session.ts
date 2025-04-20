@@ -9,6 +9,7 @@ export enum SessionStatus {
 
 export interface Session {
 	id: string;
+	characterId: string;
 	title: string;
 	content: string;
 	created: Date;

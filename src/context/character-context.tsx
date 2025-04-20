@@ -1,7 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Character, Companion, CharacterClass, generateSlug } from "@/types/character";
 import { Session, SessionStatus } from "@/types/session";
-import { getAllCharacters, addCharacter, addCompanion } from "@/lib/db";
+import {
+	getAllCharacters,
+	addCharacter,
+	addCompanion,
+	addSession,
+	getSessionsByCharacterId,
+	updateSession,
+} from "@/lib/db";
 
 interface CharacterContextType {
 	// Character Management
@@ -19,6 +26,7 @@ interface CharacterContextType {
 	currentSession: Session | null;
 	startSession: (characterId: string) => Promise<Session>;
 	endSession: () => Promise<void>;
+	getCharacterSessions: (characterId: string) => Promise<Session[]>;
 
 	// Data Refresh
 	refreshCharacters: () => Promise<void>;
@@ -83,13 +91,49 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 	};
 
 	const startSession = async (characterId: string): Promise<Session> => {
-		// TODO: Implement session creation
-		throw new Error("Not implemented");
+		try {
+			const session = await addSession({
+				characterId,
+				title: "New Session",
+				content: "",
+				status: SessionStatus.ACTIVE,
+				cards: {
+					drawn: [],
+					discarded: [],
+				},
+				tags: [],
+				images: [],
+				isPrivate: false,
+			});
+			setCurrentSession(session);
+			return session;
+		} catch (err) {
+			throw err instanceof Error ? err : new Error("Failed to start session");
+		}
 	};
 
 	const endSession = async (): Promise<void> => {
-		// TODO: Implement session ending
-		throw new Error("Not implemented");
+		if (!currentSession) return;
+
+		try {
+			const updatedSession = {
+				...currentSession,
+				status: SessionStatus.COMPLETED,
+				updated: new Date(),
+			};
+			await updateSession(updatedSession);
+			setCurrentSession(null);
+		} catch (err) {
+			throw err instanceof Error ? err : new Error("Failed to end session");
+		}
+	};
+
+	const getCharacterSessions = async (characterId: string): Promise<Session[]> => {
+		try {
+			return await getSessionsByCharacterId(characterId);
+		} catch (err) {
+			throw err instanceof Error ? err : new Error("Failed to get character sessions");
+		}
 	};
 
 	useEffect(() => {
@@ -109,6 +153,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 				selectCharacter,
 				startSession,
 				endSession,
+				getCharacterSessions,
 				refreshCharacters,
 			}}
 		>

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useCharacter } from "@/context/character-context";
 import { CHARACTER_CLASSES, CharacterClass } from "@/types/character";
 import type { Character } from "@/types/character";
@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 
 const Character = () => {
 	const { slug } = useParams<{ slug: string }>();
+	const navigate = useNavigate();
 	const [character, setCharacter] = useState<Character | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const { startSession } = useCharacter();
 
 	useEffect(() => {
 		const fetchCharacter = async () => {
@@ -25,6 +27,23 @@ const Character = () => {
 
 		fetchCharacter();
 	}, [slug]);
+
+	const handleStartSession = async () => {
+		if (!character) return;
+
+		try {
+			const session = await startSession(character.id);
+			if (session) {
+				navigate(`/character/${character.slug}/session/${session.id}`);
+			} else {
+				console.error("Failed to create session");
+				// You might want to show an error message to the user here
+			}
+		} catch (error) {
+			console.error("Error starting session:", error);
+			// You might want to show an error message to the user here
+		}
+	};
 
 	if (isLoading) {
 		return (
@@ -83,6 +102,12 @@ const Character = () => {
 						</div>
 					</div>
 				)}
+
+				<div className="mt-8">
+					<button onClick={handleStartSession} className="btn btn-primary w-full">
+						Start New Session
+					</button>
+				</div>
 			</div>
 		</div>
 	);

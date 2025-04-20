@@ -1,19 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { CharacterForm } from "@/components/character-form";
-import { CharacterClass, generateSlug } from "@/types/character";
-import { addCharacter } from "@/lib/db";
+import { useCharacter } from "@/context/character-context";
+import { CharacterClass } from "@/types/character";
 
 export default function Create() {
 	const navigate = useNavigate();
+	const { createCharacter } = useCharacter();
 
 	const handleSubmit = async (formData: { characterName: string; class: CharacterClass }) => {
 		try {
-			const character = await addCharacter({
-				name: formData.characterName,
-				slug: generateSlug(formData.characterName),
-				class: formData.class,
-				level: 1,
-			});
+			const character = await createCharacter(formData.characterName, formData.class);
 			navigate(`/character/${character.slug}`);
 		} catch (error) {
 			console.error("Failed to create character:", error);
@@ -21,8 +17,8 @@ export default function Create() {
 	};
 
 	return (
-		<div className="container mx-auto px-4 py-8">
-			<h1 className="mb-8 text-3xl font-bold">Create New Character</h1>
+		<div className="container mx-auto">
+			<h1 className="mb-4 text-3xl font-bold">Create New Character</h1>
 			<CharacterForm onSubmit={handleSubmit} />
 		</div>
 	);
