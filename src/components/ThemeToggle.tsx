@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/theme-context";
 import { Moon, Sun, Monitor } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "./ui/button";
+import Button from "./ui/Button";
 
 interface ThemeToggleProps {
 	className?: string;
@@ -33,11 +33,12 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 	return (
 		<div className={`relative inline-block ${className}`} ref={dropdownRef}>
 			<Button
+				variant="ghost"
+				size="md"
+				circle
 				onClick={() => setIsOpen(!isOpen)}
 				aria-label="Toggle theme"
 				aria-expanded={isOpen}
-				variant="outline"
-				size="icon"
 			>
 				{getThemeIcon()}
 			</Button>
@@ -49,9 +50,8 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				<Button
 					variant="ghost"
 					size="sm"
-					className={`w-full justify-start ${
-						theme === "light" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
-					}`}
+					active={theme === "light"}
+					className="justify-start gap-2"
 					onClick={() => {
 						setTheme("light");
 						setIsOpen(false);
@@ -63,9 +63,8 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				<Button
 					variant="ghost"
 					size="sm"
-					className={`w-full justify-start ${
-						theme === "dark" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
-					}`}
+					active={theme === "dark"}
+					className="justify-start gap-2"
 					onClick={() => {
 						setTheme("dark");
 						setIsOpen(false);
@@ -77,9 +76,8 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
 				<Button
 					variant="ghost"
 					size="sm"
-					className={`w-full justify-start ${
-						theme === "system" ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
-					}`}
+					active={theme === "system"}
+					className="justify-start gap-2"
 					onClick={() => {
 						setTheme("system");
 						setIsOpen(false);
