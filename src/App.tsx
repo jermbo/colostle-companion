@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/context/theme-context";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import CharacterList from "@/components/CharacterList";
+import Footer from "@/components/Footer";
 import "@/styles/utils.css";
 
 const App = () => {
@@ -44,17 +45,21 @@ const App = () => {
 
 	return (
 		<ThemeProvider>
-			<div className="min-h-screen bg-white dark:bg-gray-900">
+			<div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
 				<Navigation title="Colostle Companion" />
 
-				<Hero
-					title="Begin Your Journey in the Endless Castle"
-					description="Create your character and explore the ever-changing halls of Colostle. Each session brings new adventures and discoveries."
-					buttonText="Start Your Adventure"
-					onStart={handleStartAdventure}
-				/>
+				<main className="flex-1">
+					<Hero
+						title="Begin Your Journey in the Endless Castle"
+						description="Create your character and explore the ever-changing halls of Colostle. Each session brings new adventures and discoveries."
+						buttonText="Start Your Adventure"
+						onStart={handleStartAdventure}
+					/>
 
-				<CharacterList characters={characters} onContinue={handleContinueJourney} onMenuClick={handleCharacterMenu} />
+					<CharacterList characters={characters} onContinue={handleContinueJourney} onMenuClick={handleCharacterMenu} />
+				</main>
+
+				<Footer />
 			</div>
 		</ThemeProvider>
 	);

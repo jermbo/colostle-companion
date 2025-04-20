@@ -13,12 +13,6 @@ const Navigation = ({ title }: Props) => {
 						<span className="text-xl font-bold text-gray-900 dark:text-white">{title}</span>
 					</div>
 					<div className="flex items-center gap-4">
-						<a href="/" className="p-2 hover:text-gray-900">
-							Home
-						</a>
-						<a href="/characters" className="p-2 hover:text-gray-900">
-							Characters
-						</a>
 						<a href="/settings" className="p-2 hover:text-gray-900">
 							Settings
 						</a>
