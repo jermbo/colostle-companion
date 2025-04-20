@@ -27,4 +27,10 @@ export type Theme =
 	| "lemonade"
 	| "night"
 	| "coffee"
-	| "winter";
+	| "winter"
+	| "dim"
+	| "nord"
+	| "sunset"
+	| "caramellatte"
+	| "abyss"
+	| "silk";

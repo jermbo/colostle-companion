@@ -1,4 +1,4 @@
-import ThemeToggle from "@/components/ThemeToggle";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
 	return (
@@ -6,13 +6,14 @@ const Navigation = () => {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="flex h-16 items-center justify-between">
 					<div className="flex-shrink-0">
-						<span className="text-xl font-bold">Colostle Companion</span>
+						<Link to="/" className="text-xl font-bold">
+							Colostle Companion
+						</Link>
 					</div>
 					<div className="flex items-center gap-4">
-						<a href="/settings" className="hover:text-base-content/80 p-2">
+						<Link to="/settings" className="hover:text-base-content/80 p-2">
 							Settings
-						</a>
-						<ThemeToggle />
+						</Link>
 					</div>
 				</div>
 			</div>
