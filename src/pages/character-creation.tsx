@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CharacterForm } from "@/components/character-form";
-import { CharacterClass } from "@/types/character";
+import { CharacterClass, generateSlug } from "@/types/character";
 import { addCharacter } from "@/lib/db";
 
 export default function CharacterCreation() {
@@ -8,10 +8,13 @@ export default function CharacterCreation() {
 
 	const handleSubmit = async (formData: { characterName: string; class: CharacterClass }) => {
 		try {
+			const slug = generateSlug(formData.characterName);
 			await addCharacter({
 				name: formData.characterName,
+				slug,
 				class: formData.class,
 				level: 1,
+				companions: [],
 			});
 			navigate("/characters");
 		} catch (error) {
