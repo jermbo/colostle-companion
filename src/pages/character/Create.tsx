@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CharacterForm } from "@/components/character-form";
-import { CharacterClass } from "@/types/character";
+import { CharacterClass, generateSlug } from "@/types/character";
 import { addCharacter } from "@/lib/db";
 
 export default function Create() {
@@ -10,10 +10,11 @@ export default function Create() {
 		try {
 			const character = await addCharacter({
 				name: formData.characterName,
+				slug: generateSlug(formData.characterName),
 				class: formData.class,
 				level: 1,
 			});
-			navigate(`/character/${character.id}`);
+			navigate(`/character/${character.slug}`);
 		} catch (error) {
 			console.error("Failed to create character:", error);
 		}

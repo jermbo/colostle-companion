@@ -19,25 +19,15 @@ const App = () => {
 				<Router>
 					<div className="flex min-h-screen flex-col">
 						<Navigation />
-
-						<main>
+						<main className="flex-1">
 							<Routes>
-								<Route
-									path="/"
-									element={
-										<>
-											<Hero />
-											<CharacterList />
-										</>
-									}
-								/>
+								<Route path="/" element={<Home />} />
 								<Route path="/settings" element={<Settings />} />
 								<Route path="/character/create" element={<Create />} />
 								<Route path="/character/:slug" element={<Character />} />
-								<Route path="/character/:slug/:sessionId" element={<Session />} />
+								<Route path="/character/:slug/session/:sessionId" element={<Session />} />
 							</Routes>
 						</main>
-
 						<Footer />
 					</div>
 				</Router>
