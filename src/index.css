@@ -1,7 +1,9 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
-
+@import "tailwindcss";
+@plugin "daisyui" {
+	themes: all;
+}
 @import "tw-animate-css";
+@import "./styles/dialog.css";
 
 @layer base {
 	* {

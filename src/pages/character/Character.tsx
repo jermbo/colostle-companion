@@ -139,17 +139,11 @@ const Character = () => {
 					</div>
 				</div>
 
-				{showCompanionForm && (
-					<div className="mt-8">
-						<h2 className="mb-4 text-2xl font-bold">Create Your Companion</h2>
-						<p className="mb-4 text-gray-700">
-							{requiresCompanion
-								? `As a ${classInfo.displayName}, you need a companion to accompany you on your journey.`
-								: "Add a companion to join you on your journey."}
-						</p>
-						<CompanionForm onSubmit={handleCreateCompanion} />
-					</div>
-				)}
+				<CompanionForm
+					onSubmit={handleCreateCompanion}
+					isOpen={showCompanionForm}
+					onClose={() => setShowCompanionForm(false)}
+				/>
 
 				<div className="mt-8">
 					<button onClick={handleStartSession} className="btn btn-primary w-full">
