@@ -6,11 +6,6 @@ import Footer from "@/components/Footer";
 import "@/styles/utils.css";
 
 const App = () => {
-	const handleStartAdventure = () => {
-		// TODO: Implement start adventure logic
-		console.log("Starting adventure...");
-	};
-
 	const handleContinueJourney = (characterId: string) => {
 		console.log("Continuing journey for character:", characterId);
 	};
@@ -45,17 +40,11 @@ const App = () => {
 
 	return (
 		<ThemeProvider>
-			<div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
-				<Navigation title="Colostle Companion" />
+			<div className="flex min-h-screen flex-col">
+				<Navigation />
 
-				<main className="flex-1">
-					<Hero
-						title="Begin Your Journey in the Endless Castle"
-						description="Create your character and explore the ever-changing halls of Colostle. Each session brings new adventures and discoveries."
-						buttonText="Start Your Adventure"
-						onStart={handleStartAdventure}
-					/>
-
+				<main>
+					<Hero />
 					<CharacterList characters={characters} onContinue={handleContinueJourney} onMenuClick={handleCharacterMenu} />
 				</main>
 
