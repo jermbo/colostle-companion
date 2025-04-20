@@ -8,6 +8,7 @@ import {
 	addSession,
 	getSessionsByCharacterId,
 	updateSession,
+	getCompanionsByCharacterId,
 } from "@/lib/db";
 
 interface CharacterContextType {
@@ -30,6 +31,9 @@ interface CharacterContextType {
 
 	// Data Refresh
 	refreshCharacters: () => Promise<void>;
+
+	// Companion Management
+	getCharacterCompanions: (characterId: string) => Promise<Companion[]>;
 }
 
 const CharacterContext = createContext<CharacterContextType | null>(null);
@@ -61,6 +65,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 				slug,
 				class: characterClass,
 				level: 1,
+				companions: [],
 			});
 			await refreshCharacters();
 			return character;
@@ -75,7 +80,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 				name,
 				type,
 				characterId,
-			});
+			} as Omit<Companion, "id" | "createdAt" | "updatedAt">);
 			await refreshCharacters();
 			return companion;
 		} catch (err) {
@@ -136,6 +141,14 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 		}
 	};
 
+	const getCharacterCompanions = async (characterId: string): Promise<Companion[]> => {
+		try {
+			return await getCompanionsByCharacterId(characterId);
+		} catch (err) {
+			throw err instanceof Error ? err : new Error("Failed to get character companions");
+		}
+	};
+
 	useEffect(() => {
 		refreshCharacters();
 	}, []);
@@ -155,6 +168,7 @@ export const CharacterProvider = ({ children }: { children: React.ReactNode }) =
 				endSession,
 				getCharacterSessions,
 				refreshCharacters,
+				getCharacterCompanions,
 			}}
 		>
 			{children}

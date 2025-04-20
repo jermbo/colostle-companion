@@ -104,24 +104,57 @@ export const addCompanion = async (
 	});
 };
 
-export const getAllCharacters = async (): Promise<Character[]> => {
-	return withTransaction(STORES.CHARACTERS, "readonly", (store) => {
+export const getCompanionsByCharacterId = async (characterId: string): Promise<Companion[]> => {
+	return withTransaction(STORES.COMPANIONS, "readonly", (store) => {
 		return new Promise((resolve, reject) => {
-			const request = store.getAll();
-			request.onsuccess = () => resolve(request.result);
+			const index = store.index("characterId");
+			const request = index.getAll(characterId);
+			request.onsuccess = () => resolve(request.result || []);
 			request.onerror = () => reject(request.error);
 		});
 	});
 };
 
+export const getAllCharacters = async (): Promise<Character[]> => {
+	return withTransaction(STORES.CHARACTERS, "readonly", async (store) => {
+		const characters = await new Promise<Character[]>((resolve, reject) => {
+			const request = store.getAll();
+			request.onsuccess = () => resolve(request.result);
+			request.onerror = () => reject(request.error);
+		});
+
+		// Fetch companions for each character
+		const charactersWithCompanions = await Promise.all(
+			characters.map(async (character) => {
+				const companions = await getCompanionsByCharacterId(character.id);
+				return {
+					...character,
+					companions,
+				};
+			}),
+		);
+
+		return charactersWithCompanions;
+	});
+};
+
 export const getCharacterBySlug = async (slug: string): Promise<Character | null> => {
-	return withTransaction(STORES.CHARACTERS, "readonly", (store) => {
-		return new Promise((resolve, reject) => {
+	return withTransaction(STORES.CHARACTERS, "readonly", async (store) => {
+		const character = await new Promise<Character | null>((resolve, reject) => {
 			const index = store.index("slug");
 			const request = index.get(slug);
 			request.onsuccess = () => resolve(request.result || null);
 			request.onerror = () => reject(request.error);
 		});
+
+		if (!character) return null;
+
+		// Fetch companions for this character
+		const companions = await getCompanionsByCharacterId(character.id);
+		return {
+			...character,
+			companions,
+		};
 	});
 };
 

@@ -54,7 +54,7 @@ export interface Character {
 	name: string;
 	class: CharacterClass;
 	level: number;
-	companion?: Companion;
+	companions: Companion[];
 	createdAt: Date;
 	updatedAt: Date;
 }
