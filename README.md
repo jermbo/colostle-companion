@@ -1,297 +1,164 @@
-Welcome to your new TanStack app!
+# SoloRPG Companion App
 
-# Getting Started
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
 
-To run this application:
+## Goals for the App
 
-```bash
-npm install
-npm run start
-```
+The tide is shifting in the world of development, with AI advancements making a significant impact. As a developer, I'm curious about what this means for my craft and career. This project is an exploration into "Vibe Coding" - its significance, practicality, and potential to change software development as we know it.
 
-# Building For Production
+I want to gain insight into how coding assistants work, how they can be integrated into our workflow, and whether they'll make me more capable or redundant. By diving deeper into this technology, I'm aiming to stay ahead of the curve and unlock its full potential - which will ultimately benefit my own projects, including a fan-made tool that enables me to play Colostle on-the-go!
 
-To build this application for production:
+## Features
 
-```bash
-npm run build
-```
+### MVP Features
 
-## Testing
+- **Character Creation**
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+  - Create characters from the book
+  - Track exploration and combat totals
+  - State management using React Context API
+  - Modern UI with Tailwind CSS
 
-```bash
-npm run test
-```
+- **Session Storage**
 
-## Styling
+  - Local storage using IndexedDB
+  - Reviewable game sessions
+  - Optimized data models for component integration
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+- **Card Drawing**
+  - Interactive card drawing system
+  - Real-time data display for encounters
+  - Fast development cycle with Vite
+  - Efficient state management using React Hooks
 
-## Linting & Formatting
+## Game Overview
 
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
+Colostle is a solo RPG where you explore a world inside a castle so vast that entire civilizations exist within its rooms, corridors, and forgotten chambers. Using a standard deck of playing cards, you draw to determine encounters, locations, and events that shape your character's journey.
 
-```bash
-npm run lint
-npm run format
-npm run check
-```
+This companion app digitizes the card-drawing process and provides instant interpretations based on the game's rules, allowing you to focus on the storytelling and adventure.
 
-## Routing
+### Character Management
 
-This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
+- Create and customize character profiles with name and class selection
+- Create companions for classes that require them
+- Assign equipment and inventory items
+- Switch between multiple characters
+- Remove or edit existing characters
 
-### Adding A Route
+### Gameplay Mechanics
 
-To add a new route to your application just add another a new file in the `./src/routes` directory.
+- **Exploration Phase**
 
-TanStack will automatically generate the content of the route file for you.
+  - Card-based exploration system
+  - Draw cards up to your class limit
+  - Different card types (Treasure, City/Building, Enemy, Enemy Rook)
+  - Replacement card drawing for specific card types
 
-Now that you have two routes you can use a `Link` component to navigate between them.
+- **Card Drawing System**
 
-### Adding Links
+  - Automatic card interpretation based on suit and value
+  - Context-aware card effects
+  - Card history tracking
+  - Card discard pile management
 
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+- **Companion System**
+  - Create companions for eligible character classes
+  - Manage companion inventory
+  - Track companion information
+  - Link companions to characters
 
-```tsx
-import { Link } from "@tanstack/react-router";
-```
+### Session Management
 
-Then anywhere in your JSX you can use it like so:
+- Save and load game sessions
+- Review session history
+- Edit or delete existing sessions
+- Auto-save functionality with configurable timer
+- Manual save option
 
-```tsx
-<Link to="/about">About</Link>
-```
+### Journaling System
 
-This will create a link that will navigate to the `/about` route.
+- Create detailed journal entries about your adventures
+- Link entries to specific cards and events
+- Organize entries with tags and categories
+- Search and filter journal entries
+- View a timeline of your story
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
+### Additional Features
 
-### Using A Layout
+- Data export and import functionality
+- Offline-first architecture
+- Data privacy (all data stored locally)
+- Responsive design for all devices
 
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
+## Tech Stack
 
-Here is an example layout that includes a header:
+- **Frontend**
 
-```tsx
-import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+  - React
+  - TypeScript
+  - Tailwind CSS
+  - Vite
 
-import { Link } from "@tanstack/react-router";
+- **State Management**
 
-export const Route = createRootRoute({
-	component: () => (
-		<>
-			<header>
-				<nav>
-					<Link to="/">Home</Link>
-					<Link to="/about">About</Link>
-				</nav>
-			</header>
-			<Outlet />
-			<TanStackRouterDevtools />
-		</>
-	),
-});
-```
+  - React Context API
+  - React Hooks
 
-The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
+- **Storage**
+  - IndexedDB
 
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-const peopleRoute = createRoute({
-	getParentRoute: () => rootRoute,
-	path: "/people",
-	loader: async () => {
-		const response = await fetch("https://swapi.dev/api/people");
-		return response.json() as Promise<{
-			results: {
-				name: string;
-			}[];
-		}>;
-	},
-	component: () => {
-		const data = peopleRoute.useLoaderData();
-		return (
-			<ul>
-				{data.results.map((person) => (
-					<li key={person.name}>{person.name}</li>
-				))}
-			</ul>
-		);
-	},
-});
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+## Out of Scope (MVP)
 
-### React-Query
+The following features are not included in the MVP but may be considered for future development:
 
-React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
+- Combat handling
+- Inventory management
+- AI-driven recommendations
 
-First add your dependencies:
-
-```bash
-npm install @tanstack/react-query @tanstack/react-query-devtools
-```
-
-Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
-
-```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// ...
+## Future Development
 
-const queryClient = new QueryClient();
+### Planned Features
 
-// ...
+- Combat and inventory management systems
+- AI-driven party building recommendations
+- Enhanced exploration/combat optimization tools
 
-if (!rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
+### UI/UX Improvements
 
-	root.render(
-		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
-		</QueryClientProvider>,
-	);
-}
-```
+- Interactive elements
+- Animations and transitions
+- Modern UI components
 
-You can also add TanStack Query Devtools to the root route (optional).
-
-```tsx
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+### Data Model Expansion
 
-const rootRoute = createRootRoute({
-	component: () => (
-		<>
-			<Outlet />
-			<ReactQueryDevtools buttonPosition="top-right" />
-			<TanStackRouterDevtools />
-		</>
-	),
-});
-```
-
-Now you can use `useQuery` to fetch your data.
-
-```tsx
-import { useQuery } from "@tanstack/react-query";
+- Support for additional game mechanics
+- Enhanced storage and retrieval systems
+- Sidekick integration
 
-import "./App.css";
+## Contributing
 
-function App() {
-	const { data } = useQuery({
-		queryKey: ["people"],
-		queryFn: () =>
-			fetch("https://swapi.dev/api/people")
-				.then((res) => res.json())
-				.then((data) => data.results as { name: string }[]),
-		initialData: [],
-	});
+We welcome contributions! If you're interested in contributing to this project:
 
-	return (
-		<div>
-			<ul>
-				{data.map((person) => (
-					<li key={person.name}>{person.name}</li>
-				))}
-			</ul>
-		</div>
-	);
-}
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-export default App;
-```
+Please follow our commit message conventions:
 
-You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
+- `fix:` for bug fixes
+- `feat:` for new features
+- `perf:` for performance improvements
+- `docs:` for documentation changes
+- `style:` for formatting changes
+- `refactor:` for code refactoring
+- `test:` for adding missing tests
+- `chore:` for maintenance tasks
 
-## State Management
+## License
 
-Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
-
-First you need to add TanStack Store as a dependency:
-
-```bash
-npm install @tanstack/store
-```
-
-Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-function App() {
-	const count = useStore(countStore);
-	return (
-		<div>
-			<button onClick={() => countStore.setState((n) => n + 1)}>
-				Increment - {count}
-			</button>
-		</div>
-	);
-}
-
-export default App;
-```
-
-One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
-
-Let's check this out by doubling the count using derived state.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store, Derived } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-const doubledStore = new Derived({
-	fn: () => countStore.state * 2,
-	deps: [countStore],
-});
-doubledStore.mount();
-
-function App() {
-	const count = useStore(countStore);
-	const doubledCount = useStore(doubledStore);
-
-	return (
-		<div>
-			<button onClick={() => countStore.setState((n) => n + 1)}>
-				Increment - {count}
-			</button>
-			<div>Doubled - {doubledCount}</div>
-		</div>
-	);
-}
-
-export default App;
-```
-
-We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
-
-Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
-
-You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+This project is an experimental exploration of "Vibe Coding" and actual development, aiming to enhance personal gaming experiences. As a fan-made tool, it is not officially affiliated with [Colostle](https://www.colostle.com/), the game created by Nich Angell. If Colostle's creator were to stumble upon this project, I'd be thrilled to collaborate and bring it to life!
