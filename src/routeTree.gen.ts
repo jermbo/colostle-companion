@@ -11,9 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as KitchenSinkImport } from './routes/kitchen-sink'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const KitchenSinkRoute = KitchenSinkImport.update({
+  id: '/kitchen-sink',
+  path: '/kitchen-sink',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/kitchen-sink': {
+      id: '/kitchen-sink'
+      path: '/kitchen-sink'
+      fullPath: '/kitchen-sink'
+      preLoaderRoute: typeof KitchenSinkImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/kitchen-sink': typeof KitchenSinkRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kitchen-sink': typeof KitchenSinkRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/kitchen-sink': typeof KitchenSinkRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/kitchen-sink'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/kitchen-sink'
+  id: '__root__' | '/' | '/kitchen-sink'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KitchenSinkRoute: typeof KitchenSinkRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KitchenSinkRoute: KitchenSinkRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/kitchen-sink"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/kitchen-sink": {
+      "filePath": "kitchen-sink.tsx"
     }
   }
 }
