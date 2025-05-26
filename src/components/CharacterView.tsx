@@ -5,6 +5,7 @@ import { useCharacters } from "@/lib/store/CharacterContext";
 import CharacterForm from "@/components/CharacterForm";
 import CharacterList from "@/components/CharacterList";
 import { useState } from "react";
+import { useRouter } from "@tanstack/react-router";
 
 interface CharacterViewProps {
 	onSelectCharacter: (character: Character) => void;
@@ -15,6 +16,7 @@ export const CharacterView = ({
 }: CharacterViewProps): React.ReactElement => {
 	const { characters, isLoading, error, createCharacter } = useCharacters();
 	const [isCreating, setIsCreating] = useState(false);
+	const router = useRouter();
 	const [characterForm, setCharacterForm] = useState<
 		Omit<Character, "id" | "createdAt" | "updatedAt">
 	>({
@@ -45,6 +47,14 @@ export const CharacterView = ({
 		setIsCreating(false);
 	};
 
+	const handleSelectCharacter = (character: Character) => {
+		onSelectCharacter(character);
+		router.navigate({
+			to: "/characters/$characterId",
+			params: { characterId: character.id },
+		});
+	};
+
 	return (
 		<div className="space-y-4">
 			<div className="flex justify-between items-center">
@@ -66,7 +76,7 @@ export const CharacterView = ({
 			) : (
 				<CharacterList
 					characters={characters}
-					onSelectCharacter={onSelectCharacter}
+					onSelectCharacter={handleSelectCharacter}
 				/>
 			)}
 		</div>

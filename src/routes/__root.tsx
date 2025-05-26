@@ -12,7 +12,9 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: () => (
 		<>
-			<Outlet />
+			<div className="container mx-auto">
+				<Outlet />
+			</div>
 
 			<TanStackRouterDevtools />
 			<TanStackQueryLayout />

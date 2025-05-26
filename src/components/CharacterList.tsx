@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import type { Character } from "@/types/character";
 import { CHARACTER_CLASSES } from "@/types/character";
+import { Link } from "@tanstack/react-router";
 
 interface CharacterListProps {
 	characters: Character[];
@@ -30,24 +31,27 @@ const CharacterList = ({
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 			{characters.map((character) => (
-				<Card
+				<Link
 					key={character.id}
-					className="hover:bg-gray-50 cursor-pointer"
-					onClick={() => onSelectCharacter(character)} // Make the whole card clickable
+					to="/characters/$characterId"
+					params={{ characterId: character.id }}
+					onClick={() => onSelectCharacter(character)}
 				>
-					<CardHeader>
-						<CardTitle>{character.name}</CardTitle>
-						<CardDescription>
-							{CHARACTER_CLASSES[character.class].displayName} - Level{" "}
-							{character.level}
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<p className="text-sm text-muted-foreground line-clamp-3">
-							{CHARACTER_CLASSES[character.class].description}
-						</p>
-					</CardContent>
-				</Card>
+					<Card className="hover:bg-gray-50 cursor-pointer">
+						<CardHeader>
+							<CardTitle>{character.name}</CardTitle>
+							<CardDescription>
+								{CHARACTER_CLASSES[character.class].displayName} - Level{" "}
+								{character.level}
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<p className="text-sm text-muted-foreground line-clamp-3">
+								{CHARACTER_CLASSES[character.class].description}
+							</p>
+						</CardContent>
+					</Card>
+				</Link>
 			))}
 		</div>
 	);
