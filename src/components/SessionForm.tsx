@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Session } from "@/types/views";
+import { useCallback, useMemo } from "react";
 
 interface SessionFormProps {
 	sessionForm: Omit<Session, "id" | "campaignId" | "drawnCards">;
@@ -24,31 +25,49 @@ export const SessionForm = ({
 	onSetSessionForm,
 	onCreateSession,
 	onCancel,
-}: SessionFormProps) => {
+}: SessionFormProps): React.ReactElement => {
+	const isFormValid: boolean = useMemo(() => {
+		return sessionForm.title.trim() !== "";
+	}, [sessionForm.title]);
+
+	const handleSubmit = useCallback(
+		(event: React.FormEvent<HTMLFormElement>): void => {
+			event.preventDefault();
+			if (isFormValid) {
+				onCreateSession();
+			}
+		},
+		[isFormValid, onCreateSession],
+	);
+
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Start New Session</CardTitle>
-			</CardHeader>
-			<CardContent className="space-y-4">
-				<div>
-					<Label htmlFor="sessionTitle">Title</Label>
-					<Input
-						id="sessionTitle"
-						value={sessionForm.title}
-						onChange={(e) =>
-							onSetSessionForm({ ...sessionForm, title: e.target.value })
-						}
-						placeholder="Session title"
-					/>
-				</div>
-			</CardContent>
-			<CardFooter className="flex justify-end gap-2">
-				<Button variant="outline" onClick={onCancel}>
-					Cancel
-				</Button>
-				<Button onClick={onCreateSession}>Start Session</Button>
-			</CardFooter>
-		</Card>
+		<form onSubmit={handleSubmit} className="w-full">
+			<Card>
+				<CardHeader>
+					<CardTitle>Start New Session</CardTitle>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					<div>
+						<Label htmlFor="sessionTitle">Title</Label>
+						<Input
+							id="sessionTitle"
+							value={sessionForm.title}
+							onChange={(e) =>
+								onSetSessionForm({ ...sessionForm, title: e.target.value })
+							}
+							placeholder="Session title"
+						/>
+					</div>
+				</CardContent>
+				<CardFooter className="flex justify-end gap-2">
+					<Button type="button" variant="outline" onClick={onCancel}>
+						Cancel
+					</Button>
+					<Button type="submit" disabled={!isFormValid}>
+						Start Session
+					</Button>
+				</CardFooter>
+			</Card>
+		</form>
 	);
 };
