@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 // import { Button } from "@/components/ui/button"; // No longer directly used
 // Card, Input, Label, Textarea, and specific Lucide icons are handled by child components
@@ -13,6 +13,11 @@ import { CampaignView } from "@/components/CampaignView";
 import { SessionView } from "@/components/SessionView";
 
 export const Route = createFileRoute("/")({
+	beforeLoad: () => {
+		throw redirect({
+			to: "/characters",
+		});
+	},
 	component: App,
 });
 
@@ -35,20 +40,11 @@ const CARDS = {
 };
 
 export default function App() {
-	// Data state
-	const [characters, setCharacters] = useState<Character[]>([]);
+	// Campaign and Session state
 	const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 	const [sessions, setSessions] = useState<Session[]>([]);
 
 	// Form state
-	const [characterForm, setCharacterForm] = useState<
-		Omit<Character, "id" | "createdAt" | "updatedAt">
-	>({
-		name: "",
-		class: "armed" as CharacterClass, // Ensure type correctness
-		level: 1,
-	});
-
 	const [campaignForm, setCampaignForm] = useState<
 		Omit<Campaign, "id" | "characterId">
 	>({
@@ -80,8 +76,10 @@ export default function App() {
 	// Speech recognition state
 	const [isListening, setIsListening] = useState(false);
 	const [speechSupported, setSpeechSupported] = useState(false);
+	const [activeTextarea, setActiveTextarea] = useState<
+		"exploration" | "combat" | null
+	>(null);
 	const recognitionRef = useRef<any>(null);
-	const activeTextareaRef = useRef<"exploration" | "combat" | null>(null);
 
 	useEffect(() => {
 		// Check if speech recognition is supported
@@ -95,22 +93,18 @@ export default function App() {
 			recognitionRef.current.interimResults = true;
 			recognitionRef.current.lang = "en-US";
 
-			// onresult will be handled by a callback passed to SessionView
-			// recognitionRef.current.onresult = ... (handled via prop)
+			recognitionRef.current.onresult = (event: any) => {
+				const transcript = Array.from(event.results)
+					.map((result: any) => result[0].transcript)
+					.join("");
+				updateSessionLogFromSpeech(transcript);
+			};
 
 			recognitionRef.current.onerror = (event: any) => {
 				console.error("Speech recognition error", event.error);
-				setIsListening(false); // Ensure listening state is reset on error
-				activeTextareaRef.current = null;
+				setIsListening(false);
+				setActiveTextarea(null);
 			};
-
-			// recognitionRef.current.onend = () => {
-			//   // Automatically restart if it was manually stopped
-			//   // This might be too aggressive depending on desired UX
-			//   if (isListening) {
-			//       recognitionRef.current.start();
-			//   }
-			// };
 		}
 
 		return () => {
@@ -121,13 +115,9 @@ export default function App() {
 	}, []);
 
 	const updateSessionLogFromSpeech = (transcript: string) => {
-		if (activeTextareaRef.current && selectedSession) {
+		if (activeTextarea && selectedSession) {
 			const field =
-				activeTextareaRef.current === "exploration"
-					? "explorationLog"
-					: "combatLog";
-			// Update the log with the full transcript so far
-			// The child component will receive this new selectedSession value
+				activeTextarea === "exploration" ? "explorationLog" : "combatLog";
 			const updatedSession = { ...selectedSession, [field]: transcript };
 			setSelectedSession(updatedSession);
 			setSessions(
@@ -141,40 +131,18 @@ export default function App() {
 			alert("Speech recognition is not supported in your browser");
 			return;
 		}
-		if (isListening && activeTextareaRef.current === type) {
+		if (isListening && activeTextarea === type) {
 			recognitionRef.current.stop();
 			setIsListening(false);
-			activeTextareaRef.current = null;
+			setActiveTextarea(null);
 		} else {
 			if (isListening) {
-				// If listening to the other textarea, stop it first
 				recognitionRef.current.stop();
 			}
-			activeTextareaRef.current = type;
+			setActiveTextarea(type);
 			recognitionRef.current.start();
 			setIsListening(true);
 		}
-	};
-
-	// Character methods
-	const createCharacter = () => {
-		const newCharacter: Character = {
-			...characterForm,
-			id: Date.now().toString(),
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
-		setCharacters([...characters, newCharacter]);
-		setCharacterForm({ name: "", class: "armed", level: 1 });
-		setIsCreating(false);
-	};
-
-	const selectCharacter = (character: Character) => {
-		setSelectedCharacter(character);
-		setView("campaigns");
-		setSelectedCampaign(null);
-		setSelectedSession(null);
-		setIsCreating(false); // Reset isCreating when changing main view context
 	};
 
 	// Campaign methods
@@ -193,8 +161,8 @@ export default function App() {
 	const selectCampaign = (campaign: Campaign) => {
 		setSelectedCampaign(campaign);
 		setView("sessions");
-		setSelectedSession(null); // When selecting a campaign, clear any active session
-		setIsCreating(false); // Reset isCreating
+		setSelectedSession(null);
+		setIsCreating(false);
 	};
 
 	// Session methods
@@ -207,7 +175,7 @@ export default function App() {
 			drawnCards: [],
 		};
 		setSessions([...sessions, newSession]);
-		setSelectedSession(newSession); // Automatically select the new session
+		setSelectedSession(newSession);
 		setSessionForm({ title: "", explorationLog: "", combatLog: "" });
 		setIsCreating(false);
 	};
@@ -252,26 +220,16 @@ export default function App() {
 	const goBack = () => {
 		if (view === "sessions") {
 			if (selectedSession) {
-				setSelectedSession(null); // First, deselect current session to go back to session list
-				// setIsCreating(false); // Already handled by setSelectedSession(null) if it implies view change
+				setSelectedSession(null);
 			} else {
 				setView("campaigns");
-				setSelectedCampaign(null); // Deselect campaign when going back to characters from campaign's session list
+				setSelectedCampaign(null);
 			}
 		} else if (view === "campaigns") {
 			setView("characters");
-			setSelectedCharacter(null); // Deselect character when going back to overview
+			setSelectedCharacter(null);
 		}
-		setIsCreating(false); // General reset for creation forms
-	};
-
-	const speechRecognitionProps = {
-		isListening,
-		speechSupported,
-		recognitionRef,
-		activeTextareaRef,
-		toggleListening,
-		updateSessionLogFromSpeech,
+		setIsCreating(false);
 	};
 
 	return (
@@ -286,13 +244,13 @@ export default function App() {
 
 				{view === "characters" && (
 					<CharacterView
-						characters={characters}
-						characterForm={characterForm}
-						isCreating={isCreating}
-						onSetCharacterForm={setCharacterForm}
-						onCreateCharacter={createCharacter}
-						onSelectCharacter={selectCharacter}
-						onSetIsCreating={setIsCreating}
+						onSelectCharacter={(character) => {
+							setSelectedCharacter(character);
+							setView("campaigns");
+							setSelectedCampaign(null);
+							setSelectedSession(null);
+							setIsCreating(false);
+						}}
 					/>
 				)}
 
@@ -304,10 +262,10 @@ export default function App() {
 						isCreating={isCreating}
 						onSetCampaignForm={setCampaignForm}
 						onCreateCampaign={createCampaign}
-						onSelectCampaign={selectCampaign} // This is for "Continue" button
-						onListViewSessions={goBack} // This is for "Sessions" button
+						onSelectCampaign={selectCampaign}
 						onSetIsCreating={setIsCreating}
 						onGoBack={goBack}
+						onListViewSessions={goBack}
 					/>
 				)}
 
@@ -320,12 +278,17 @@ export default function App() {
 						isCreating={isCreating}
 						onSetSessionForm={setSessionForm}
 						onCreateSession={createSession}
-						onSetSelectedSession={setSelectedSession} // Used by SessionList and also to clear selection
+						onSetSelectedSession={setSelectedSession}
 						onSetIsCreating={setIsCreating}
 						onGoBack={goBack}
 						onDrawCard={drawCard}
-						onUpdateSessionLog={updateSessionLog} // Manual log update
-						speechRecognition={speechRecognitionProps}
+						onUpdateSessionLog={updateSessionLog}
+						speechRecognition={{
+							isListening,
+							speechSupported,
+							activeTextarea,
+							toggleListening,
+						}}
 					/>
 				)}
 			</div>

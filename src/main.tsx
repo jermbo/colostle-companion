@@ -1,42 +1,25 @@
-import { StrictMode } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { CharacterProvider } from "@/lib/store/CharacterContext";
+import App from "@/routes";
+import "@/styles.css";
 
-import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
-
-// Import the generated route tree
-import { routeTree } from "./routeTree.gen";
-
-import "./styles.css";
-
-// Create a new router instance
-const router = createRouter({
-	routeTree,
-	context: {
-		...TanStackQueryProvider.getContext(),
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 60 * 5, // 5 minutes
+			gcTime: 1000 * 60 * 30, // 30 minutes
+		},
 	},
-	defaultPreload: "intent",
-	scrollRestoration: true,
-	defaultStructuralSharing: true,
-	defaultPreloadStaleTime: 0,
 });
 
-// Register the router instance for type safety
-declare module "@tanstack/react-router" {
-	interface Register {
-		router: typeof router;
-	}
-}
-
-// Render the app
-const rootElement = document.getElementById("app");
-if (rootElement && !rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
-	root.render(
-		<StrictMode>
-			<TanStackQueryProvider.Provider>
-				<RouterProvider router={router} />
-			</TanStackQueryProvider.Provider>
-		</StrictMode>,
-	);
-}
+ReactDOM.createRoot(document.getElementById("app")!).render(
+	<React.StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<CharacterProvider>
+				<App />
+			</CharacterProvider>
+		</QueryClientProvider>
+	</React.StrictMode>,
+);

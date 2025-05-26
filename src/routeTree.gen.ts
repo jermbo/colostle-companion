@@ -11,10 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as CharactersImport } from './routes/characters'
 import { Route as IndexImport } from './routes/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
+import { Route as CharactersCharacterIdImport } from './routes/characters.$characterId'
 
 // Create/Update Routes
+
+const CharactersRoute = CharactersImport.update({
+  id: '/characters',
+  path: '/characters',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -28,6 +36,12 @@ const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const CharactersCharacterIdRoute = CharactersCharacterIdImport.update({
+  id: '/$characterId',
+  path: '/$characterId',
+  getParentRoute: () => CharactersRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -38,6 +52,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
+    }
+    '/characters': {
+      id: '/characters'
+      path: '/characters'
+      fullPath: '/characters'
+      preLoaderRoute: typeof CharactersImport
+      parentRoute: typeof rootRoute
+    }
+    '/characters/$characterId': {
+      id: '/characters/$characterId'
+      path: '/$characterId'
+      fullPath: '/characters/$characterId'
+      preLoaderRoute: typeof CharactersCharacterIdImport
+      parentRoute: typeof CharactersImport
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -51,38 +79,67 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface CharactersRouteChildren {
+  CharactersCharacterIdRoute: typeof CharactersCharacterIdRoute
+}
+
+const CharactersRouteChildren: CharactersRouteChildren = {
+  CharactersCharacterIdRoute: CharactersCharacterIdRoute,
+}
+
+const CharactersRouteWithChildren = CharactersRoute._addFileChildren(
+  CharactersRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/characters': typeof CharactersRouteWithChildren
+  '/characters/$characterId': typeof CharactersCharacterIdRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/characters': typeof CharactersRouteWithChildren
+  '/characters/$characterId': typeof CharactersCharacterIdRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/characters': typeof CharactersRouteWithChildren
+  '/characters/$characterId': typeof CharactersCharacterIdRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/characters'
+    | '/characters/$characterId'
+    | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/demo/tanstack-query'
+  to: '/' | '/characters' | '/characters/$characterId' | '/demo/tanstack-query'
+  id:
+    | '__root__'
+    | '/'
+    | '/characters'
+    | '/characters/$characterId'
+    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CharactersRoute: typeof CharactersRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CharactersRoute: CharactersRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 
@@ -97,11 +154,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/characters",
         "/demo/tanstack-query"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/characters": {
+      "filePath": "characters.tsx",
+      "children": [
+        "/characters/$characterId"
+      ]
+    },
+    "/characters/$characterId": {
+      "filePath": "characters.$characterId.tsx",
+      "parent": "/characters"
     },
     "/demo/tanstack-query": {
       "filePath": "demo.tanstack-query.tsx"
