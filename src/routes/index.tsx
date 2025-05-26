@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -8,16 +8,15 @@ import {
 	CardTitle,
 	CardDescription,
 	CardFooter,
-} from "/components/ui/card";
-import { Input } from "/components/ui/input";
-import { Label } from "/components/ui/label";
-import { Textarea } from "/components/ui/textarea";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
 	ArrowLeft,
 	User,
 	Map,
 	Book,
-	Sword,
 	Plus,
 	List,
 	Mic,
