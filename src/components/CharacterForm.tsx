@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Character, CharacterClass } from "@/types/character";
 import { CHARACTER_CLASSES } from "@/types/character";
+import { useCallback, useMemo } from "react";
 
 interface CharacterFormProps {
 	characterForm: Omit<Character, "id" | "createdAt" | "updatedAt">;
@@ -26,18 +27,32 @@ const CharacterForm = ({
 	onCreateCharacter,
 	onCancel,
 }: CharacterFormProps): React.ReactElement => {
-	const isFormValid: boolean =
-		!!characterForm.name && characterForm.level > 0 && !!characterForm.class;
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-		event.preventDefault();
-		if (isFormValid) {
-			onCreateCharacter();
+	const isFormValid: boolean = useMemo(() => {
+		if (characterForm.name.trim() === "") {
+			return false;
 		}
-	};
+		if (characterForm.level <= 0) {
+			return false;
+		}
+		if (characterForm.class === undefined) {
+			return false;
+		}
+		return true;
+	}, [characterForm]);
+
+	const handleSubmit = useCallback(
+		(event: React.FormEvent<HTMLFormElement>): void => {
+			event.preventDefault();
+
+			if (isFormValid) {
+				onCreateCharacter();
+			}
+		},
+		[isFormValid, onCreateCharacter],
+	);
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="w-full">
 			<Card>
 				<CardHeader>
 					<CardTitle>Create New Character</CardTitle>
@@ -96,7 +111,7 @@ const CharacterForm = ({
 					</div>
 				</CardContent>
 				<CardFooter className="flex justify-end gap-2">
-					<Button variant="outline" onClick={onCancel}>
+					<Button type="button" variant="outline" onClick={onCancel}>
 						Cancel
 					</Button>
 					<Button type="submit" disabled={!isFormValid}>

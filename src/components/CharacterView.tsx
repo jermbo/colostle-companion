@@ -4,7 +4,7 @@ import type { Character } from "@/types/character";
 import CharacterForm from "@/components/CharacterForm";
 import CharacterList from "@/components/CharacterList";
 
-interface Props {
+interface CharacterViewProps {
 	characters: Character[];
 	characterForm: Omit<Character, "id" | "createdAt" | "updatedAt">;
 	isCreating: boolean;
@@ -24,7 +24,7 @@ export const CharacterView = ({
 	onCreateCharacter,
 	onSelectCharacter,
 	onSetIsCreating,
-}: Props): React.ReactElement => {
+}: CharacterViewProps): React.ReactElement => {
 	return (
 		<div className="space-y-4">
 			<div className="flex justify-between items-center">
