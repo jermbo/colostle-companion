@@ -1,4 +1,4 @@
-import { OceanEncounter } from "../types/gameData";
+import type { OceanEncounter } from "../types/gameData";
 
 const OCEAN_ENCOUNTERS: OceanEncounter[] = [
 	{

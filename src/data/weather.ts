@@ -1,4 +1,4 @@
-import { Weather } from "../types/gameData";
+import type { Weather } from "../types/gameData";
 
 const WEATHER: Weather[] = [
 	{

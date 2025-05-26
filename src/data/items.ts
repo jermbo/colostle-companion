@@ -1,4 +1,4 @@
-import { Item } from "../types/gameData";
+import type { Item } from "../types/gameData";
 
 const ITEMS: Item[] = [
 	{ id: "ace", name: "Treasure", description: "For trading" },

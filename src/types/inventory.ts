@@ -31,7 +31,7 @@ export interface Inventory {
 export interface InventoryContextType {
 	inventory: Inventory | null;
 	addItem: (
-		item: Omit<Item, "id" | "createdAt" | "updatedAt">
+		item: Omit<Item, "id" | "createdAt" | "updatedAt">,
 	) => Promise<void>;
 	removeItem: (itemId: string) => Promise<void>;
 	updateItem: (itemId: string, updates: Partial<Item>) => Promise<void>;

@@ -1,4 +1,4 @@
-import { Encounter } from "../types/gameData";
+import type { Encounter } from "../types/gameData";
 
 const ENCOUNTERS: Encounter[] = [
 	{

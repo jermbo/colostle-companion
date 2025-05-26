@@ -1,4 +1,4 @@
-import { CityAmenity } from "../types/gameData";
+import type { CityAmenity } from "../types/gameData";
 
 const CITY_AMENITIES: CityAmenity[] = [
 	{

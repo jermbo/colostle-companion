@@ -1,4 +1,4 @@
-import { Location } from "../types/gameData";
+import type { Location } from "../types/gameData";
 
 const LOCATIONS: Location[] = [
 	{

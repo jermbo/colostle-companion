@@ -1,4 +1,4 @@
-import { Event } from "../types/gameData";
+import type { Event } from "../types/gameData";
 
 const EVENTS: Event[] = [
 	{ id: "ace", name: "You Meet a Friend", description: "" },
