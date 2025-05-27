@@ -19,6 +19,7 @@ interface CharacterFormProps {
 	>;
 	onCreateCharacter: () => void;
 	onCancel: () => void;
+	isEditing?: boolean;
 }
 
 const CharacterForm = ({
@@ -26,6 +27,7 @@ const CharacterForm = ({
 	onSetCharacterForm,
 	onCreateCharacter,
 	onCancel,
+	isEditing = false,
 }: CharacterFormProps): React.ReactElement => {
 	const isFormValid: boolean = useMemo(() => {
 		if (characterForm.name.trim() === "") {
@@ -51,11 +53,18 @@ const CharacterForm = ({
 		[isFormValid, onCreateCharacter],
 	);
 
+	const formTitle = useMemo(() => {
+		if (isEditing) {
+			return `Editing - ${characterForm.name}`;
+		}
+		return "Create New Character";
+	}, [isEditing, characterForm.name]);
+
 	return (
 		<form onSubmit={handleSubmit} className="w-full">
-			<Card>
+			<Card title={formTitle}>
 				<CardHeader>
-					<CardTitle>Create New Character</CardTitle>
+					<CardTitle>{formTitle}</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					<div>
@@ -115,7 +124,7 @@ const CharacterForm = ({
 						Cancel
 					</Button>
 					<Button type="submit" disabled={!isFormValid}>
-						Create Character
+						{isEditing ? "Update Character" : "Create Character"}
 					</Button>
 				</CardFooter>
 			</Card>

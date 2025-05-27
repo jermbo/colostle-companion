@@ -29,15 +29,15 @@
 
 #### Acceptance Criteria
 
-- [ ] Landing page shows list of characters
-- [ ] Can create new characters
-- [ ] Can edit existing characters
-- [ ] Can delete characters
-- [ ] Character data persists between sessions
-- [ ] Character selection is reflected in URL
-- [ ] Direct navigation to character details works
-- [ ] Loading states show during data operations
-- [ ] Error states are handled gracefully
+- [x] Landing page shows list of characters
+- [x] Can create new characters
+- [x] Can edit existing characters
+- [x] Can delete characters
+- [x] Character data persists between sessions
+- [x] Character selection is reflected in URL
+- [x] Direct navigation to character details works
+- [x] Loading states show during data operations
+- [x] Error states are handled gracefully
 
 #### Dependencies
 
