@@ -2,64 +2,97 @@ import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
+	CardDescription,
 	CardHeader,
 	CardTitle,
-	CardFooter,
 } from "@/components/ui/card";
-import { List } from "lucide-react";
-import type { Character } from "@/types/character";
-import type { Campaign } from "@/types/views";
+import { Edit, Trash2, Calendar } from "lucide-react";
+import type { Campaign } from "@/types/campaign";
+import { format } from "date-fns";
 
-interface CampaignListProps {
+interface Props {
 	campaigns: Campaign[];
-	selectedCharacter: Character;
 	onSelectCampaign: (campaign: Campaign) => void;
-	onListViewSessions: (campaign: Campaign) => void;
+	onEditCampaign: (campaign: Campaign) => void;
+	onDeleteCampaign: (campaign: Campaign) => void;
+	isLoading: boolean;
+	error: Error | null;
 }
 
-export const CampaignList = ({
+const CampaignList = ({
 	campaigns,
-	selectedCharacter,
 	onSelectCampaign,
-	onListViewSessions,
-}: CampaignListProps) => {
-	const characterCampaigns = campaigns.filter(
-		(c) => c.characterId === selectedCharacter.id,
-	);
+	onEditCampaign,
+	onDeleteCampaign,
+	isLoading,
+	error,
+}: Props): React.ReactElement => {
+	if (isLoading) {
+		return <div>Loading campaigns...</div>;
+	}
 
-	if (characterCampaigns.length === 0) {
+	if (error) {
+		return <div>Error loading campaigns: {error.message}</div>;
+	}
+
+	if (campaigns.length === 0) {
 		return (
-			<Card>
-				<CardContent className="p-6 text-center">
-					<p className="text-muted-foreground">
-						No campaigns for this character yet
-					</p>
-				</CardContent>
-			</Card>
+			<div className="text-center text-muted-foreground">
+				No campaigns found. Create your first campaign to get started!
+			</div>
 		);
 	}
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-			{characterCampaigns.map((campaign) => (
-				<Card key={campaign.id} className="hover:bg-gray-50">
+		<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+			{campaigns.map((campaign) => (
+				<Card
+					key={campaign.id}
+					className="cursor-pointer transition-colors hover:bg-muted/50"
+					onClick={() => onSelectCampaign(campaign)}
+				>
 					<CardHeader>
-						<CardTitle>{campaign.title}</CardTitle>
+						<div className="flex items-start justify-between">
+							<div>
+								<CardTitle>{campaign.title}</CardTitle>
+								<CardDescription className="mt-1 flex items-center gap-1">
+									<Calendar className="h-4 w-4" />
+									{format(new Date(campaign.createdAt), "MMM d, yyyy")}
+								</CardDescription>
+							</div>
+							<div className="flex gap-1">
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={(e) => {
+										e.stopPropagation();
+										onEditCampaign(campaign);
+									}}
+								>
+									<Edit className="h-4 w-4" />
+								</Button>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={(e) => {
+										e.stopPropagation();
+										onDeleteCampaign(campaign);
+									}}
+								>
+									<Trash2 className="h-4 w-4" />
+								</Button>
+							</div>
+						</div>
 					</CardHeader>
 					<CardContent>
-						<p className="line-clamp-3 text-sm">{campaign.description}</p>
+						<p className="text-sm text-muted-foreground line-clamp-3">
+							{campaign.description}
+						</p>
 					</CardContent>
-					<CardFooter className="flex justify-between">
-						<Button
-							variant="outline"
-							onClick={() => onListViewSessions(campaign)}
-						>
-							<List className="mr-2 h-4 w-4" /> Sessions
-						</Button>
-						<Button onClick={() => onSelectCampaign(campaign)}>Continue</Button>
-					</CardFooter>
 				</Card>
 			))}
 		</div>
 	);
 };
+
+export default CampaignList;

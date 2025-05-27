@@ -9,24 +9,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { Campaign } from "@/types/views";
+import type { CampaignFormData } from "@/types/campaign";
 import { useCallback, useMemo } from "react";
 
-interface CampaignFormProps {
-	campaignForm: Omit<Campaign, "id" | "characterId">;
-	onSetCampaignForm: React.Dispatch<
-		React.SetStateAction<Omit<Campaign, "id" | "characterId">>
-	>;
+interface Props {
+	campaignForm: CampaignFormData;
+	onSetCampaignForm: React.Dispatch<React.SetStateAction<CampaignFormData>>;
 	onCreateCampaign: () => void;
 	onCancel: () => void;
+	isEditing?: boolean;
 }
 
-export const CampaignForm = ({
+const CampaignForm = ({
 	campaignForm,
 	onSetCampaignForm,
 	onCreateCampaign,
 	onCancel,
-}: CampaignFormProps): React.ReactElement => {
+	isEditing = false,
+}: Props): React.ReactElement => {
 	const isFormValid: boolean = useMemo(() => {
 		return campaignForm.title.trim() !== "";
 	}, [campaignForm.title]);
@@ -34,6 +34,7 @@ export const CampaignForm = ({
 	const handleSubmit = useCallback(
 		(event: React.FormEvent<HTMLFormElement>): void => {
 			event.preventDefault();
+
 			if (isFormValid) {
 				onCreateCampaign();
 			}
@@ -41,11 +42,18 @@ export const CampaignForm = ({
 		[isFormValid, onCreateCampaign],
 	);
 
+	const formTitle = useMemo(() => {
+		if (isEditing) {
+			return `Editing - ${campaignForm.title}`;
+		}
+		return "Create New Campaign";
+	}, [isEditing, campaignForm.title]);
+
 	return (
 		<form onSubmit={handleSubmit} className="w-full">
 			<Card>
 				<CardHeader>
-					<CardTitle>Create New Campaign</CardTitle>
+					<CardTitle>{formTitle}</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					<div>
@@ -54,7 +62,10 @@ export const CampaignForm = ({
 							id="campaignTitle"
 							value={campaignForm.title}
 							onChange={(e) =>
-								onSetCampaignForm({ ...campaignForm, title: e.target.value })
+								onSetCampaignForm({
+									...campaignForm,
+									title: e.target.value,
+								})
 							}
 							placeholder="Campaign title"
 						/>
@@ -71,7 +82,7 @@ export const CampaignForm = ({
 								})
 							}
 							placeholder="Campaign description"
-							rows={4}
+							className="min-h-[100px]"
 						/>
 					</div>
 				</CardContent>
@@ -80,10 +91,12 @@ export const CampaignForm = ({
 						Cancel
 					</Button>
 					<Button type="submit" disabled={!isFormValid}>
-						Create Campaign
+						{isEditing ? "Update Campaign" : "Create Campaign"}
 					</Button>
 				</CardFooter>
 			</Card>
 		</form>
 	);
 };
+
+export default CampaignForm;
