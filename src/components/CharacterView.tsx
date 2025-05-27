@@ -10,13 +10,9 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { LoadingState } from "@/components/LoadingState";
 import { ErrorState } from "@/components/ErrorState";
 
-interface CharacterViewProps {
-	onSelectCharacter: (character: Character) => void;
-}
+interface CharacterViewProps {}
 
-export const CharacterView = ({
-	onSelectCharacter,
-}: CharacterViewProps): React.ReactElement => {
+export const CharacterView = ({}: CharacterViewProps): React.ReactElement => {
 	const {
 		characters,
 		isLoading,
@@ -97,14 +93,6 @@ export const CharacterView = ({
 		}
 	};
 
-	const handleSelectCharacter = (character: Character) => {
-		onSelectCharacter(character);
-		router.navigate({
-			to: "/characters/$characterId",
-			params: { characterId: character.id },
-		});
-	};
-
 	const handleCancel = () => {
 		setEditingCharacter(null);
 		setIsCreating(false);
@@ -138,7 +126,6 @@ export const CharacterView = ({
 				) : (
 					<CharacterList
 						characters={characters}
-						onSelectCharacter={handleSelectCharacter}
 						onEditCharacter={handleEditCharacter}
 						onDeleteCharacter={handleDeleteCharacter}
 						isLoading={isLoading}

@@ -28,7 +28,6 @@ import { NotFoundState } from "@/components/NotFoundState";
 
 interface CharacterListProps {
 	characters: Character[];
-	onSelectCharacter: (character: Character) => void;
 	onEditCharacter: (character: Character) => void;
 	onDeleteCharacter: (character: Character) => Promise<void>;
 	isLoading?: boolean;
@@ -37,7 +36,6 @@ interface CharacterListProps {
 
 const CharacterList = ({
 	characters,
-	onSelectCharacter,
 	onEditCharacter,
 	onDeleteCharacter,
 	isLoading = false,
@@ -91,7 +89,6 @@ const CharacterList = ({
 						<Link
 							to="/characters/$characterId"
 							params={{ characterId: character.id }}
-							onClick={() => onSelectCharacter(character)}
 							className="block"
 							title={character.name}
 						>

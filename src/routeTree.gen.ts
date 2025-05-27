@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as CharactersImport } from './routes/characters'
 import { Route as IndexImport } from './routes/index'
-import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as CharactersCharacterIdImport } from './routes/characters.$characterId'
 import { Route as CharactersCharacterIdCampaignsCampaignIdImport } from './routes/characters.$characterId.campaigns.$campaignId'
 
@@ -28,12 +27,6 @@ const CharactersRoute = CharactersImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,13 +67,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/characters/$characterId'
       preLoaderRoute: typeof CharactersCharacterIdImport
       parentRoute: typeof CharactersImport
-    }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryImport
-      parentRoute: typeof rootRoute
     }
     '/characters/$characterId/campaigns/$campaignId': {
       id: '/characters/$characterId/campaigns/$campaignId'
@@ -124,7 +110,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/characters': typeof CharactersRouteWithChildren
   '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
 }
 
@@ -132,7 +117,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/characters': typeof CharactersRouteWithChildren
   '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
 }
 
@@ -141,7 +125,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/characters': typeof CharactersRouteWithChildren
   '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
 }
 
@@ -151,21 +134,18 @@ export interface FileRouteTypes {
     | '/'
     | '/characters'
     | '/characters/$characterId'
-    | '/demo/tanstack-query'
     | '/characters/$characterId/campaigns/$campaignId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/characters'
     | '/characters/$characterId'
-    | '/demo/tanstack-query'
     | '/characters/$characterId/campaigns/$campaignId'
   id:
     | '__root__'
     | '/'
     | '/characters'
     | '/characters/$characterId'
-    | '/demo/tanstack-query'
     | '/characters/$characterId/campaigns/$campaignId'
   fileRoutesById: FileRoutesById
 }
@@ -173,13 +153,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CharactersRoute: typeof CharactersRouteWithChildren
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CharactersRoute: CharactersRouteWithChildren,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 
 export const routeTree = rootRoute
@@ -193,8 +171,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/characters",
-        "/demo/tanstack-query"
+        "/characters"
       ]
     },
     "/": {
@@ -212,9 +189,6 @@ export const routeTree = rootRoute
       "children": [
         "/characters/$characterId/campaigns/$campaignId"
       ]
-    },
-    "/demo/tanstack-query": {
-      "filePath": "demo.tanstack-query.tsx"
     },
     "/characters/$characterId/campaigns/$campaignId": {
       "filePath": "characters.$characterId.campaigns.$campaignId.tsx",
