@@ -1,0 +1,16 @@
+---
+interface Props {
+  value?: string;
+  suit?: string;
+  color?: 'red' | 'black';
+}
+const { value = '9', suit = '♣', color = 'black' } = Astro.props;
+---
+<div
+  class={`playing-card playing-card--${color}`}
+  id="flipped-card"
+  aria-label={`Last flipped card: ${value} of ${suit}`}
+>
+  <div class="playing-card__value" id="card-value">{value}</div>
+  <div class="playing-card__suit" id="card-suit">{suit}</div>
+</div>

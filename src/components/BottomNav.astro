@@ -1,0 +1,23 @@
+---
+const tabs = [
+  { id: 'home',  icon: '⌂', label: 'Home'  },
+  { id: 'play',  icon: '◆', label: 'Play'  },
+  { id: 'party', icon: '♛', label: 'Party' },
+  { id: 'story', icon: '✎', label: 'Story' },
+  { id: 'cards', icon: '♠', label: 'Cards' },
+];
+---
+<nav class="bottom-nav" role="tablist" aria-label="Main navigation">
+  {tabs.map((tab, i) => (
+    <button
+      class={`nav-item${i === 0 ? ' active' : ''}`}
+      role="tab"
+      aria-selected={i === 0 ? 'true' : 'false'}
+      data-tab={tab.id}
+      aria-controls={`tab-${tab.id}`}
+    >
+      <span class="nav-item__icon" aria-hidden="true">{tab.icon}</span>
+      <span class="nav-item__label">{tab.label}</span>
+    </button>
+  ))}
+</nav>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  count?: number;
+}
+const { count = 38 } = Astro.props;
+---
+<div class="card-back" aria-label="Deck">
+  <div class="card-back__label">
+    deck<br /><span id="deck-count">{count}</span> left
+  </div>
+</div>

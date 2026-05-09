@@ -1,0 +1,38 @@
+---
+import Counter from '../Counter.astro';
+import CardBack from '../CardBack.astro';
+import PlayingCard from '../PlayingCard.astro';
+import OraclePrompt from '../OraclePrompt.astro';
+import QuickJournal from '../QuickJournal.astro';
+---
+<section id="tab-play" class="tab-panel" role="tabpanel" aria-label="Play">
+
+  <div class="play-counters">
+    <Counter id="explore" label="Explore" filled={3} total={5} color="var(--explore)" />
+    <Counter id="combat"  label="Combat"  filled={1} total={5} color="var(--combat)"  />
+  </div>
+
+  <div class="play-stage">
+    <div class="card-stage">
+      <div class="card-stage__slot">
+        <CardBack count={38} />
+        <span class="wf-meta">deck</span>
+      </div>
+      <div class="card-stage__arrow" aria-hidden="true"></div>
+      <div class="card-stage__slot">
+        <PlayingCard value="9" suit="♣" color="black" />
+        <span class="wf-meta">last flipped</span>
+      </div>
+    </div>
+
+    <OraclePrompt />
+
+    <div class="play-actions">
+      <button class="wf-btn" id="btn-reflip" aria-label="Flip again">↻ Flip</button>
+      <button class="wf-btn wf-btn-primary" id="btn-journal" aria-label="Write journal entry">✎ Journal</button>
+    </div>
+
+    <QuickJournal />
+  </div>
+
+</section>

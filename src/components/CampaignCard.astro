@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  sessionNumber: number;
+  lastPlayed: string;
+  cardsRemaining: number;
+  journalEntries: number;
+}
+const { id, title, sessionNumber, lastPlayed, cardsRemaining, journalEntries } = Astro.props;
+---
+<div class="wf-box campaign-card" id={id}>
+  <div class="campaign-card__title">{title}</div>
+  <div class="campaign-card__meta">
+    <span class="wf-tag wf-tag-accent">Session {sessionNumber}</span>
+    <span class="wf-meta">{lastPlayed}</span>
+  </div>
+  <div class="wf-meta campaign-card__details">
+    {cardsRemaining} cards remaining · {journalEntries} journal entries
+  </div>
+</div>

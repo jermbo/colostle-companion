@@ -1,0 +1,27 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  filled: number;
+  total: number;
+  color: string;
+}
+const { id, label, filled, total, color } = Astro.props;
+const segments = Array.from({ length: total }, (_, i) => i < filled);
+---
+<div class="wf-box counter">
+  <div class="counter__info">
+    <div class="wf-label">{label}</div>
+    <div class="counter__value" id={`${id}-value`}>{filled} / {total}</div>
+  </div>
+  <div
+    class="progress-bar"
+    id={`${id}-bar`}
+    style={`--seg-color: ${color};`}
+    aria-label={`${label} counter, ${filled} of ${total}`}
+  >
+    {segments.map(isFilled => (
+      <div class={`progress-bar__seg${isFilled ? ' filled' : ''}`}></div>
+    ))}
+  </div>
+</div>

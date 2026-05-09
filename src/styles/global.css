@@ -1,0 +1,772 @@
+/* Fonts via fontsource */
+@import '@fontsource/kalam/400.css';
+@import '@fontsource/kalam/700.css';
+@import '@fontsource/caveat/400.css';
+@import '@fontsource/caveat/600.css';
+@import '@fontsource/caveat/700.css';
+@import '@fontsource/special-elite/400.css';
+
+/* -------------------------------------------------------------------------
+   Design tokens
+   ------------------------------------------------------------------------- */
+:root {
+  --ink:        #1f1a17;
+  --ink-soft:   #4a423d;
+  --ink-faint:  #8a8079;
+
+  --paper:      #f4efe6;
+  --paper-warm: #ebe3d3;
+
+  --accent:      #2b4a7a;
+  --accent-soft: #5a7099;
+  --explore:     #4a7a5c;
+  --combat:      #b04030;
+  --rust:        #a85a3a;
+
+  --line: #2a2520;
+
+  --radius-sketchy: 4px 6px 5px 7px / 6px 4px 7px 5px;
+  --radius-tag: 8px;
+
+  --shadow-raised: 1.5px 1.5px 0 var(--line);
+}
+
+/* -------------------------------------------------------------------------
+   Reset & base
+   ------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  /* Root container — @container queries target this width */
+  container-type: inline-size;
+  container-name: root;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+textarea, input {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+}
+
+/* -------------------------------------------------------------------------
+   App shell — intrinsic layout
+   Default: column (narrow — bottom nav at foot)
+   Wide (≥ 900px): grid with left sidebar nav
+   ------------------------------------------------------------------------- */
+.app {
+  display: grid;
+  grid-template-areas:
+    "topbar"
+    "content"
+    "nav";
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+}
+
+@container root (min-width: 900px) {
+  .app {
+    grid-template-areas:
+      "nav topbar"
+      "nav content";
+    grid-template-columns: 88px 1fr;
+    grid-template-rows: auto 1fr;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------------------- */
+.top-bar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 56px;
+  background: var(--paper-warm);
+  border-bottom: 1.5px solid var(--line);
+}
+
+.top-bar__action {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 32px;
+  padding: 4px;
+  line-height: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.top-bar__center {
+  flex: 1;
+  text-align: center;
+}
+
+.top-bar__title {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.top-bar__sub {
+  font-family: 'Kalam', cursive;
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1;
+  margin-top: 1px;
+}
+
+/* -------------------------------------------------------------------------
+   Main content area
+   ------------------------------------------------------------------------- */
+.app__content {
+  grid-area: content;
+  overflow: hidden;
+  position: relative;
+  /* Container for tab panels to query against */
+  container-type: inline-size;
+  container-name: content;
+}
+
+/* -------------------------------------------------------------------------
+   Tab panels
+   ------------------------------------------------------------------------- */
+.tab-panel {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Each panel is itself a container */
+  container-type: inline-size;
+  container-name: panel;
+}
+
+.tab-panel.active {
+  display: flex;
+}
+
+/* -------------------------------------------------------------------------
+   Bottom / side navigation
+   ------------------------------------------------------------------------- */
+.bottom-nav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: row;
+  background: var(--paper);
+  border-top: 1.5px solid var(--line);
+}
+
+@container root (min-width: 900px) {
+  .bottom-nav {
+    flex-direction: column;
+    border-top: none;
+    border-right: 1.5px solid var(--line);
+    height: 100%;
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 4px 10px;
+  color: var(--ink-faint);
+  transition: color 0.12s;
+  min-height: 56px;
+}
+
+@container root (min-width: 900px) {
+  .nav-item {
+    flex: 0 0 auto;
+    padding: 14px 4px;
+    min-height: auto;
+  }
+}
+
+.nav-item.active {
+  color: var(--accent);
+}
+
+.nav-item__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.nav-item__label {
+  font-family: 'Special Elite', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+/* -------------------------------------------------------------------------
+   Typography utilities
+   ------------------------------------------------------------------------- */
+.wf-h1 { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 700; line-height: 1.05; }
+.wf-h2 { font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700; line-height: 1.05; }
+.wf-h3 { font-family: 'Caveat', cursive; font-size: 17px; font-weight: 600; line-height: 1.05; }
+
+.wf-body {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.wf-meta {
+  font-family: 'Kalam', cursive;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+
+.wf-label {
+  font-family: 'Special Elite', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+/* -------------------------------------------------------------------------
+   Boxes & containers
+   ------------------------------------------------------------------------- */
+.wf-box {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sketchy);
+  background: var(--paper);
+}
+
+.wf-box-dashed {
+  border: 1.5px dashed var(--ink-soft);
+  border-radius: var(--radius-sketchy);
+  background: var(--paper);
+}
+
+.wf-box-double {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sketchy);
+  box-shadow: 2px 2px 0 var(--paper-warm), 2px 2px 0 1px var(--line);
+  background: var(--paper-warm);
+}
+
+/* -------------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------------- */
+.wf-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 6px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sketchy);
+  box-shadow: var(--shadow-raised);
+  transition: transform 0.08s, box-shadow 0.08s;
+  min-height: 44px;
+  line-height: 1;
+}
+
+.wf-btn:active {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: none;
+}
+
+.wf-btn-primary {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+
+.wf-btn-sm {
+  font-size: 14px;
+  padding: 3px 9px;
+  min-height: 32px;
+}
+
+/* -------------------------------------------------------------------------
+   Tags
+   ------------------------------------------------------------------------- */
+.wf-tag {
+  display: inline-block;
+  font-family: 'Special Elite', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tag);
+  background: var(--paper);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.wf-tag-explore {
+  background: rgba(74, 122, 92, 0.15);
+  border-color: var(--explore);
+  color: var(--explore);
+}
+
+.wf-tag-combat {
+  background: rgba(176, 64, 48, 0.15);
+  border-color: var(--combat);
+  color: var(--combat);
+}
+
+.wf-tag-accent {
+  background: rgba(43, 74, 122, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   Playing card
+   ------------------------------------------------------------------------- */
+.playing-card {
+  width: 72px;
+  height: 104px;
+  background: var(--paper-warm);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sketchy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 2px;
+}
+
+.playing-card::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed var(--ink-soft);
+  border-radius: 3px 5px 4px 6px / 5px 3px 6px 4px;
+  pointer-events: none;
+}
+
+.playing-card__value {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.playing-card__suit {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.playing-card--red .playing-card__value,
+.playing-card--red .playing-card__suit {
+  color: var(--combat);
+}
+
+.playing-card--black .playing-card__value,
+.playing-card--black .playing-card__suit {
+  color: var(--ink);
+}
+
+.card-back {
+  width: 72px;
+  height: 104px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sketchy);
+  background-color: var(--accent);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.08) 0px,
+    rgba(255,255,255,0.08) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back__label {
+  font-family: 'Special Elite', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* -------------------------------------------------------------------------
+   Counter & progress bar
+   ------------------------------------------------------------------------- */
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+}
+
+.counter__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.counter__value {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.progress-bar__seg {
+  height: 8px;
+  width: 14px;
+  border: 1px solid var(--line);
+  border-radius: 2px 3px 2px 3px / 3px 2px 3px 2px;
+  background: var(--paper);
+}
+
+.progress-bar__seg.filled {
+  background: var(--seg-color, var(--explore));
+}
+
+/* -------------------------------------------------------------------------
+   Tab layout utilities
+   ------------------------------------------------------------------------- */
+.tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 14px 8px;
+  flex-shrink: 0;
+}
+
+.tab-hint {
+  padding: 8px 14px 16px;
+  text-align: center;
+  color: var(--ink-faint);
+}
+
+.section-divider {
+  height: 0;
+  border-top: 1px dashed var(--ink-soft);
+  margin: 8px 14px;
+}
+
+/* -------------------------------------------------------------------------
+   Empty state
+   ------------------------------------------------------------------------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 40px 24px;
+  text-align: center;
+  gap: 10px;
+  color: var(--ink-faint);
+}
+
+.empty-state__title {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/* -------------------------------------------------------------------------
+   Campaign list (Home tab)
+   ------------------------------------------------------------------------- */
+.campaign-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 14px;
+}
+
+/* Side-by-side cards when the panel has room */
+@container panel (min-width: 560px) {
+  .campaign-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .campaign-card {
+    flex: 1 1 240px;
+  }
+}
+
+.campaign-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.08s;
+}
+
+.campaign-card:active {
+  transform: translate(1px, 1px);
+}
+
+.campaign-card__title {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.campaign-card__meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.campaign-card__details {
+  margin-top: 2px;
+  color: var(--ink-faint);
+}
+
+/* -------------------------------------------------------------------------
+   Play tab
+   ------------------------------------------------------------------------- */
+.play-counters {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px dashed var(--ink-soft);
+  flex-shrink: 0;
+}
+
+.play-counters .counter {
+  flex: 1;
+}
+
+.play-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 14px 12px;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Wide play tab: card stage and oracle side-by-side.
+   Must query the panel container (the parent), not play-stage itself,
+   because a container cannot respond to its own container query. */
+@container panel (min-width: 560px) {
+  .play-stage {
+    display: grid;
+    grid-template-areas:
+      "cards  prompt"
+      "cards  actions"
+      "journal journal";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    column-gap: 20px;
+    row-gap: 12px;
+    padding: 20px;
+  }
+
+  .card-stage    { grid-area: cards; flex-direction: column; align-items: center; }
+  .oracle-prompt { grid-area: prompt; width: auto; }
+  .play-actions  { grid-area: actions; }
+  .quick-journal { grid-area: journal; }
+
+  /* Arrow points down when card stage is vertical */
+  .card-stage__arrow::before { content: '↓' !important; }
+}
+
+.card-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.card-stage__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-stage__arrow {
+  font-size: 18px;
+  color: var(--ink-soft);
+  line-height: 1;
+}
+
+.card-stage__arrow::before {
+  content: '→';
+}
+
+/* -------------------------------------------------------------------------
+   Oracle prompt
+   ------------------------------------------------------------------------- */
+.oracle-prompt {
+  width: 100%;
+  padding: 12px;
+}
+
+.oracle-prompt__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.oracle-prompt__text {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
+   Play actions
+   ------------------------------------------------------------------------- */
+.play-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.play-actions .wf-btn {
+  flex: 1;
+}
+
+/* -------------------------------------------------------------------------
+   Quick journal
+   ------------------------------------------------------------------------- */
+.quick-journal {
+  width: 100%;
+  padding: 10px;
+}
+
+.quick-journal__textarea {
+  width: 100%;
+  min-height: 72px;
+  background: transparent;
+  border: none;
+  resize: none;
+  color: var(--ink);
+  margin-top: 6px;
+  outline: none;
+  line-height: 1.4;
+}
+
+.quick-journal__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* -------------------------------------------------------------------------
+   Cards tab
+   ------------------------------------------------------------------------- */
+.cards-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 14px 14px;
+  container-type: inline-size;
+  container-name: cards-content;
+}
+
+.deck-status {
+  padding: 12px;
+}
+
+.deck-status .wf-label {
+  margin-bottom: 6px;
+}
+
+.deck-status__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.oracle-tables .wf-label {
+  margin-bottom: 8px;
+}
+
+.oracle-table-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Two-column oracle table list when space allows */
+@container cards-content (min-width: 480px) {
+  .oracle-table-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.oracle-table-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+}
+
+.cards-note {
+  text-align: center;
+  color: var(--ink-faint);
+  padding: 4px 0;
+}
+
+/* -------------------------------------------------------------------------
+   Reduce motion
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

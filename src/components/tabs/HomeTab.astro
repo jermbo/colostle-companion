@@ -1,0 +1,24 @@
+---
+import CampaignCard from '../CampaignCard.astro';
+---
+<section id="tab-home" class="tab-panel active" role="tabpanel" aria-label="Home">
+  <div class="tab-header">
+    <span class="wf-label">Campaigns</span>
+    <button class="wf-btn wf-btn-sm" id="btn-new-campaign">+ New</button>
+  </div>
+
+  <div class="campaign-list">
+    <CampaignCard
+      id="campaign-iron-vale"
+      title="The Iron Vale"
+      sessionNumber={3}
+      lastPlayed="Last played today"
+      cardsRemaining={38}
+      journalEntries={14}
+    />
+  </div>
+
+  <div class="section-divider"></div>
+
+  <p class="tab-hint wf-meta">Tap a campaign to view details or resume play.</p>
+</section>

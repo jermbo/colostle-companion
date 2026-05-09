@@ -1,17 +1,35 @@
 ---
-
+import '../styles/global.css';
+import TopBar   from '../components/TopBar.astro';
+import BottomNav from '../components/BottomNav.astro';
+import HomeTab  from '../components/tabs/HomeTab.astro';
+import PlayTab  from '../components/tabs/PlayTab.astro';
+import PartyTab from '../components/tabs/PartyTab.astro';
+import StoryTab from '../components/tabs/StoryTab.astro';
+import CardsTab from '../components/tabs/CardsTab.astro';
 ---
-
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Colostle Companion</title>
+  </head>
+  <body>
+    <div class="app">
+      <TopBar />
+      <main class="app__content">
+        <HomeTab />
+        <PlayTab />
+        <PartyTab />
+        <StoryTab />
+        <CardsTab />
+      </main>
+      <BottomNav />
+    </div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
 </html>
