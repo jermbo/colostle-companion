@@ -2,6 +2,12 @@
 
 A digital companion app for the solo tabletop role-playing game Colostle. This app helps players manage their character, draw cards, and track their journey through the vast castle world of Colostle.
 
+## Documentation
+
+- **[Project wiki](./docs/README.md)** — how docs are layered and where to put work.
+- **[Documentation standards](./docs/STANDARDS.md)** — IDs, folders, freeze rules, epic/feature/story/task/decision norms.
+- **[Domain glossary](./CONTEXT.md)** — canonical terms (fill in as the model stabilizes).
+
 ## Goals for the App
 
 The tide is shifting in the world of development, with AI advancements making a significant impact. As a developer, I'm curious about what this means for my craft and career. This project is an exploration into "Vibe Coding" - its significance, practicality, and potential to change software development as we know it.
