@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Colostle Companion · Home (Hi-Fi)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  /* ==========================================================
+     Colostle Companion · Brand foundations
+     ----------------------------------------------------------
+     Tone: a quiet, literary RPG companion. Parchment + ink, with
+     a deep teal that recalls patinated bronze on castle doors.
+     ========================================================== */
+  :root {
+    /* Surfaces */
+    --stone:        #1c1813;   /* studio backdrop */
+    --stone-2:      #25201a;
+    --paper:        #f0e7d2;   /* parchment */
+    --paper-2:      #e8ddc2;   /* deeper parchment */
+    --paper-3:      #dccfaf;   /* shadow tone */
+    --vellum:       #f7f0dd;   /* highlight */
+
+    /* Inks */
+    --ink:          #1c1813;
+    --ink-2:        #3a322a;
+    --ink-3:        #6e6253;
+    --ink-4:        #a8997f;
+
+    /* Suit + status */
+    --teal:         #2a5a5c;   /* primary — "Iron Vale" */
+    --teal-deep:    #1d4244;
+    --brass:        #a8823a;   /* gilt accent */
+    --claret:       #8b2e26;   /* combat / hearts·diamonds */
+    --moss:         #3d6648;   /* explore */
+    --plum:         #5b3a5a;
+    --rust:         #a85a3a;
+
+    /* Type */
+    --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --sans:  'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #2e2820 0%, transparent 60%),
+      var(--stone);
+    color: var(--paper);
+    font-family: var(--sans);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .page {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 56px 48px 96px;
+  }
+
+  /* ----- Studio header ----- */
+  .studio-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid #3a3329;
+    padding-bottom: 22px;
+    margin-bottom: 56px;
+  }
+  .studio-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .studio-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 38px;
+    line-height: 1;
+    margin: 8px 0 0;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+  }
+  .studio-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+  }
+
+  /* ----- Two-column layout ----- */
+  .stage {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 1100px) {
+    .stage { grid-template-columns: 1fr; }
+  }
+
+  /* ====================================================
+     BRAND PANEL
+     ==================================================== */
+  .brand h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    font-weight: 500;
+    margin: 0 0 18px;
+  }
+  .brand h2 .num { color: var(--brass); margin-right: 8px; }
+
+  .brand-block + .brand-block { margin-top: 48px; }
+
+  /* Logo lockup */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 26px 28px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 6px;
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: var(--teal-deep);
+    color: var(--paper);
+    border-radius: 4px;
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .logo-word {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+
+  /* Color tokens */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .swatch {
+    aspect-ratio: 1 / 1.15;
+    border-radius: 4px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .swatch .name {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .swatch .hex { opacity: 0.7; }
+
+  /* Type specimens */
+  .type-row {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #322c23;
+    align-items: baseline;
+  }
+  .type-row:last-child { border-bottom: 0; }
+  .type-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding-top: 6px;
+  }
+  .type-spec-display {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.05;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+  }
+  .type-spec-ui {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+  }
+  .type-spec-mono {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--paper-3);
+    letter-spacing: 0.04em;
+  }
+  .type-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-4);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Suit token row */
+  .suits {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .suit {
+    background: var(--stone-2);
+    border: 1px solid #322c23;
+    border-radius: 4px;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .suit-glyph {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1;
+  }
+  .suit-name {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .suit-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .s-hearts   { color: var(--claret); }
+  .s-diamonds { color: var(--brass); }
+  .s-clubs    { color: var(--ink-4); }
+  .s-spades   { color: var(--teal); }
+
+  /* ====================================================
+     PHONE / HOME SCREEN
+     ==================================================== */
+  .phone-wrap {
+    position: sticky;
+    top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: var(--paper);
+    border-radius: 50px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 2px #0c0a08,
+      0 30px 60px -20px rgba(0,0,0,0.6),
+      0 12px 30px -10px rgba(0,0,0,0.5);
+    border: 1px solid #0c0a08;
+  }
+  .screen {
+    width: 100%; height: 100%;
+    background: var(--paper);
+    border-radius: 38px;
+    overflow: hidden;
+    position: relative;
+    color: var(--ink);
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Subtle paper grain */
+  .screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0 0.06 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+    z-index: 5;
+  }
+
+  /* iOS status bar */
+  .status {
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 28px 8px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    z-index: 6;
+    position: relative;
+  }
+  .status .right { display: flex; gap: 6px; align-items: center; }
+  .status .right svg { display: block; }
+
+  .notch {
+    position: absolute;
+    top: 8px; left: 50%; transform: translateX(-50%);
+    width: 110px; height: 28px;
+    background: #0c0a08;
+    border-radius: 16px;
+    z-index: 7;
+  }
+
+  /* Top bar */
+  .topbar {
+    padding: 18px 22px 14px;
+    flex-shrink: 0;
+    z-index: 6;
+    position: relative;
+  }
+  .topbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .icon-btn {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(28, 24, 19, 0.06);
+    display: grid; place-items: center;
+    color: var(--ink);
+  }
+  .topbar h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1;
+    margin: 6px 0 4px;
+    letter-spacing: -0.005em;
+  }
+  .topbar .sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .topbar .sub b { color: var(--brass); font-weight: 500; }
+
+  /* Scroll area */
+  .scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 22px 14px;
+    z-index: 6;
+    position: relative;
+  }
+  .scroll::-webkit-scrollbar { display: none; }
+
+  /* Section labels */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 18px 0 10px;
+  }
+  .section-label .more {
+    color: var(--teal);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  /* ----- Hero card ----- */
+  .hero {
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--teal-deep);
+    color: var(--paper);
+    box-shadow: 0 12px 24px -16px rgba(28,24,19,0.4);
+    position: relative;
+  }
+  .hero-art {
+    position: relative;
+    height: 168px;
+    background:
+      radial-gradient(120% 80% at 70% 10%, rgba(168,130,58,0.22), transparent 55%),
+      linear-gradient(180deg, #2d6062 0%, #1a3e40 65%, #142f31 100%);
+    overflow: hidden;
+  }
+  /* Castle silhouette built from simple rectangles + a moon */
+  .hero-art .moon {
+    position: absolute;
+    top: 22px; right: 28px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #f3e6c2 0%, #c5a45a 70%, #8a6b2e 100%);
+    box-shadow: 0 0 30px rgba(243,230,194,0.25);
+  }
+  .hero-art .skyline {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 100%;
+    width: 100%;
+  }
+  .hero-art .stars {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-art .stars i {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: #f0e7d2;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .hero-art .label {
+    position: absolute;
+    top: 14px; left: 18px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(240,231,210,0.7);
+  }
+  .hero-art .quote {
+    position: absolute;
+    left: 18px; right: 18px; bottom: 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+  }
+  .hero-body {
+    padding: 16px 18px 18px;
+    background: var(--paper);
+    color: var(--ink);
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .hero-meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+  }
+  .hero-meta b { color: var(--ink-2); font-weight: 600; }
+
+  /* phase progress dots */
+  .phases {
+    display: flex; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .phase {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--paper-3);
+  }
+  .phase.done { background: var(--teal); }
+  .phase.now  {
+    background: var(--teal);
+    box-shadow: 0 0 0 2px rgba(42,90,92,0.18);
+    position: relative;
+  }
+  .phase.now::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--teal) 50%, var(--paper-3) 50%);
+  }
+
+  .hero-counters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .counter {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(28,24,19,0.05);
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .counter .glyph { font-family: var(--serif); font-size: 13px; }
+  .counter.explore .glyph { color: var(--moss); }
+  .counter.combat  .glyph { color: var(--claret); }
+  .counter.deck    { color: var(--ink-3); }
+
+  .hero-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    flex: 1;
+    height: 44px;
+    border-radius: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: var(--teal-deep);
+    color: var(--paper);
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--paper-3);
+    color: var(--ink-2);
+    flex: 0 0 44px;
+    padding: 0;
+  }
+
+  /* ----- Bookshelf ----- */
+  .shelf {
+    margin: 6px -22px 0;
+    padding: 18px 22px 0;
+    background: linear-gradient(180deg, transparent, rgba(28,24,19,0.04));
+  }
+  .shelf-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    border-bottom: 5px solid #3a322a;
+    border-radius: 1px;
+    box-shadow: 0 2px 0 0 #6e6253;
+  }
+  .spine {
+    width: 44px;
+    border-radius: 3px 3px 0 0;
+    border: 1px solid rgba(28,24,19,0.4);
+    border-bottom: none;
+    color: var(--paper);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 10px 0 12px;
+    box-shadow:
+      inset 1px 0 0 rgba(255,255,255,0.08),
+      inset -2px 0 0 rgba(0,0,0,0.18);
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .spine:hover { transform: translateY(-3px); }
+  .spine .vert {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  }
+  .spine .gilt {
+    position: absolute;
+    top: 14px; left: 50%; transform: translateX(-50%);
+    width: 22px; height: 1px;
+    background: var(--brass);
+    opacity: 0.8;
+  }
+  .spine .gilt.b {
+    top: auto; bottom: 22px;
+  }
+  .spine.current::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 10px;
+    background: var(--brass);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--paper);
+  }
+  .spine.archived { opacity: 0.5; filter: saturate(0.5); }
+  .spine-add {
+    width: 44px;
+    height: 110px;
+    border-radius: 3px 3px 0 0;
+    border: 1px dashed var(--ink-3);
+    border-bottom: none;
+    color: var(--ink-3);
+    display: grid; place-items: center;
+    font-size: 22px;
+    font-family: var(--serif);
+    background: transparent;
+  }
+
+  /* ----- Activity ----- */
+  .activity {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .activity-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(28,24,19,0.08);
+  }
+  .activity-row:last-child { border-bottom: none; }
+  .activity-glyph {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--paper-2);
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink-2);
+    flex-shrink: 0;
+  }
+  .activity-glyph.combat  { background: rgba(139,46,38,0.12); color: var(--claret); }
+  .activity-glyph.explore { background: rgba(61,102,72,0.12); color: var(--moss); }
+  .activity-glyph.session { background: rgba(42,90,92,0.12); color: var(--teal); }
+  .activity-text { flex: 1; min-width: 0; }
+  .activity-title {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 1px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .activity-meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-3);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .activity-when {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+
+  /* ----- Bottom nav ----- */
+  .nav {
+    flex-shrink: 0;
+    border-top: 1px solid rgba(28,24,19,0.1);
+    padding: 8px 18px 26px;
+    display: flex;
+    justify-content: space-between;
+    background: var(--paper);
+    z-index: 6;
+    position: relative;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: var(--ink-3);
+    text-decoration: none;
+    padding: 6px 0 4px;
+  }
+  .nav-item.active { color: var(--teal); }
+  .nav-item .lbl {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .home-indicator {
+    position: absolute;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 134px; height: 5px;
+    border-radius: 3px;
+    background: var(--ink);
+    opacity: 0.5;
+  }
+
+  /* Phone caption beneath */
+  .phone-caption {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============== HEADER ============== -->
+  <header class="studio-head">
+    <div>
+      <div class="studio-eyebrow">// brand · v0.1 · home</div>
+      <h1 class="studio-title">A companion for solo journeys.</h1>
+    </div>
+    <div class="studio-meta">colostle · hi-fi · 390 × 844</div>
+  </header>
+
+  <!-- ============== STAGE ============== -->
+  <div class="stage">
+
+    <!-- ============== BRAND PANEL ============== -->
+    <section class="brand">
+
+      <!-- LOGO -->
+      <div class="brand-block">
+        <h2><span class="num">01</span>Lockup</h2>
+        <div class="logo">
+          <div class="logo-mark">C</div>
+          <div>
+            <div class="logo-word">Colostle</div>
+            <div class="logo-sub">Companion</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLORS -->
+      <div class="brand-block">
+        <h2><span class="num">02</span>Palette</h2>
+        <div class="swatch-grid">
+          <div class="swatch" style="background:#f0e7d2; color:#1c1813;">
+            <div class="name">Parchment</div><div class="hex">#F0E7D2</div>
+          </div>
+          <div class="swatch" style="background:#1c1813; color:#f0e7d2;">
+            <div class="name">Ink</div><div class="hex">#1C1813</div>
+          </div>
+          <div class="swatch" style="background:#2a5a5c; color:#f0e7d2;">
+            <div class="name">Iron Teal</div><div class="hex">#2A5A5C</div>
+          </div>
+          <div class="swatch" style="background:#a8823a; color:#1c1813;">
+            <div class="name">Brass</div><div class="hex">#A8823A</div>
+          </div>
+          <div class="swatch" style="background:#8b2e26; color:#f0e7d2;">
+            <div class="name">Claret</div><div class="hex">#8B2E26</div>
+          </div>
+          <div class="swatch" style="background:#3d6648; color:#f0e7d2;">
+            <div class="name">Moss</div><div class="hex">#3D6648</div>
+          </div>
+          <div class="swatch" style="background:#e8ddc2; color:#1c1813;">
+            <div class="name">Paper 2</div><div class="hex">#E8DDC2</div>
+          </div>
+          <div class="swatch" style="background:#6e6253; color:#f0e7d2;">
+            <div class="name">Ink Soft</div><div class="hex">#6E6253</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE -->
+      <div class="brand-block">
+        <h2><span class="num">03</span>Type</h2>
+        <div class="type-row">
+          <div class="type-label">Display</div>
+          <div>
+            <div class="type-spec-display">The Iron Vale</div>
+            <div class="type-meta">Cormorant Garamond · 500 italic · titles, hero quotes, character names</div>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">UI</div>
+          <div>
+            <div class="type-spec-ui">Resume your campaign · Session 4 of an unfinished tale</div>
+            <div class="type-meta">Manrope · 400 / 500 / 600 / 700 · body, buttons, chrome</div>
+          </div>
+        </div>
+        <div class="type-row">
+          <div class="type-label">Mono</div>
+          <div>
+            <div class="type-spec-mono">// LAST PLAYED &nbsp; 2D AGO &nbsp; · &nbsp; PHASE 2/5</div>
+            <div class="type-meta">JetBrains Mono · 400 / 500 · labels, system asides, counters</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUITS -->
+      <div class="brand-block">
+        <h2><span class="num">04</span>Suit semantics</h2>
+        <div class="suits">
+          <div class="suit">
+            <div class="suit-glyph s-spades">♠</div>
+            <div class="suit-name">Spades</div>
+            <div class="suit-meta">Place</div>
+          </div>
+          <div class="suit">
+            <div class="suit-glyph s-hearts">♥</div>
+            <div class="suit-name">Hearts</div>
+            <div class="suit-meta">People</div>
+          </div>
+          <div class="suit">
+            <div class="suit-glyph s-diamonds">♦</div>
+            <div class="suit-name">Diamonds</div>
+            <div class="suit-meta">Discovery</div>
+          </div>
+          <div class="suit">
+            <div class="suit-glyph s-clubs">♣</div>
+            <div class="suit-name">Clubs</div>
+            <div class="suit-meta">Conflict</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============== PHONE ============== -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+
+          <!-- Status bar -->
+          <div class="status">
+            <div>9:41</div>
+            <div class="right">
+              <!-- signal -->
+              <svg width="18" height="11" viewBox="0 0 18 11" fill="none">
+                <rect x="0"  y="7" width="3" height="4" rx="0.5" fill="currentColor"/>
+                <rect x="5"  y="5" width="3" height="6" rx="0.5" fill="currentColor"/>
+                <rect x="10" y="3" width="3" height="8" rx="0.5" fill="currentColor"/>
+                <rect x="15" y="0" width="3" height="11" rx="0.5" fill="currentColor"/>
+              </svg>
+              <!-- wifi -->
+              <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+                <path d="M8 2C5 2 2.5 3 0.6 4.7l1.4 1.4C3.5 4.7 5.6 4 8 4s4.5 0.7 6 2.1l1.4-1.4C13.5 3 11 2 8 2zm0 3.4c-1.7 0-3.3 0.6-4.5 1.6l1.4 1.4C5.7 7.7 6.8 7.3 8 7.3s2.3 0.4 3.1 1.1l1.4-1.4C11.3 6 9.7 5.4 8 5.4zM8 8.7c-0.8 0-1.6 0.3-2.2 0.8L8 11l2.2-1.5C9.6 9 8.8 8.7 8 8.7z"/>
+              </svg>
+              <!-- battery -->
+              <svg width="26" height="12" viewBox="0 0 26 12" fill="none">
+                <rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" opacity="0.5"/>
+                <rect x="2" y="2" width="17" height="8" rx="1.2" fill="currentColor"/>
+                <rect x="23.5" y="4" width="2" height="4" rx="0.6" fill="currentColor" opacity="0.5"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Top bar -->
+          <div class="topbar">
+            <div class="topbar-row">
+              <div class="icon-btn">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M3 5h12M3 9h12M3 13h12"/>
+                </svg>
+              </div>
+              <div class="icon-btn">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M9 3v12M3 9h12"/>
+                </svg>
+              </div>
+            </div>
+            <h1>My campaigns</h1>
+            <div class="sub"><b>3 active</b> · 1 archived</div>
+          </div>
+
+          <!-- Scroll -->
+          <div class="scroll">
+
+            <!-- HERO -->
+            <div class="section-label" style="margin-top: 4px;">
+              <span>// last played 2d ago</span>
+              <span class="more">resume ›</span>
+            </div>
+
+            <div class="hero">
+              <div class="hero-art">
+                <div class="moon"></div>
+                <div class="stars">
+                  <i style="top:18px; left:24px;"></i>
+                  <i style="top:34px; left:62px;"></i>
+                  <i style="top:24px; left:120px;"></i>
+                  <i style="top:48px; left:200px;"></i>
+                  <i style="top:70px; left:88px;"></i>
+                  <i style="top:14px; left:260px;"></i>
+                  <i style="top:60px; left:310px;"></i>
+                </div>
+                <!-- castle silhouette -->
+                <svg class="skyline" viewBox="0 0 366 168" preserveAspectRatio="none">
+                  <!-- distant ridge -->
+                  <path d="M0,168 L0,118 L40,108 L80,118 L130,100 L180,116 L240,98 L300,114 L366,104 L366,168 Z"
+                        fill="#0e2728" opacity="0.7"/>
+                  <!-- main castle block -->
+                  <g fill="#081a1c">
+                    <rect x="60"  y="92"  width="46" height="76"/>
+                    <rect x="106" y="76"  width="22" height="92"/>
+                    <rect x="128" y="58"  width="34" height="110"/>
+                    <rect x="162" y="80"  width="20" height="88"/>
+                    <rect x="182" y="68"  width="28" height="100"/>
+                    <rect x="210" y="86"  width="40" height="82"/>
+                    <rect x="250" y="74"  width="18" height="94"/>
+                    <rect x="268" y="90"  width="42" height="78"/>
+                    <!-- crenellations -->
+                    <rect x="60"  y="86"  width="6" height="6"/>
+                    <rect x="72"  y="86"  width="6" height="6"/>
+                    <rect x="84"  y="86"  width="6" height="6"/>
+                    <rect x="96"  y="86"  width="6" height="6"/>
+                    <rect x="128" y="52"  width="6" height="6"/>
+                    <rect x="140" y="52"  width="6" height="6"/>
+                    <rect x="152" y="52"  width="6" height="6"/>
+                    <rect x="210" y="80"  width="6" height="6"/>
+                    <rect x="222" y="80"  width="6" height="6"/>
+                    <rect x="234" y="80"  width="6" height="6"/>
+                    <rect x="244" y="80"  width="6" height="6"/>
+                    <rect x="268" y="84"  width="6" height="6"/>
+                    <rect x="280" y="84"  width="6" height="6"/>
+                    <rect x="292" y="84"  width="6" height="6"/>
+                    <rect x="304" y="84"  width="6" height="6"/>
+                    <!-- spire -->
+                    <polygon points="139,40 145,58 133,58"/>
+                    <!-- tiny lit windows -->
+                  </g>
+                  <g fill="#a8823a" opacity="0.85">
+                    <rect x="74"  y="118" width="3" height="5"/>
+                    <rect x="84"  y="130" width="3" height="5"/>
+                    <rect x="138" y="98"  width="3" height="6"/>
+                    <rect x="146" y="116" width="3" height="5"/>
+                    <rect x="194" y="92"  width="3" height="5"/>
+                    <rect x="220" y="118" width="3" height="5"/>
+                    <rect x="280" y="116" width="3" height="5"/>
+                  </g>
+                </svg>
+                <div class="label">// the iron vale · cover</div>
+                <div class="quote">"…the Rook lingered at the edge of the chasm, waiting."</div>
+              </div>
+
+              <div class="hero-body">
+                <div class="hero-eyebrow">Currently playing</div>
+                <div class="hero-title">The Iron Vale</div>
+                <div class="hero-meta">Session 4 · <b>Phase 2 of 5</b> · "The Gloaming"</div>
+
+                <div class="phases">
+                  <div class="phase done"></div>
+                  <div class="phase now"></div>
+                  <div class="phase"></div>
+                  <div class="phase"></div>
+                  <div class="phase"></div>
+                </div>
+
+                <div class="hero-counters">
+                  <span class="counter explore"><span class="glyph">♦</span> 4 / 6</span>
+                  <span class="counter combat"><span class="glyph">♣</span> 1 / 3</span>
+                  <span class="counter deck">38 cards</span>
+                </div>
+
+                <div class="hero-actions">
+                  <button class="btn btn-primary">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2l9 5-9 5V2z"/></svg>
+                    Resume the tale
+                  </button>
+                  <button class="btn btn-ghost" aria-label="More">
+                    <svg width="16" height="4" viewBox="0 0 16 4" fill="currentColor">
+                      <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/><circle cx="14" cy="2" r="1.5"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOOKSHELF -->
+            <div class="section-label">
+              <span>// the shelf</span>
+              <span class="more">all 4 ›</span>
+            </div>
+            <div class="shelf">
+              <div class="shelf-row">
+                <div class="spine current" style="height:158px; background:linear-gradient(180deg, #2d6062, #1a3e40);">
+                  <div class="gilt"></div>
+                  <div class="vert">The Iron Vale</div>
+                  <div class="gilt b"></div>
+                </div>
+                <div class="spine" style="height:138px; background:linear-gradient(180deg, #8a4a2a, #5e2e16);">
+                  <div class="gilt"></div>
+                  <div class="vert">Salt &amp; Stone</div>
+                  <div class="gilt b"></div>
+                </div>
+                <div class="spine" style="height:168px; background:linear-gradient(180deg, #3d6648, #234229);">
+                  <div class="gilt"></div>
+                  <div class="vert">Glasswood</div>
+                  <div class="gilt b"></div>
+                </div>
+                <div class="spine archived" style="height:124px; background:linear-gradient(180deg, #5b3a5a, #341f33);">
+                  <div class="gilt"></div>
+                  <div class="vert">Ashfall</div>
+                  <div class="gilt b"></div>
+                </div>
+                <div class="spine-add">+</div>
+              </div>
+            </div>
+
+            <!-- ACTIVITY -->
+            <div class="section-label">
+              <span>// recent activity</span>
+            </div>
+            <div class="activity">
+              <div class="activity-row">
+                <div class="activity-glyph combat">♣</div>
+                <div class="activity-text">
+                  <div class="activity-title">Iron Vale · S4 phase 2</div>
+                  <div class="activity-meta">Flipped 9♣, fought a Rook to a wounded stand-off.</div>
+                </div>
+                <div class="activity-when">2d</div>
+              </div>
+              <div class="activity-row">
+                <div class="activity-glyph explore">♦</div>
+                <div class="activity-text">
+                  <div class="activity-title">Salt &amp; Stone · S2</div>
+                  <div class="activity-meta">Completed phase 1 — the harbor opens.</div>
+                </div>
+                <div class="activity-when">5d</div>
+              </div>
+              <div class="activity-row">
+                <div class="activity-glyph session">♠</div>
+                <div class="activity-text">
+                  <div class="activity-title">Iron Vale · S3 phase 1</div>
+                  <div class="activity-meta">Session ended at the chasm road.</div>
+                </div>
+                <div class="activity-when">9d</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom nav -->
+          <nav class="nav">
+            <a class="nav-item active">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M3 10l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z" fill="rgba(42,90,92,0.12)"/>
+              </svg>
+              <span class="lbl">Home</span>
+            </a>
+            <a class="nav-item">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                <rect x="4" y="3" width="9" height="14" rx="1.2"/>
+                <rect x="9" y="5" width="9" height="14" rx="1.2"/>
+              </svg>
+              <span class="lbl">Play</span>
+            </a>
+            <a class="nav-item">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                <circle cx="8"  cy="9" r="3"/>
+                <circle cx="15" cy="11" r="2.4"/>
+                <path d="M3 18c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/>
+                <path d="M13 18c0-1.8 1.5-3.4 3.5-3.4S20 16.2 20 18"/>
+              </svg>
+              <span class="lbl">Party</span>
+            </a>
+            <a class="nav-item">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M4 4h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3z"/>
+                <path d="M4 4v11a3 3 0 0 0 3 3"/>
+                <path d="M8 8h6M8 11h6M8 14h4"/>
+              </svg>
+              <span class="lbl">Story</span>
+            </a>
+            <a class="nav-item">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                <rect x="3" y="6" width="16" height="12" rx="1.5"/>
+                <path d="M3 10h16"/>
+                <circle cx="7" cy="14" r="1"/>
+              </svg>
+              <span class="lbl">Inv.</span>
+            </a>
+          </nav>
+
+          <div class="home-indicator"></div>
+
+        </div>
+      </div>
+      <div class="phone-caption">// home · default state · 3 campaigns active</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
