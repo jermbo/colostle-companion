@@ -10,9 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import { characterStorage } from "@/lib/storage/characterStorage";
 import { campaignStorage } from "@/lib/storage/campaignStorage";
 
-export const Route = createFileRoute(
-	"/characters/$characterId/campaigns/$campaignId",
-)({
+export const Route = createFileRoute("/campaign/$characterId/$campaignId")({
 	beforeLoad: async ({ params }) => {
 		const [character, campaign] = await Promise.all([
 			characterStorage.get(params.characterId),
@@ -25,8 +23,8 @@ export const Route = createFileRoute(
 			campaign.characterId !== params.characterId
 		) {
 			throw redirect({
-				to: "/characters/$characterId",
-				params: { characterId: params.characterId },
+				to: "/character/$id",
+				params: { id: params.characterId },
 			});
 		}
 
@@ -60,8 +58,8 @@ function CampaignDetails() {
 
 	const handleGoBack = () => {
 		navigate({
-			to: "/characters/$characterId",
-			params: { characterId },
+			to: "/character/$id",
+			params: { id: characterId },
 		});
 	};
 

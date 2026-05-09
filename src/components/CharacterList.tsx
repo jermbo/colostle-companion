@@ -87,7 +87,7 @@ const CharacterList = ({
 						className="hover:bg-gray-50 transition-colors"
 					>
 						<Link
-							to="/characters/$characterId"
+							to="/character/$characterId"
 							params={{ characterId: character.id }}
 							className="block"
 							title={character.name}

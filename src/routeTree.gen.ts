@@ -11,16 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as CharactersImport } from './routes/characters'
+import { Route as CharactersListImport } from './routes/characters-list'
 import { Route as IndexImport } from './routes/index'
-import { Route as CharactersCharacterIdImport } from './routes/characters.$characterId'
-import { Route as CharactersCharacterIdCampaignsCampaignIdImport } from './routes/characters.$characterId.campaigns.$campaignId'
+import { Route as CharacterIdImport } from './routes/character.$id'
+import { Route as CampaignCharacterIdCampaignIdImport } from './routes/campaign.$characterId.$campaignId'
 
 // Create/Update Routes
 
-const CharactersRoute = CharactersImport.update({
-  id: '/characters',
-  path: '/characters',
+const CharactersListRoute = CharactersListImport.update({
+  id: '/characters-list',
+  path: '/characters-list',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -30,17 +30,17 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const CharactersCharacterIdRoute = CharactersCharacterIdImport.update({
-  id: '/$characterId',
-  path: '/$characterId',
-  getParentRoute: () => CharactersRoute,
+const CharacterIdRoute = CharacterIdImport.update({
+  id: '/character/$id',
+  path: '/character/$id',
+  getParentRoute: () => rootRoute,
 } as any)
 
-const CharactersCharacterIdCampaignsCampaignIdRoute =
-  CharactersCharacterIdCampaignsCampaignIdImport.update({
-    id: '/campaigns/$campaignId',
-    path: '/campaigns/$campaignId',
-    getParentRoute: () => CharactersCharacterIdRoute,
+const CampaignCharacterIdCampaignIdRoute =
+  CampaignCharacterIdCampaignIdImport.update({
+    id: '/campaign/$characterId/$campaignId',
+    path: '/campaign/$characterId/$campaignId',
+    getParentRoute: () => rootRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -54,110 +54,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/characters': {
-      id: '/characters'
-      path: '/characters'
-      fullPath: '/characters'
-      preLoaderRoute: typeof CharactersImport
+    '/characters-list': {
+      id: '/characters-list'
+      path: '/characters-list'
+      fullPath: '/characters-list'
+      preLoaderRoute: typeof CharactersListImport
       parentRoute: typeof rootRoute
     }
-    '/characters/$characterId': {
-      id: '/characters/$characterId'
-      path: '/$characterId'
-      fullPath: '/characters/$characterId'
-      preLoaderRoute: typeof CharactersCharacterIdImport
-      parentRoute: typeof CharactersImport
+    '/character/$id': {
+      id: '/character/$id'
+      path: '/character/$id'
+      fullPath: '/character/$id'
+      preLoaderRoute: typeof CharacterIdImport
+      parentRoute: typeof rootRoute
     }
-    '/characters/$characterId/campaigns/$campaignId': {
-      id: '/characters/$characterId/campaigns/$campaignId'
-      path: '/campaigns/$campaignId'
-      fullPath: '/characters/$characterId/campaigns/$campaignId'
-      preLoaderRoute: typeof CharactersCharacterIdCampaignsCampaignIdImport
-      parentRoute: typeof CharactersCharacterIdImport
+    '/campaign/$characterId/$campaignId': {
+      id: '/campaign/$characterId/$campaignId'
+      path: '/campaign/$characterId/$campaignId'
+      fullPath: '/campaign/$characterId/$campaignId'
+      preLoaderRoute: typeof CampaignCharacterIdCampaignIdImport
+      parentRoute: typeof rootRoute
     }
   }
 }
 
 // Create and export the route tree
 
-interface CharactersCharacterIdRouteChildren {
-  CharactersCharacterIdCampaignsCampaignIdRoute: typeof CharactersCharacterIdCampaignsCampaignIdRoute
-}
-
-const CharactersCharacterIdRouteChildren: CharactersCharacterIdRouteChildren = {
-  CharactersCharacterIdCampaignsCampaignIdRoute:
-    CharactersCharacterIdCampaignsCampaignIdRoute,
-}
-
-const CharactersCharacterIdRouteWithChildren =
-  CharactersCharacterIdRoute._addFileChildren(
-    CharactersCharacterIdRouteChildren,
-  )
-
-interface CharactersRouteChildren {
-  CharactersCharacterIdRoute: typeof CharactersCharacterIdRouteWithChildren
-}
-
-const CharactersRouteChildren: CharactersRouteChildren = {
-  CharactersCharacterIdRoute: CharactersCharacterIdRouteWithChildren,
-}
-
-const CharactersRouteWithChildren = CharactersRoute._addFileChildren(
-  CharactersRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/characters': typeof CharactersRouteWithChildren
-  '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
+  '/characters-list': typeof CharactersListRoute
+  '/character/$id': typeof CharacterIdRoute
+  '/campaign/$characterId/$campaignId': typeof CampaignCharacterIdCampaignIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/characters': typeof CharactersRouteWithChildren
-  '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
+  '/characters-list': typeof CharactersListRoute
+  '/character/$id': typeof CharacterIdRoute
+  '/campaign/$characterId/$campaignId': typeof CampaignCharacterIdCampaignIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/characters': typeof CharactersRouteWithChildren
-  '/characters/$characterId': typeof CharactersCharacterIdRouteWithChildren
-  '/characters/$characterId/campaigns/$campaignId': typeof CharactersCharacterIdCampaignsCampaignIdRoute
+  '/characters-list': typeof CharactersListRoute
+  '/character/$id': typeof CharacterIdRoute
+  '/campaign/$characterId/$campaignId': typeof CampaignCharacterIdCampaignIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/characters'
-    | '/characters/$characterId'
-    | '/characters/$characterId/campaigns/$campaignId'
+    | '/characters-list'
+    | '/character/$id'
+    | '/campaign/$characterId/$campaignId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/characters'
-    | '/characters/$characterId'
-    | '/characters/$characterId/campaigns/$campaignId'
+    | '/characters-list'
+    | '/character/$id'
+    | '/campaign/$characterId/$campaignId'
   id:
     | '__root__'
     | '/'
-    | '/characters'
-    | '/characters/$characterId'
-    | '/characters/$characterId/campaigns/$campaignId'
+    | '/characters-list'
+    | '/character/$id'
+    | '/campaign/$characterId/$campaignId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CharactersRoute: typeof CharactersRouteWithChildren
+  CharactersListRoute: typeof CharactersListRoute
+  CharacterIdRoute: typeof CharacterIdRoute
+  CampaignCharacterIdCampaignIdRoute: typeof CampaignCharacterIdCampaignIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CharactersRoute: CharactersRouteWithChildren,
+  CharactersListRoute: CharactersListRoute,
+  CharacterIdRoute: CharacterIdRoute,
+  CampaignCharacterIdCampaignIdRoute: CampaignCharacterIdCampaignIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -171,28 +149,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/characters"
+        "/characters-list",
+        "/character/$id",
+        "/campaign/$characterId/$campaignId"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/characters": {
-      "filePath": "characters.tsx",
-      "children": [
-        "/characters/$characterId"
-      ]
+    "/characters-list": {
+      "filePath": "characters-list.tsx"
     },
-    "/characters/$characterId": {
-      "filePath": "characters.$characterId.tsx",
-      "parent": "/characters",
-      "children": [
-        "/characters/$characterId/campaigns/$campaignId"
-      ]
+    "/character/$id": {
+      "filePath": "character.$id.tsx"
     },
-    "/characters/$characterId/campaigns/$campaignId": {
-      "filePath": "characters.$characterId.campaigns.$campaignId.tsx",
-      "parent": "/characters/$characterId"
+    "/campaign/$characterId/$campaignId": {
+      "filePath": "campaign.$characterId.$campaignId.tsx"
     }
   }
 }

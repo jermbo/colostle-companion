@@ -31,12 +31,14 @@ export const useCampaigns = (characterId: string) => {
 		mutationFn: async (
 			newCampaign: Omit<Campaign, "id" | "createdAt" | "updatedAt">,
 		) => {
+			console.log("Creating new campaign:", newCampaign);
 			const campaign: Campaign = {
 				...newCampaign,
 				id: crypto.randomUUID(),
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			};
+			console.log("Campaign to be stored:", campaign);
 			await campaignStorage.set(campaign);
 			return campaign;
 		},
@@ -117,12 +119,14 @@ export const CampaignProvider = ({
 		mutationFn: async (
 			newCampaign: Omit<Campaign, "id" | "createdAt" | "updatedAt">,
 		) => {
+			console.log("Creating new campaign:", newCampaign);
 			const campaign: Campaign = {
 				...newCampaign,
 				id: crypto.randomUUID(),
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			};
+			console.log("Campaign to be stored:", campaign);
 			await campaignStorage.set(campaign);
 			return campaign;
 		},

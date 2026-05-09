@@ -72,7 +72,7 @@ const CampaignManagement = ({ characterId }: Props) => {
 					campaigns={campaigns}
 					onSelectCampaign={(campaign) => {
 						navigate({
-							to: "/characters/$characterId/campaigns/$campaignId",
+							to: "/campaign/$characterId/$campaignId",
 							params: { characterId, campaignId: campaign.id },
 						});
 					}}
