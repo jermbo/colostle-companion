@@ -21,7 +21,7 @@ Drawing a card from the deck to trigger an oracle result. Each flip consumes one
 _Avoid_: Draw, roll, query
 
 **Deck**:
-A shuffled set of cards belonging to a campaign. When depleted, the deck reshuffles and reuses the same cards.
+A shuffled set of cards belonging to a campaign. When depleted, the deck reshuffles and reuses the same cards. **Aces are low** — in oracle lookups, Ace is the lowest value (below 2), not above King.
 _Avoid_: Card pool, card set
 
 **Oracle** (or **Table**):
@@ -66,3 +66,4 @@ A player's internal narration during a session:
 - **"Flip" vs. "Draw"**: Colostle players may say both. Here, "flip" is canonical to emphasize the action and its oracle outcome.
 - **"Oracle" vs. "Table"**: Both appear in Colostle. "Oracle" emphasizes consultation (asking the cards); "table" is the implementation. Use "oracle" with players; "table" in technical docs.
 - **"Counter" vs. "Resource"**: Counters are player-controlled and narrative-driven, not mechanical. They track narrative momentum (exploration vs. combat), not character stats.
+- **Ace value**: Aces are low in Colostle. In oracle table lookups, Ace ranks below 2 — it is the weakest card, not the strongest. Do not treat Ace as high (14) in any game logic or table ordering.

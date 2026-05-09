@@ -79,11 +79,11 @@ graph TD
     B -->|Start session| C
     C -->|Resume| D
     A -->|Yes| D
-    D -->|[Flip]| D
-    D -->|[Journal]| E
-    E -->|[Expand]| F
-    F -->|[Save]| D
-    D -->|[⋯]| G
+    D -->|"Flip"| D
+    D -->|"Journal"| E
+    E -->|"Expand"| F
+    F -->|"Save"| D
+    D -->|"⋯"| G
     G -->|New Phase| D
     G -->|End Session| A
     
@@ -150,12 +150,12 @@ graph TD
     A -->|Settlements section| C
     B -->|Tap NPC| D
     C -->|Tap Settlement| E
-    D -->|[Edit]| F
-    E -->|[Edit]| G
-    F -->|[Save]| D
-    G -->|[Save]| E
-    D -->|[Link to entries]| H
-    E -->|[Link to entries]| H
+    D -->|"Edit"| F
+    E -->|"Edit"| G
+    F -->|"Save"| D
+    G -->|"Save"| E
+    D -->|"Link to entries"| H
+    E -->|"Link to entries"| H
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -179,15 +179,15 @@ graph TD
     G["Search Results"]
     H["NPC Detail<br/>(from entry link)"]
     
-    A -->|[Tap session]| B
+    A -->|"Tap session"| B
     B -->|Expand| C
-    C -->|[Tap entry]| D
-    D -->|[Edit]| E
-    E -->|[Save]| D
-    A -->|[Search]| F
-    F -->|[Query]| G
-    G -->|[Result]| D
-    D -->|[Tap NPC link]| H
+    C -->|"Tap entry"| D
+    D -->|"Edit"| E
+    E -->|"Save"| D
+    A -->|"Search"| F
+    F -->|"Query"| G
+    G -->|"Result"| D
+    D -->|"Tap NPC link"| H
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -211,13 +211,13 @@ graph TD
     G["Table Editor"]
     
     A -->|Deck section| B
-    B -->|[View flip history]| C
+    B -->|"View flip history"| C
     A -->|Oracle tables| D
-    D -->|[Tap table]| E
-    E -->|[Edit]| G
-    G -->|[Save]| E
-    D -->|[+ Add custom]| F
-    F -->|[Save]| D
+    D -->|"Tap table"| E
+    E -->|"Edit"| G
+    G -->|"Save"| E
+    D -->|"+ Add custom"| F
+    F -->|"Save"| D
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -241,7 +241,7 @@ graph LR
     C["Home<br/>(list)<br/>+ focus new"]
     
     A -->|+ New button| B
-    B -->|[Create]| C
+    B -->|"Create"| C
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#ebe3d3,stroke:#2b4a7a,color:#1f1a17
@@ -260,9 +260,9 @@ graph LR
     
     A -->|Tap campaign| B
     B -->|Resume/New| C
-    C -->|[Flip]| D
-    C -->|[Journal]| E
-    E -->|[Save]| C
+    C -->|"Flip"| D
+    C -->|"Journal"| E
+    E -->|"Save"| C
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -280,9 +280,9 @@ graph LR
     C["Party Tab<br/>(world)"]
     D["NPC<br/>Detail"]
     
-    A -->|[Tap NPC link]| B
+    A -->|"Tap NPC link"| B
     B -->|Jump tab| C
-    C -->|[Tap NPC]| D
+    C -->|"Tap NPC"| D
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -301,9 +301,9 @@ graph LR
     E["File<br/>Download"]
     
     A -->|Tap campaign| B
-    B -->|[⋯]| C
-    C -->|[Export]| D
-    D -->|[Confirm]| E
+    B -->|"⋯"| C
+    C -->|"Export"| D
+    D -->|"Confirm"| E
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17

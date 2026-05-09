@@ -12,16 +12,49 @@ Flip the virtual deck and instantly resolve the card to a prompt via an **oracle
 
 ## Oracle tables
 
-All tables are keyed by **card value** (2–10, J, Q, K, A) and **suit color** (red = positive, black = negative).
+**Card value ordering:** Ace is low in Colostle (A → 2 → … → 10 → J → Q → K).
 
 **Official Colostle tables:**
-- **Exploration (Land)** — environmental prompts, discoveries, obstacles
-- **Exploration (Sea)** — water-based prompts, navigation, sea encounters
-- **Combat** — enemy builder (type + difficulty based on player's combat counter)
-- **Settlement** — location builder (features, inhabitants, mood)
-- **Items** — object/treasure generator
-- **Yes-No Oracle** — binary outcome (yes/no/maybe) with narrative flavor
-- **Custom tables** — player-created oracles and house rules
+- **Exploration** — see below; suit and color both matter
+- **Settlement** — location builder (A–K, suits irrelevant)
+- **Items** — object/treasure generator (A–K, suits irrelevant)
+- **Enemy creation** — triggered by J/Q/K; 3 additional flips (suits irrelevant)
+- **Yes-No Oracle** — binary outcome with narrative flavor
+- **Custom tables** — player-created oracles and house rules (v0.2.0+)
+
+### Exploration table mechanics
+
+Exploration uses both **suit color** and **individual suit**:
+
+| Color | Meaning | Positive suit | Negative suit |
+|---|---|---|---|
+| Red (hearts, diamonds) | Organic — person, creature, being | Hearts | Diamonds |
+| Black (spades, clubs) | Non-organic — place, object, structure | Spades | Clubs |
+
+Full result = base concept + suit modifier (e.g., "A fellow traveler — friendly" vs. "A fellow traveler — aggressive").
+
+**J, Q, K are enemy triggers**, not exploration results. Drawing one of these during exploration begins enemy creation (see below). The suit of the triggering card does not affect the enemy — it only determines size.
+
+### Enemy creation
+
+Triggered by drawing J, Q, or K during exploration:
+
+| Card | Enemy |
+|---|---|
+| J | Non-Rook enemy |
+| Q | Medium Rook |
+| K | Large Rook |
+
+All three follow the same creation flow. After the trigger card, flip **3 additional cards** to determine the enemy's characteristics (suits irrelevant for all 3):
+
+| Flip | Aspect | A–6 | 7–K |
+|---|---|---|---|
+| 1 | Type | Defensive | Attack |
+| 2 | Range | Short | Long |
+
+| Flip | Aspect | A–3 | 4–7 | 8–10 | J–K |
+|---|---|---|---|---|---|
+| 3 | Magic | None | Rumble | Ice | Lightning |
 
 ## Player control
 
@@ -65,14 +98,14 @@ graph TD
     
     A -->|default: Explore| B
     B -->|or change| A
-    A -->|[Flip]| C
+    A -->|"Flip"| C
     C -->|consume card| D
     D -->|value + color| E
     E -->|display| F
     F -->|player reads| G
     G -->|write it down| H
     G -->|explore more| I
-    H -->|[Save]| J
+    H -->|"Save"| J
     I -->|change narrative| F
     J -->|recorded| K
     K -->|ready| C

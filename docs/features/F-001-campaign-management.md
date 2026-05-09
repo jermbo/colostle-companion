@@ -39,8 +39,8 @@ graph LR
     B["New Campaign<br/>(form)"]
     C["Home<br/>(list)<br/>+ new focused"]
     
-    A -->|+ New| B
-    B -->|[Create]| C
+    A -->|"New"| B
+    B -->|"Create"| C
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#ebe3d3,stroke:#2b4a7a,color:#1f1a17
@@ -95,12 +95,12 @@ graph LR
     C["Edit Campaign<br/>(form)"]
     D["Confirmation<br/>Modal"]
     
-    A -->|[⋯]| B
-    B -->|[Edit notes]| C
-    B -->|[Export]| D
-    B -->|[Delete]| D
-    C -->|[Save]| A
-    D -->|[Confirm]| A
+    A -->|"⋯"| B
+    B -->|"Edit notes"| C
+    B -->|"Export"| D
+    B -->|"Delete"| D
+    C -->|"Save"| A
+    D -->|"Confirm"| A
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#ebe3d3,stroke:#2b4a7a,color:#1f1a17

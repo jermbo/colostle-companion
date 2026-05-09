@@ -68,13 +68,13 @@ graph TD
     I["Back to Play<br/>(ready for next)"]
     
     A -->|Oracle displayed| A
-    A -->|[Journal]| B
+    A -->|"Journal"| B
     B -->|input focus| C
-    C -->|[Voice]| F
+    C -->|"Voice"| F
     C -->|type| E
     E -->|continue| E
     F -->|or type| C
-    C -->|[Save]| G
+    C -->|"Save"| G
     G -->|create entry| H
     H -->|confirm| I
     
@@ -111,14 +111,14 @@ graph TD
     F["[Save]"]
     G["Entry updated<br/>+ linked"]
     
-    A -->|[Expand]| B
+    A -->|"Expand"| B
     B -->|open| C
     C -->|textarea| D
     C -->|checkboxes| E
     D -->|edit| D
     E -->|select| E
-    D -->|[Save]| F
-    E -->|[Save]| F
+    D -->|"Save"| F
+    E -->|"Save"| F
     F -->|update| G
     
     style A fill:#ebe3d3,stroke:#2b4a7a,color:#1f1a17
@@ -148,9 +148,9 @@ graph TD
     
     A -->|Sessions| B
     B -->|Expand| C
-    C -->|[Tap entry]| D
-    D -->|[Edit]| E
-    D -->|[Delete]| E
+    C -->|"Tap entry"| D
+    D -->|"Edit"| E
+    D -->|"Delete"| E
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style B fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
@@ -180,11 +180,11 @@ graph LR
     E["Results<br/>(entries + NPCs)"]
     F["Full Entry<br/>View"]
     
-    A -->|[Search button]| B
+    A -->|"Search button"| B
     B -->|open| C
     C -->|type term| D
     D -->|query| E
-    E -->|[Tap result]| F
+    E -->|"Tap result"| F
     
     style A fill:#f4efe6,stroke:#2b4a7a,color:#1f1a17
     style C fill:#ebe3d3,stroke:#2b4a7a,color:#1f1a17
